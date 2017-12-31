@@ -1,0 +1,8 @@
+﻿@import url(theme.css);
+
+/*LTR CSS*/
+body{direction:ltr}
+
+@media(min-width:768px){
+	#wrapper{padding-left:185px}
+}

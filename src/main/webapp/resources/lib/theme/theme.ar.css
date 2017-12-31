@@ -1,0 +1,48 @@
+﻿@import url(theme.css);
+@import url(http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+@import url(http://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
+
+/*RTL Bootstrap*/
+body{direction:rtl;font:13px 'Droid Arabic Naskh',sans-serif!important}
+.input-group-addon:first-child{border-left:0 none}
+.input-group .form-control:first-child,.input-group-addon:first-child,.input-group-btn:first-child>.btn,.input-group-btn:first-child>.btn-group>.btn,.input-group-btn:first-child>.dropdown-toggle,.input-group-btn:last-child>.btn:not(:last-child):not(.dropdown-toggle),.input-group-btn:last-child>.btn-group:not(:last-child)>.btn{border:1px solid #ccc;border-radius:0 4px 4px 0}
+.input-group .form-control:last-child,.input-group-addon:last-child,.input-group-btn:last-child>.btn,.input-group-btn:last-child>.btn-group>.btn,.input-group-btn:last-child>.dropdown-toggle,.input-group-btn:first-child>.btn:not(:first-child),.input-group-btn:first-child>.btn-group:not(:first-child)>.btn{border:1px solid #ccc;border-radius:4px 0 0 4px}
+.text-right{text-align:left!important}
+.text-left{text-align:right!important}
+.pull-left{float:right!important}
+.pull-right{float:left!important}
+.form-horizontal .control-label{float:right;padding-left:0;text-align:left;font-weight:bold}
+.nav>li{float:right !important;font:12px Tahoma}
+[class*="col-"]{float:right!important}
+.col-md-offset-2{margin-left:0;margin-right:16.66666667%}
+.col-lg-offset-1{margin-left:0;margin-right:8%}.col-md-offset-1{margin-left:0;margin-right:8.5%}
+td,th{text-align:right}
+.popover-inner{text-align:right!important}
+.popover{font:11px 'Droid Arabic Kufi'!important;text-align:right!important}
+.col-sm-offset-10{margin-right:83.3333%;margin-left:0}
+.col-sm-offset-3{margin-left:0;margin-right:25%}
+select.form-control{font-size:12px}
+.table td,.table-inner td{font:11px 'Droid Arabic Kufi',Arial!important}
+.pagination>li>a,.pagination>li>span{float:right}
+.pagination>li:first-child>a,.pagination>li:first-child>span{border-bottom-left-radius:0;border-top-left-radius:0;border-bottom-right-radius:3px;border-top-right-radius:3px}
+.pagination>li:last-child>a,.pagination>li:last-child>span{border-bottom-left-radius:3px;border-top-left-radius:3px;border-bottom-right-radius:0;border-top-right-radius:0}
+.jGrowl-message{text-align:right}
+
+.side-nav a{font:14px 'Droid Arabic Naskh',serif!important}
+.navbar-brand{margin:2px 9px 0;padding:0}
+.navbar-brand img{height:40px}
+.navbar-header{float:right}
+.navbar-right{float:left!important}
+.navbar-right .dropdown-menu{right:auto;left:0}
+.navbar-nav{float:right!important}
+.navbar-nav>li{float:right!important}
+
+.highcharts-container text,.highcharts-container div span{font:normal 11px/14px 'Droid Arabic Kufi',Tahoma,sans-serif!important;text-align:center!important}
+.highcharts-container .highcharts-title{color:#f00!important;font:bold 16px/18px 'Droid Arabic Naskh',Tahoma,serif!important;text-align:center!important;direction:rtl}
+@media(max-width:1200px){
+.form-reports .control-label{padding-top:5px;font-size:11px}
+}
+
+/*THEME*/
+.viewkey{text-align:left!important}
+.breadcrumb>li{font:10px 'Droid Arabic Kufi'!important}
