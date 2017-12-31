@@ -122,6 +122,31 @@ public class HomeController {
 		
 			return new ModelAndView("redirect:/home");
 		}
+		
+
+		@RequestMapping(value = "login", method = RequestMethod.GET)
+		public String loginUser(Map model) {		
+			User user = new User();			
+			model.put("user", user);			
+			
+			return "login";
+		}
+	
+	  @RequestMapping(value = "login" ,method = RequestMethod.POST)
+	    public String loginUser(@ModelAttribute("userForm") User user,
+	            Map<String, Object> model) {
+	
+		  String dd=user.getName();
+		   dd=user.getEmail();	   
+		   
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			 UserDAO customerDAO = (UserDAO) context.getBean("UserDAO");     	       
+	        
+			 User user1= customerDAO.UserLogin(user.getEmail(),user.getPassword());	        
+		   
+	
+	        return "home";
+	    }
 	
 	
 }

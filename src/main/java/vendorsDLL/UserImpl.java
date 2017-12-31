@@ -150,17 +150,21 @@ public class UserImpl  implements  UserDAO{
 	      
 	    	try {	    		
 	        
-	        SimpleJdbcCall jdbcCall = new 
-	                SimpleJdbcCall(dataSource).withProcedureName("LoginUser"); 
-
-	             SqlParameterSource in = new MapSqlParameterSource().addValue("email_in", email)
-	            		 						.addValue("password_in", password);
-	             Map<String, Object> result = jdbcCall.execute(in);
+	              
+		    		SimpleJdbcCall jdbcCall = new 
+			                SimpleJdbcCall(dataSource).withProcedureName("LoginUser")
+			                .withoutProcedureColumnMetaDataAccess().declareParameters(
+			                		new SqlParameter( "email_in", Types.VARCHAR),		                		
+				    				new SqlParameter("password_in", Types.VARCHAR ));                     
+			    				
+			    			Map<String, Object> result = new HashMap<String, Object>(2);
+			    				result.put("email_in", email);  
+			    				result.put("password_in", password);  
+			    				
+			    				result = jdbcCall.execute(result);
 
 	            List<Map<String, Object>> list = (List) result.get("#result-set-1");
 	           
-	           // String name1=(String)list.get(0).get("email");
-
 	            for (Map<String, Object> item : list) {	 
 	            	  
 	            	user.userID=(Long) (item.get("userID"));
@@ -177,6 +181,7 @@ public class UserImpl  implements  UserDAO{
 	    	}catch(Exception ex)
 	    	{
 	    		String exc=ex.getMessage();
+	    		exc="";
 	    		  
 	    	}
 	            
