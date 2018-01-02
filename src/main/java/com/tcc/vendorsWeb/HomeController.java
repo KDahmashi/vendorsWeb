@@ -7,8 +7,9 @@ import java.text.DateFormat;
 
 import vendorsBLL.*;
 import vendorsDLL.UserDAO;
+import vendorsDLL.VendorDAO;
 import vendorsModel.User;
-
+import vendorsModel.Vendor;
 
 import java.util.Date;
 import java.util.List;
@@ -124,7 +125,7 @@ public class HomeController {
 		}
 		
 
-		@RequestMapping(value = "login", method = RequestMethod.GET)
+		@RequestMapping(value = "/login", method = RequestMethod.GET)
 		public String loginUser(Map model) {		
 			User user = new User();			
 			model.put("user", user);			
@@ -132,7 +133,7 @@ public class HomeController {
 			return "login";
 		}
 	
-	  @RequestMapping(value = "login" ,method = RequestMethod.POST)
+	  @RequestMapping(value = "/login" ,method = RequestMethod.POST)
 	    public String loginUser(@ModelAttribute("userForm") User user,
 	            Map<String, Object> model) {
 	
@@ -147,6 +148,30 @@ public class HomeController {
 	
 	        return "home";
 	    }
+	  
+		@RequestMapping(value = "/vendorMain", method = RequestMethod.GET)
+		public String vendorMain(Map model) {		
+			Vendor vendor = new Vendor();			
+			model.put("vendor", vendor);			
+			
+			return "vendorMain";
+		}
+		
+		
+		  @RequestMapping(value = "/vendorMain" ,method = RequestMethod.POST)
+		    public String vendorMain(@ModelAttribute("vendorForm") Vendor vendor,
+		            Map<String, Object> model) {
+		
+			  vendor.userID=18;
+			   
+				context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+				VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
+		        
+				vendorDAO.AddVendor(vendor);	        
+			   
+		
+		        return "redirect:home";
+		    }
 	
 	
 }
