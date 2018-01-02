@@ -17,67 +17,67 @@
     
     
        <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">vendor Name English</label>
-                    <div class="col-sm-2"><form:input  class="form-control" path="vendorNameEn" /></div>
-                     <div class="col-sm-4"></div>
+                  <div class="col-sm-3"></div>
+                <label  class="col-sm-3 col-form-label">Vendor Name English</label>
+                    <div class="col-sm-4"><form:input  class="form-control" path="vendorNameEn" /></div>
+                     <div class="col-sm-2"></div>
             </div>
             
               <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Vendor Name Arabic</label>
+                  <div class="col-sm-3"></div>
+                <label  class="col-sm-3 col-form-label">Vendor Name Arabic</label>
                     <div class="col-sm-4"><form:input  class="form-control" path="vendorNameAr" /></div>
                      <div class="col-sm-2"></div>
             </div>
                       
                           <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">VendorType</label>
+                  <div class="col-sm-3"></div>
+                <label  class="col-sm-3 col-form-label">VendorType</label>
                     <div class="col-sm-4"><form:input  class="form-control" path="vendorTypeID" /></div>
                      <div class="col-sm-2"></div>
             </div>
             
             
                          <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Email</label>
+                  <div class="col-sm-3"></div>
+                <label  class="col-sm-3 col-form-label">Email</label>
                     <div class="col-sm-4"><form:input  class="form-control" path="email" /></div>
                      <div class="col-sm-2"></div>
             </div>
              
              
                                       <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Lane Number </label>
+                  <div class="col-sm-3"></div>
+                <label  class="col-sm-3 col-form-label">Lane Number </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="lanNumber" /></div>
                      <div class="col-sm-2"></div>
             </div>
             
              						  <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Mobile Number </label>
+                  <div class="col-sm-3"></div>
+                <label  class="col-sm-3 col-form-label">Mobile Number </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="mobileNumber" /></div>
                      <div class="col-sm-2"></div>
             </div>
             
              						  <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Web Site </label>
+                  <div class="col-sm-3"></div>
+                <label  class="col-sm-3 col-form-label">Web Site </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="webSiteurl" /></div>
                      <div class="col-sm-2"></div>
             </div>
             
              						  <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">C/R Number </label>
+                  <div class="col-sm-3"></div>
+                <label  class="col-sm-3 col-form-label">C/R Number </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="crNumber" /></div>
                      <div class="col-sm-2"></div>
             </div>
             
                 
                    <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label"></label>
+                  <div class="col-sm-3"></div>
+                <label  class="col-sm-3 col-form-label"></label>
                     <div class="col-sm-4"><input type="submit" value="Save"/></div>
                      <div class="col-sm-2"></div>
             </div>
