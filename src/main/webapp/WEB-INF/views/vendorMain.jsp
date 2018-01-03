@@ -18,10 +18,13 @@
     
        <div class="form-group row">
 
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>     vendor Registration         </h2>
+     <h4>    vendor Details         </h4>
+
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">vendor Name English</label>
-                    <div class="col-sm-2"><form:input  class="form-control" path="vendorNameEn" /></div>
-                     <div class="col-sm-4"></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="vendorNameEn" /></div>
+                     <div class="col-sm-2"></div>
             </div>
             
               <div class="form-group row">

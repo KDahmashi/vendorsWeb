@@ -17,7 +17,7 @@
  
 
     <form:form method="post" modelAttribute="user">
-    
+      <h2><span class="glyphicon glyphicon-user" ></span>     User Registration         </h2>
        <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Full Name</label>
