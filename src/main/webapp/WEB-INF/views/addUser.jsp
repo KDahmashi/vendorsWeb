@@ -17,23 +17,41 @@
  
 
     <form:form method="post" modelAttribute="user">
-        <table>
-            <tr>
-                <td><spring:message code="lbl.firstName" text="First Name" /></td>
-                <td><form:input path="name" /></td>
-            </tr>
-            <tr>
-                <td><spring:message code="lbl.password" text="password" /></td>
-                <td><form:input path="password" /></td>
-            </tr>
-            <tr>
-                <td><spring:message code="lbl.email" text="Email Id" /></td>
-                <td><form:input path="email" /></td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" value="Add Employee"/></td>
-            </tr>
-        </table>
+    
+       <div class="form-group row">
+                  <div class="col-sm-2"></div>
+                <label  class="col-sm-4 col-form-label">Full Name</label>
+                    <div class="col-sm-3"><form:input  class="form-control" path="name" /></div>
+                     <div class="col-sm-3"></div>
+            </div>
+                  <div class="form-group row">
+                  <div class="col-sm-2"></div>
+                <label  class="col-sm-4 col-form-label">Email</label>
+                    <div class="col-sm-3"><form:input  class="form-control" path="email" /></div>
+                     <div class="col-sm-3"></div>
+            </div>
+                  <div class="form-group row">
+                  <div class="col-sm-2"></div>
+                <label  class="col-sm-4 col-form-label">Password</label>
+                    <div class="col-sm-3"><form:input type="password" class="form-control" path="password" /></div>
+                     <div class="col-sm-3"></div>
+            </div>
+                  <div class="form-group row">
+                  <div class="col-sm-2"></div>
+                <label  class="col-sm-4 col-form-label">Confirm Password</label>
+                    <div class="col-sm-3"><form:input type="password" class="form-control" path="password" /></div>
+                     <div class="col-sm-3"></div>
+            </div>
+                
+                             <div class="form-group row">
+                <div class="col-sm-2"> </div>
+                <div class="col-sm-4"> <input type="submit" class="btn btn-warning" value="Cancel"/> </div>
+                 <div class="col-sm-3"> <input type="submit" class="btn btn-success" value="Register"/>           </div>
+                 <div class="col-sm-3"></div>
+            </div>
+            
+       
+       
     </form:form>
 
     </div>

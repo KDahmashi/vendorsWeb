@@ -41,11 +41,9 @@
           			  aria-expanded="false">
           	<span class="badge">${username} <span class="glyphicon glyphicon-user"></span> </span>
           </a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Help</a></li>
-            <li><a href="#">About</a></li>
+          <ul class="dropdown-menu">           
             <li role="separator" class="divider"></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="logout">Logout</a></li>
           </ul>
         </li>
       </ul>

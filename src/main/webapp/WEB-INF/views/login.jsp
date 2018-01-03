@@ -23,7 +23,7 @@
 <div class="col-md-4">
 	<h1><i class="fa fa-lock red"></i> Login </h1>
 	
-
+	<div class='alert alert-danger ${alert.getVisible()}' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>${alert.getMessage()}  </div>
        
   <div class="form-group">   
              <div class="form-group row">
@@ -36,7 +36,7 @@
                  <div class="form-group row">
                  
                 <label  class="col-sm-4 col-form-label">Password</label>
-                    <div class="col-sm-8"><form:input  class="form-control" path="password" /></div>
+                    <div class="col-sm-8"><form:input type="password" class="form-control" path="password" /></div>
             </div>
            
                <div class="form-group row">

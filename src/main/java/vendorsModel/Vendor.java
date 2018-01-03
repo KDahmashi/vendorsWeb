@@ -1,6 +1,6 @@
 package vendorsModel;
 
-public class Vendors {
+public class Vendor {
 	
 	public long vendorID;
 	public long userID;
@@ -12,9 +12,16 @@ public class Vendors {
 	public String mobileNumber;
 	public String webSiteurl;
 	public int statsID;
+	public String crNumber;
 	
 	
 	
+	public String getCrNumber() {
+		return crNumber;
+	}
+	public void setCrNumber(String crNumber) {
+		this.crNumber = crNumber;
+	}
 	public long getVendorID() {
 		return vendorID;
 	}
