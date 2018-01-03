@@ -39,7 +39,7 @@
                   <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Confirm Password</label>
-                    <div class="col-sm-3"><form:input type="password" class="form-control" path="password" /></div>
+                    <div class="col-sm-3"> <input id="confirmPassword" type="password" class="form-control"  type="text" value=""/></div>
                      <div class="col-sm-3"></div>
             </div>
                 
