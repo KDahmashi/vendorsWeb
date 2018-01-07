@@ -31,6 +31,7 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="home">Home <span class="sr-only">(current)</span></a></li>
         <li><a href="<c:url value='/addUser' />">Add User</a></li>
+        <li><a href="<c:url value='/vendorMain' />">Add Vendor</a></li>
         <li><a href="<c:url value='/search' />">Search</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
