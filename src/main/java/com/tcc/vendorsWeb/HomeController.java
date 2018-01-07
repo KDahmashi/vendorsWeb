@@ -6,24 +6,25 @@ import java.text.DateFormat;
 
 
 import vendorsBLL.*;
+import vendorsDLL.SearchVendorsDAO;
 import vendorsDLL.UserDAO;
 import vendorsDLL.VendorDAO;
-import vendorsModel.Alert;
+import vendorsModel.SearchVendors;
 import vendorsModel.User;
 import vendorsModel.Vendor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.apache.jasper.tagplugins.jstl.core.Redirect;
 
 //import javax.activation.DataSource;
 
@@ -67,12 +68,11 @@ public class HomeController {
 	 */
 		
 	 @RequestMapping(value= {"/", "/home"})
-	    public ModelAndView home(HttpSession session) throws IOException{
+	    public ModelAndView home() throws IOException{
 		 
 		 ModelAndView model = new ModelAndView("home");
 		 try {
-		 User userSession=(User)session.getAttribute("user");
-		 if(userSession!=null) {
+		 
 						
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");				
 		   UserDAO customerDAO = (UserDAO) context.getBean("UserDAO");    
@@ -80,10 +80,7 @@ public class HomeController {
 	        List<User> listUsers = customerDAO.GetByID(7);
 	       
 	        model.addObject("userList", listUsers);
-	        model.addObject("username", userSession.name);
-		 }
-		 else
-			 return new ModelAndView("redirect:/login");
+	        model.addObject("username", "Admin");
 	        
 		 }catch(Exception ex)
 		 {
@@ -92,8 +89,8 @@ public class HomeController {
 	        return model;
 	    }
 	 
-	 
-	/*	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
+	/* 
+		@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 		public String addUser(Map model) {		
 			User user = new User();
 			user.email="rereree";
@@ -133,21 +130,17 @@ public class HomeController {
 		}
 		
 
-		@RequestMapping(value = "/login", method = RequestMethod.GET)
-		public String loginUser(Map model,@ModelAttribute("alert") Alert alert) {		
-			
-			
-			
+		@RequestMapping(value = "login", method = RequestMethod.GET)
+		public String loginUser(Map model) {		
 			User user = new User();			
-			model.put("user", user);
-			model.put("alert", alert);
+			model.put("user", user);			
 			
 			return "login";
 		}
 	
-	  @RequestMapping(value = "/login" ,method = RequestMethod.POST)
-	    public String  loginUser(@ModelAttribute("userForm") User user,
-	            Map<String, Object> model,final RedirectAttributes redirectAttributes) {
+	  @RequestMapping(value = "login" ,method = RequestMethod.POST)
+	    public String loginUser(@ModelAttribute("userForm") User user,
+	            Map<String, Object> model) {
 	
 		  String dd=user.getName();
 		   dd=user.getEmail();	   
@@ -157,24 +150,13 @@ public class HomeController {
 	        
 			 User user1= customerDAO.UserLogin(user.getEmail(),user.getPassword());	        
 		   
-			if(user1.name!=null) {
-				
-				model.put("loggedInUser", user1.name);
-				return "redirect:home";
-			}
-			else
-			{
-				Alert alert =new Alert();  
-				alert.Visible="visible";
-				alert.Message="Invalid user name or password ";
-						
-				redirectAttributes.addFlashAttribute("alert", alert);
-			   return "redirect:login";
-			}
-			
+	
+	        return "home";
 	    }*/
+	
+	 
 	  
-		@RequestMapping(value = "/vendorMain", method = RequestMethod.GET)
+	  @RequestMapping(value = "/vendorMain", method = RequestMethod.GET)
 		public String vendorMain(Map model) {		
 			Vendor vendor = new Vendor();			
 			model.put("vendor", vendor);			
@@ -197,6 +179,46 @@ public class HomeController {
 		
 		        return "redirect:home";
 		    }
-	
+		  
+		  @RequestMapping(value = "/search", method = RequestMethod.GET)
+			public ModelAndView searchVendors(Map model , @ModelAttribute("searchResults")SearchVendors searchResults) {		
+				List<SearchVendors> searchResultslist = new ArrayList<SearchVendors>();
+				SearchVendors searchVendors = new SearchVendors();			
+				
+				
+				 ModelAndView model1 = new ModelAndView("search");
+				
+		        try {
+		         
+		        	context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+		        	SearchVendorsDAO searchDAO = (SearchVendorsDAO) context.getBean("SearchVendorsDAO");    
+		        	
+		        	if(searchResults.vendorNameEn!=null) {
+		        		 searchResultslist =searchDAO.findVendors(searchResults.vendorNameEn, searchResults.catName, searchResults.subCatName, searchResults.productName);
+		        	}else
+		        		 searchResultslist =searchDAO.findVendors("tcc", "", "", "");
+		        	
+		        	 model1.addObject("searchInput", searchVendors);
+		        	 model1.addObject("search", searchResultslist);
+
+		        } catch (Exception ex) {
+		        	String ss=ex.getMessage();
+		    
+		        }
+		       
+		        return model1;
+				
+			}
+			
+			@RequestMapping(value = "/search", method = RequestMethod.POST)
+		    public String search(@ModelAttribute("searchInput") SearchVendors searchVendors,
+		            Map<String, Object> model, final RedirectAttributes redirect) {
+		
+				redirect.addFlashAttribute("searchResults",searchVendors);
+		        return "redirect:search";
+		    }
+		  
+		
+	  
 	
 }
