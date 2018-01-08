@@ -6,12 +6,14 @@ import java.text.DateFormat;
 
 
 import vendorsBLL.*;
+import vendorsDLL.SearchVendorsDAO;
 import vendorsDLL.UserDAO;
 import vendorsDLL.VendorDAO;
-import vendorsModel.Alert;
+import vendorsModel.SearchVendors;
 import vendorsModel.User;
 import vendorsModel.Vendor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -150,6 +152,43 @@ public class HomeController {
 		
 		        return "redirect:home";
 		    }
-	
-	
+		  
+		  @RequestMapping(value = "/search", method = RequestMethod.GET)
+			public ModelAndView searchVendors(Map model , @ModelAttribute("searchResults")SearchVendors searchResults) {		
+				List<SearchVendors> searchResultslist = new ArrayList<SearchVendors>();
+				SearchVendors searchVendors = new SearchVendors();			
+				
+				
+				 ModelAndView model1 = new ModelAndView("search");
+				
+		        try {
+		         
+		        	context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+		        	SearchVendorsDAO searchDAO = (SearchVendorsDAO) context.getBean("SearchVendorsDAO");    
+		        	
+		        	if(searchResults.vendorNameEn!=null) {
+		        		 searchResultslist =searchDAO.findVendors(searchResults.vendorNameEn, searchResults.catName, searchResults.subCatName, searchResults.productName);
+		        	}else
+		        		 searchResultslist =searchDAO.findVendors("tcc", "", "", "");
+		        	
+		        	 model1.addObject("searchInput", searchVendors);
+		        	 model1.addObject("search", searchResultslist);
+
+		        } catch (Exception ex) {
+		        	String ss=ex.getMessage();
+		    
+		        }
+		       
+		        return model1;
+				
+			}
+			
+			@RequestMapping(value = "/search", method = RequestMethod.POST)
+		    public String search(@ModelAttribute("searchInput") SearchVendors searchVendors,
+		            Map<String, Object> model, final RedirectAttributes redirect) {
+		
+				redirect.addFlashAttribute("searchResults",searchVendors);
+		        return "redirect:search";
+		    }
+
 }
