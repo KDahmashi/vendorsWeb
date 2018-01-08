@@ -23,26 +23,26 @@
 <div class="col-md-4">
 	<h1><i class="fa fa-lock red"></i> Login </h1>
 	
-	<div class='alert alert-danger ${alert.getVisible()}' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>${alert.getMessage()}  </div>
+	<div class='alert alert-danger ${alert.getVisible()}' id='alertBar' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>${alert.getMessage()} <div id='alert'> </div>  </div>
        
   <div class="form-group">   
              <div class="form-group row">
              
                 <label  class="col-sm-4 col-form-label">Email</label>                
                  <div class="col-sm-8">
-                 <form:input  class="form-control" path="email" />
+                 <form:input  class="form-control" path="email" id="email"/>
  		</div></div>
         
                  <div class="form-group row">
                  
                 <label  class="col-sm-4 col-form-label">Password</label>
-                    <div class="col-sm-8"><form:input type="password" class="form-control" path="password" /></div>
+                    <div class="col-sm-8"><form:input type="password" class="form-control" path="password" id="password"/></div>
             </div>
            
                <div class="form-group row">
                 <div class="col-sm-4"> </div>
-                <div class="col-sm-4"> <input type="submit" class="btn btn-warning" value="Cancel"/> </div>
-                 <div class="col-sm-4"> <input type="submit" class="btn btn-success" value="LOGIN"/>           </div>
+                <div class="col-sm-4"> <a href="login"  class="btn btn-warning" > cancel</a>  </div>
+                 <div class="col-sm-4"> <input type="submit" class="btn btn-success" value="Login" name="Login"/>           </div>
                 
             </div>
        
@@ -59,8 +59,55 @@
 	  </form:form>
 	</div>
 
+
     
      <jsp:include page="/WEB-INF/views/footer.jsp"/>
+     
+     
+         <script language="javascript" type="text/javascript">
+
+    
+    $("form").submit(function() {  	
+    	 $('#alert').empty(); 
+    	 var isValid = true;
+    		
+    	
+       if ($('#email').val().length <1)
+    	  {    		 
+    		  $('#alert').append("enter the email ! ");
+    		  isValid = false;   		      		  
+    	  }
+    	
+       /*  else
+    		  if (!validateEmail($('#email').val()))
+        	  {    		 
+        		  $('#alert').append("wrong email ! ");
+        		  isValid = false;
+        	  }	   
+       */  	 
+    	      	  
+    	  
+    	  if ($('#password').val().length <1)
+    	  {    		 
+    		  $('#alert').append("enter the Password ! ");
+    		  isValid = false;
+    	  }
+    	
+    	  if (isValid)
+    	  {    		 
+    		  $('#alertBar').removeClass( "visible" );
+    		  $('#alertBar').addClass( "invisible" );
+    		  return true;
+    	  }
+    	  else
+    		  {    		  
+    		  $('#alertBar').removeClass( "invisible" );
+    		  $('#alertBar').addClass( "visible" );
+    		  return false;
+    		  }
+    	
+    	});
+    </script>
 
 </body>
 </html>

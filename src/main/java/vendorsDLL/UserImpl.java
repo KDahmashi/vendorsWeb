@@ -1,6 +1,6 @@
 package vendorsDLL;
 import vendorsModel.User;
-
+import vendorsModel.Menu;
 
 import java.sql.Types;
 import java.util.ArrayList;
@@ -148,8 +148,7 @@ public class UserImpl  implements  UserDAO{
 	
 	        User user= new User();
 	      
-	    	try {	    		
-	        
+	    	try {	  
 	              
 		    		SimpleJdbcCall jdbcCall = new 
 			                SimpleJdbcCall(dataSource).withProcedureName("LoginUser")
@@ -186,6 +185,57 @@ public class UserImpl  implements  UserDAO{
 	    	}
 	            
 	             return user;  
+	    }
+	    
+	    
+	 // Get all menu of User 
+	    public List<Menu> GetUserMenu(long userTypeID)
+	    {
+	
+	    	List<Menu> lstMenu= new ArrayList<Menu>();
+	      
+	    	try {	    		
+	        
+
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetAllMenus")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "userTypeID_in", Types.INTEGER));	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("userTypeID_in", userTypeID);  		    				 
+
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");
+	           
+
+	            for (Map<String, Object> item : list) {	 
+	            	Menu menu = new Menu();
+	            	  
+	            	menu.menuID=(Integer) (item.get("menuID"));
+	            	menu.menuEn= (String) (item.get("menuEn"));
+	            	menu.menuAr=(String)item.get("menuAr");
+	            	menu.menuUrl=(String)item.get("menuUrl");
+	            	
+	            	menu.userTypeID= (Integer) (item.get("userTypeID"));        	
+	            	
+	            	lstMenu.add(menu);
+	            }
+	            	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lstMenu;  
+	    	}
+	            
+	             return lstMenu;  
+	    
+	    
+	             
+	    
 	    }
 	    
 

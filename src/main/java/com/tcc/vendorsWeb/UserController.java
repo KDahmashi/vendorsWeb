@@ -63,9 +63,9 @@ public class UserController {
 	            Map<String, Object> model) {		   
 		   
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
-			 UserDAO customerDAO = (UserDAO) context.getBean("UserDAO");     	       
+			 UserDAO userDAO = (UserDAO) context.getBean("UserDAO");     	       
 	        
-		        customerDAO.AddUser(user);	        
+		        userDAO.AddUser(user);	        
 		   
 	
 	        return "redirect:home";
@@ -76,9 +76,9 @@ public class UserController {
 		public ModelAndView deleteUser(@PathVariable long userID){
 			
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
-			 UserDAO customerDAO = (UserDAO) context.getBean("UserDAO");     	       
+			 UserDAO userDAO = (UserDAO) context.getBean("UserDAO");     	       
 	        
-		        customerDAO.deleteUser(userID);	        
+		        userDAO.deleteUser(userID);	        
 		   
 	
 		
@@ -98,7 +98,7 @@ public class UserController {
 			return "login";
 		}
 	
-	  @RequestMapping(value = "/login" ,method = RequestMethod.POST)
+	  @RequestMapping(value = "/login" ,method = RequestMethod.POST ,params = "Login")
 	    public String  loginUser(@ModelAttribute("userForm") User user,
 	            Map<String, Object> model,final RedirectAttributes redirectAttributes,HttpSession session) {
 	
@@ -106,16 +106,19 @@ public class UserController {
 		   dd=user.getEmail();	   
 		   
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
-			 UserDAO customerDAO = (UserDAO) context.getBean("UserDAO");     	       
+			 UserDAO userDAO = (UserDAO) context.getBean("UserDAO");     	       
 	        
-			 user= customerDAO.UserLogin(user.getEmail(),user.getPassword());	        
+			 user= userDAO.UserLogin(user.getEmail(),user.getPassword());	        
 		   
 			if(user.name!=null) {
+				user.menu=userDAO.GetUserMenu(user.userTypeID);
 				// session=request.getSession(false);
-				 session.setAttribute("user", user);
-				
-				model.put("loggedInUser", user.name);
-				return "redirect:home";
+				 session.setAttribute("user", user);				
+			
+				 if(user.userTypeID==1)// Vendor User
+					 return "redirect:VendorHome";
+				 else // other Procurement users
+					 return "redirect:home";
 			}
 			else
 			{
@@ -136,7 +139,5 @@ public class UserController {
 		    
 			return new ModelAndView("redirect:/login");
 		}
-		
-	
-	
+
 }

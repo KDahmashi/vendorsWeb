@@ -1,5 +1,7 @@
 package vendorsModel;
 
+import java.util.List;
+
 public class User {
 
 	public long userID;
@@ -8,7 +10,15 @@ public class User {
 	public String email; 
 	public String password; 
 	public int statusID;
+	
+	public List<Menu> menu;
 
+	public List<Menu> getMenu() {
+		return menu;
+	}
+	public void setMenu(List<Menu> menu) {
+		this.menu = menu;
+	}
 	public long getUserID() {
 		return userID;
 	}

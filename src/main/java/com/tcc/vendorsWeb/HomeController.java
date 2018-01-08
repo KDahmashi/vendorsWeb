@@ -71,19 +71,46 @@ public class HomeController {
 		 
 		 ModelAndView model = new ModelAndView("home");
 		 try {
+			 
+			 // user Session 
 		 User userSession=(User)session.getAttribute("user");
-		 if(userSession!=null) {
+		 if(userSession==null)
+			 return new ModelAndView("redirect:/login");
+		 
+		 
+		 
 						
-			context= new ClassPathXmlApplicationContext("Spring-Module.xml");				
+		   context= new ClassPathXmlApplicationContext("Spring-Module.xml");				
 		   UserDAO customerDAO = (UserDAO) context.getBean("UserDAO");    
 	        
 	        List<User> listUsers = customerDAO.GetByID(7);
 	       
-	        model.addObject("userList", listUsers);
-	        model.addObject("username", userSession.name);
+	        model.addObject("userList", listUsers);	     
+	        model.addObject("userSession", userSession);
+		
+	     
+	        
+		 }catch(Exception ex)
+		 {
+			 String XX=ex.getMessage();
 		 }
-		 else
+	        return model;
+	    }
+	 
+	 @RequestMapping(value= {"/VendorHome"})
+	    public ModelAndView VendorHome(HttpSession session) throws IOException{
+		 
+		 ModelAndView model = new ModelAndView("VendorHome");
+		 try {
+			 
+			 // user Session 
+		 User userSession=(User)session.getAttribute("user");
+		 if(userSession==null)
 			 return new ModelAndView("redirect:/login");
+		 
+	        model.addObject("userSession", userSession);
+		
+	     
 	        
 		 }catch(Exception ex)
 		 {
@@ -94,9 +121,16 @@ public class HomeController {
 	 
 		  
 		@RequestMapping(value = "/vendorMain", method = RequestMethod.GET)
-		public String vendorMain(Map model) {		
+		public String vendorMain(Map model,HttpSession session) {		
 			Vendor vendor = new Vendor();			
 			model.put("vendor", vendor);			
+			
+			 // user Session 
+			 User userSession=(User)session.getAttribute("user");
+			 if(userSession==null)
+				 return "redirect:/login";
+			 
+		        model.put("userSession", userSession);
 			
 			return "vendorMain";
 		}
