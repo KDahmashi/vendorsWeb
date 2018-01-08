@@ -99,7 +99,7 @@ public class HomeController {
 	        return model;
 	    }
 	 
-	 @RequestMapping(value= {"/VendorHome"})
+	 @RequestMapping(value= "/VendorHome", method = RequestMethod.GET)
 	    public ModelAndView VendorHome(HttpSession session) throws IOException{
 		 
 		 ModelAndView model = new ModelAndView("VendorHome");
@@ -122,73 +122,6 @@ public class HomeController {
 	    }
 	 
 		  
-		@RequestMapping(value = "/vendorMain", method = RequestMethod.GET)
-		public String vendorMain(Map model,HttpSession session) {		
-			Vendor vendor = new Vendor();			
-			model.put("vendor", vendor);			
-			
-			 // user Session 
-			 User userSession=(User)session.getAttribute("user");
-			 if(userSession==null)
-				 return "redirect:/login";
-			 
-		        model.put("userSession", userSession);
-			
-			return "vendorMain";
-		}
-		
-		
-		  @RequestMapping(value = "/vendorMain" ,method = RequestMethod.POST)
-		    public String vendorMain(@ModelAttribute("vendorForm") Vendor vendor,
-		            Map<String, Object> model) {
-		
-			  vendor.userID=18;
-			   
-				context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
-				VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
-		        
-				vendorDAO.AddVendor(vendor);	        
-			   
-		
-		        return "redirect:home";
-		    }
-		  
-		  @RequestMapping(value = "/search", method = RequestMethod.GET)
-			public ModelAndView searchVendors(Map model , @ModelAttribute("searchResults")SearchVendors searchResults) {		
-				List<SearchVendors> searchResultslist = new ArrayList<SearchVendors>();
-				SearchVendors searchVendors = new SearchVendors();			
-				
-				
-				 ModelAndView model1 = new ModelAndView("search");
-				
-		        try {
-		         
-		        	context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
-		        	SearchVendorsDAO searchDAO = (SearchVendorsDAO) context.getBean("SearchVendorsDAO");    
-		        	
-		        	if(searchResults.vendorNameEn!=null) {
-		        		 searchResultslist =searchDAO.findVendors(searchResults.vendorNameEn, searchResults.catName, searchResults.subCatName, searchResults.productName);
-		        	}else
-		        		 searchResultslist =searchDAO.findVendors("tcc", "", "", "");
-		        	
-		        	 model1.addObject("searchInput", searchVendors);
-		        	 model1.addObject("search", searchResultslist);
-
-		        } catch (Exception ex) {
-		        	String ss=ex.getMessage();
-		    
-		        }
-		       
-		        return model1;
-				
-			}
-			
-			@RequestMapping(value = "/search", method = RequestMethod.POST)
-		    public String search(@ModelAttribute("searchInput") SearchVendors searchVendors,
-		            Map<String, Object> model, final RedirectAttributes redirect) {
-		
-				redirect.addFlashAttribute("searchResults",searchVendors);
-		        return "redirect:search";
-		    }
+	
 
 }
