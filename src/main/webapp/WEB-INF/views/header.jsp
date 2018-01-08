@@ -32,15 +32,13 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-       <%--  <li class="active"><a href="home">Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="<c:url value='/addUser' />">Add User</a></li> --%>        
+     
  
            <c:if test="${not empty userSession}">
             <c:forEach var="menu" items="${userSession.menu}" varStatus="status">
              <li><a href="<c:url value='${menu.menuUrl}' />"> <i class="fa fa-bars text-danger" aria-hidden="true"></i> ${menu.menuEn}</a></li>
             </c:forEach>   
            	</c:if>
-        
       </ul>
       
      
