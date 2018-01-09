@@ -6,12 +6,16 @@ import vendorsDLL.SearchVendorsDAO;
 import vendorsDLL.UserDAO;
 import vendorsDLL.VendorDAO;
 import vendorsModel.Alert;
+import vendorsModel.Menu;
 import vendorsModel.SearchVendors;
 import vendorsModel.User;
 import vendorsModel.Vendor;
+import vendorsModel.VendorType;
+import vendorsBLL.UserManager;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -49,20 +53,28 @@ public class VendorController {
 	@RequestMapping(value = "/vendorMain", method = RequestMethod.GET)
 	public String vendorMain(Map model,HttpSession session) {		
 		Vendor vendor = new Vendor();			
-		model.put("vendor", vendor);			
+		model.put("vendor", vendor);	
+		
+		context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+		VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");         
+		model.put("VendorTypeList", vendorDAO.GetAllVendorTypes());
 		
 		 // user Session 
 		 User userSession=(User)session.getAttribute("user");
 		 if(userSession==null)
 			 return "redirect:/login";
 		 
+		 if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
+			 return "redirect:/login";//UnAuthorised Access of this page 
+		 
 	        model.put("userSession", userSession);
 		
 		return "vendorMain";
 	}
+
 	
-	
-	  @RequestMapping(value = "/vendorMain" ,method = RequestMethod.POST)
+
+	@RequestMapping(value = "/vendorMain" ,method = RequestMethod.POST)
 	    public String vendorMain(@ModelAttribute("vendorForm") Vendor vendor,
 	            Map<String, Object> model) {
 	

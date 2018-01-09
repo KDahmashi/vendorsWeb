@@ -37,7 +37,12 @@
                           <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">VendorType</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="vendorTypeID" /></div>
+                    <div class="col-sm-4">
+                     <form:select  path="vendorTypeID" class="form-control">
+                     <form:option value = "0" label = "Select"/>
+                     <form:options items = "${VendorTypeList}" />
+                  </form:select>   
+                    </div>
                      <div class="col-sm-2"></div>
             </div>
             

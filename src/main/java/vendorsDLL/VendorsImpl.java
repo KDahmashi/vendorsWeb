@@ -1,7 +1,9 @@
 package vendorsDLL;
 
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -13,7 +15,9 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import vendorsModel.Bank;
 import vendorsModel.Branch;
 import vendorsModel.ContactPerson;
+import vendorsModel.Menu;
 import vendorsModel.Vendor;
+import vendorsModel.VendorType;
 
 public class VendorsImpl implements VendorDAO {
 	
@@ -177,5 +181,34 @@ public class VendorsImpl implements VendorDAO {
 	    	}	
 	            
 	}
+	  
+	// Get all Vendor Types
+	    public  Map<Integer, String> GetAllVendorTypes()
+	    {	
+	    	  Map<Integer, String> lst = new HashMap<Integer, String>();	      
+	    	try {
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetAllVendorTypes")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters();	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);    					    				 
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	    
+		    	            
+	            for (Map<String, Object> item : list) {	 	            	
+	            	lst.put((Integer) (item.get("typeID")), (String) (item.get("typeEn")));    	             	
+	            }       	                    
+	            
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lst;  
+	    	}
+	            
+	             return lst;  	          
+	    
+	    }
 
 }
