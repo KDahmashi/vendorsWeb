@@ -71,7 +71,6 @@ public class VendorsImpl implements VendorDAO {
 	    	}catch(Exception ex)
 	    	{
 	    		String exc=ex.getMessage();
-
 	    		
 	    		 return Long.valueOf(0); 
 	    	}	
@@ -249,7 +248,6 @@ public class VendorsImpl implements VendorDAO {
 	    
 	    }
 	    
-	    
 	    // Get all Bank of vendor 
 	    public List<Bank> GetBanks(long vendorID)
 	    {
@@ -323,6 +321,7 @@ public class VendorsImpl implements VendorDAO {
 	    		String exc=ex.getMessage();
 	    		 return 0;  
 	    	}        
+}
 	    
 	    
 	    
