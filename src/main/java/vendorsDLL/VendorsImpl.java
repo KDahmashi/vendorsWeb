@@ -17,6 +17,8 @@ import vendorsModel.Branch;
 import vendorsModel.ContactPerson;
 import vendorsModel.Menu;
 import vendorsModel.Vendor;
+import vendorsModel.VendorProduct;
+
 import vendorsModel.VendorType;
 
 public class VendorsImpl implements VendorDAO {
@@ -29,7 +31,7 @@ public class VendorsImpl implements VendorDAO {
 		this.dataSource = dataSource;
 	}
 	
-	  public Integer AddVendor(Vendor vendor) {
+	  public Long AddVendor(Vendor vendor) {
 	    	
 	    	try {
 	    		
@@ -63,14 +65,14 @@ public class VendorsImpl implements VendorDAO {
 	    				
 	    			result = jdbcCall.execute(result);
 	    			
-	    			return (Integer) result.get("result");
+	    			return (Long) result.get("result");
 	  
 	             
 	    	}catch(Exception ex)
 	    	{
 	    		String exc=ex.getMessage();
-	    		
-	    		 return 0; 
+	    			    		
+	    		 return Long.valueOf(0); 
 	    	}	
 	            
 	}
@@ -182,7 +184,42 @@ public class VendorsImpl implements VendorDAO {
 	            
 	}
 	  
-	// Get all Vendor Types
+  
+	  
+	  public Integer AddVendorProduct(VendorProduct vendorProduct) {
+	    	
+	    	try {
+	    		
+	    		SimpleJdbcCall jdbcCall = new 
+	                SimpleJdbcCall(dataSource).withProcedureName("AddVendorProduct")
+	                .withoutProcedureColumnMetaDataAccess().declareParameters(
+	                		new SqlParameter( "vendorID_in", Types.BIGINT ),
+	                		new SqlParameter( "productID_in", Types.BIGINT ),
+	                		new SqlParameter( "notes_in", Types.VARCHAR ),
+		    				new SqlOutParameter("result", Types.INTEGER ));
+	                       
+	
+	    				
+	    			Map<String, Object> result = new HashMap<String, Object>(2);
+	    				result.put("vendorID_in",vendorProduct.vendorID);
+	    				result.put("productID_in", vendorProduct.productID);
+	    				result.put("notes_in", vendorProduct.notes);
+	    			 
+	    				
+	    			result = jdbcCall.execute(result);
+	    			
+	    			return (Integer) result.get("result");
+	  
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		
+	    		 return 0; 
+	    	}	
+	            
+	}
+	  
 	    public  Map<Integer, String> GetAllVendorTypes()
 	    {	
 	    	  Map<Integer, String> lst = new HashMap<Integer, String>();	      
@@ -210,5 +247,83 @@ public class VendorsImpl implements VendorDAO {
 	             return lst;  	          
 	    
 	    }
+	    
+	    // Get all Bank of vendor 
+	    public List<Bank> GetBanks(long vendorID)
+	    {
+	
+	    	List<Bank> lstBank= new ArrayList<Bank>();
+	      
+	    	try {	    		
+	        
 
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetBanksByVendorID")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "vendorID_in", Types.INTEGER));	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("vendorID_in", vendorID);  		    				 
+
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");
+	           
+
+	            for (Map<String, Object> item : list) {	 
+	            	Bank bank = new Bank();
+	            	  
+	            	bank.bankID=(Long) (item.get("bankID"));
+	            	bank.vendorID= vendorID;
+	            	bank.bankName=(String)item.get("bankName");
+	            	bank.iban=(String)item.get("iban");
+	            	
+	               	
+	            	
+	            	lstBank.add(bank);
+	            }
+	            	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lstBank;  
+	    	}
+	            
+	             return lstBank;   
+	    	    
+	    }
+
+	    
+	    
+	    public int deleteBank(long bankID)    {
+	 	   
+	    	try {	    		
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("DeleteBank")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "bankID_in", Types.INTEGER ),		                		
+			    				new SqlOutParameter("result", Types.INTEGER ));                     
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("bankID_in", bankID);  				
+		    			 
+		    				
+		    			result = jdbcCall.execute(result);
+		    			
+		    			return (Integer) result.get("result");		                        	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return 0;  
+	    	}        
 }
+	    
+	    
+	    
+}  
+	    

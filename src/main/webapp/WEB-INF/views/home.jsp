@@ -17,7 +17,7 @@
         <div align="center">
             <h1></h1>
              <h2><span class="glyphicon glyphicon-edit" ></span>        User List      </h2>
-                    	<table class="table table-dark">
+                    	<table class="table table-condensed table-hover table-striped" >
                     	 <thead>
                     	<tr>
                  <th scope="col">No</th>

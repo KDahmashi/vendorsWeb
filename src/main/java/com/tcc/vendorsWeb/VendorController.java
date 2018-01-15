@@ -6,6 +6,8 @@ import vendorsDLL.SearchVendorsDAO;
 import vendorsDLL.UserDAO;
 import vendorsDLL.VendorDAO;
 import vendorsModel.Alert;
+import vendorsModel.Bank;
+import vendorsModel.ContactPerson;
 import vendorsModel.Menu;
 import vendorsModel.SearchVendors;
 import vendorsModel.User;
@@ -21,6 +23,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -31,13 +34,15 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
-
+import com.google.gson.Gson;
 
 
 
@@ -76,17 +81,20 @@ public class VendorController {
 
 	@RequestMapping(value = "/vendorMain" ,method = RequestMethod.POST)
 	    public String vendorMain(@ModelAttribute("vendorForm") Vendor vendor,
-	            Map<String, Object> model) {
+	            Map<String, Object> model,HttpSession session) {
 	
-		  vendor.userID=18;
+		  User userSession=(User)session.getAttribute("user");
+		  vendor.userID=userSession.userID;
 		   
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
 			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
 	        
-			vendorDAO.AddVendor(vendor);	        
+			Long vendorId=vendorDAO.AddVendor(vendor);	
+			
+			session.setAttribute("vendorId", vendorId);				
 		   
 	
-	        return "redirect:home";
+	        return "redirect:vendorInfo";
 	    }
 	  
 	  @RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -135,11 +143,88 @@ public class VendorController {
 	    }
 
 
-	  @RequestMapping(value = "/login" ,method = RequestMethod.POST ,params = "Login1")
-	    public String  loginUser1(@ModelAttribute("userForm") User user,
-	            Map<String, Object> model,final RedirectAttributes redirectAttributes,HttpSession session) {
+
+
+		@RequestMapping(value = "/subCategory", method = RequestMethod.GET)
+		public @ResponseBody String GetSubCategory(@RequestParam("id") Long id) {
+			//logger.debug("finding cities for state " + state);
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
+			
+			return new Gson().toJson(vendorDAO.GetAllVendorTypes() );
+		}
+			
+	
 	  
-		  return "redirect:addUser";
-	  }
+		@RequestMapping(value = "/vendorInfo", method = RequestMethod.GET)
+		public String vendorInfo(Map model,HttpSession session) {		
+			Bank bank = new Bank();
+			model.put("bank", bank);
+			
+			ContactPerson contactPerson = new ContactPerson();
+			model.put("contactPerson", contactPerson);
+			
+			Long vendorId=(Long)session.getAttribute("vendorId");
+			
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	
+			 List<Bank> bankList=vendorDAO.GetBanks(vendorId);
+			 model.put("bankList", bankList);
+			
+				
+			return "vendorInfo";
+		}	
+		
+
+		@RequestMapping(value = "/vendorInfo" ,method = RequestMethod.POST, params = "AddBank")
+		    public String addBank(@ModelAttribute("vendorForm") Bank bank,
+		            Map<String, Object> model,HttpSession session) {
+		
+			  User userSession=(User)session.getAttribute("user");
+			
+			  Long vendorId=(Long)session.getAttribute("vendorId");
+			   
+				context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+				VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
+		        
+				bank.vendorID=vendorId;
+				vendorDAO.AddBank(bank);	        
+			   
+		
+		        return "redirect:vendorInfo";
+		    }
+		
+		@RequestMapping(value = "/vendorInfo" ,method = RequestMethod.POST ,params = "AddPerson")
+	    public String addPerson(@ModelAttribute("vendorForm") ContactPerson contactPerson,
+	            Map<String, Object> model,HttpSession session) {
+	
+		  User userSession=(User)session.getAttribute("user");
+		
+		  Long vendorId=(Long)session.getAttribute("vendorId");
+		   
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
+	        
+			contactPerson.vendorID=vendorId;
+			vendorDAO.AddContactPerson(contactPerson);	        
+		   
+	
+	        return "redirect:vendorInfo";
+	    }
+		
+		
+		@RequestMapping(value="/deleteBank/{bankID}",method = RequestMethod.GET)
+		public ModelAndView deleteBank(@PathVariable long bankID){
+			
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
+	        
+			 vendorDAO.deleteBank(bankID);	        
+		   
+	
+		
+			return new ModelAndView("redirect:/vendorInfo");
+		}
+
 		
 }
