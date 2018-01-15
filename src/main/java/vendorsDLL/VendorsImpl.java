@@ -47,7 +47,7 @@ public class VendorsImpl implements VendorDAO {
 	                		new SqlParameter( "mobileNumber_in", Types.VARCHAR ),
 	                		new SqlParameter( "webSiteurl_in", Types.VARCHAR ),
 	                		new SqlParameter( "crNumber_in", Types.VARCHAR ),
-		    				new SqlOutParameter("result", Types.INTEGER ));
+		    				new SqlOutParameter("result", Types.BIGINT ));
 	                       
 	
 	    				
@@ -71,7 +71,8 @@ public class VendorsImpl implements VendorDAO {
 	    	}catch(Exception ex)
 	    	{
 	    		String exc=ex.getMessage();
-	    			    		
+
+	    		
 	    		 return Long.valueOf(0); 
 	    	}	
 	            
@@ -248,6 +249,7 @@ public class VendorsImpl implements VendorDAO {
 	    
 	    }
 	    
+	    
 	    // Get all Bank of vendor 
 	    public List<Bank> GetBanks(long vendorID)
 	    {
@@ -321,7 +323,6 @@ public class VendorsImpl implements VendorDAO {
 	    		String exc=ex.getMessage();
 	    		 return 0;  
 	    	}        
-}
 	    
 	    
 	    
