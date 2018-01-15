@@ -9,6 +9,8 @@ import vendorsBLL.*;
 import vendorsDLL.SearchVendorsDAO;
 import vendorsDLL.UserDAO;
 import vendorsDLL.VendorDAO;
+import vendorsModel.Bank;
+import vendorsModel.ContactPerson;
 import vendorsModel.SearchVendors;
 import vendorsModel.User;
 import vendorsModel.Vendor;
@@ -77,11 +79,7 @@ public class HomeController {
 			 // user Session 
 		 User userSession=(User)session.getAttribute("user");
 		 if(userSession==null)
-			 return new ModelAndView("redirect:/login");
-		 
-		 
-		 
-						
+			 return new ModelAndView("redirect:/login");						
 		   context= new ClassPathXmlApplicationContext("Spring-Module.xml");				
 		   UserDAO customerDAO = (UserDAO) context.getBean("UserDAO");    
 	        
@@ -99,6 +97,8 @@ public class HomeController {
 	        return model;
 	    }
 	 
+
+
 	 @RequestMapping(value= "/VendorHome", method = RequestMethod.GET)
 	    public ModelAndView VendorHome(HttpSession session) throws IOException{
 		 
@@ -120,8 +120,8 @@ public class HomeController {
 		 }
 	        return model;
 	    }
-	 
-		  
-	
+			
+
+
 
 }
