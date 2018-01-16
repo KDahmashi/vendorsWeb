@@ -241,9 +241,7 @@ public class VendorController {
 				model.put("userSession", userSession);
 			
 			return "vendorProduct";
-		}
-		
-
+		}	
 
 		@RequestMapping(value = "/subCategory", method = RequestMethod.GET)
 		public @ResponseBody String GetSubCategory(@RequestParam("id") Long id) {
