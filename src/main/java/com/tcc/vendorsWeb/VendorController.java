@@ -12,6 +12,7 @@ import vendorsModel.Menu;
 import vendorsModel.SearchVendors;
 import vendorsModel.User;
 import vendorsModel.Vendor;
+import vendorsModel.VendorProduct;
 import vendorsModel.VendorType;
 import vendorsBLL.UserManager;
 
@@ -37,11 +38,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
-
+import com.google.gson.Gson;
 
 
 
@@ -56,12 +58,12 @@ public class VendorController {
 	
 	@RequestMapping(value = "/vendorMain", method = RequestMethod.GET)
 	public String vendorMain(Map model,HttpSession session) {		
-		Vendor vendor = new Vendor();			
-		model.put("vendor", vendor);	
+
 		
 		context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
 		VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");         
-		model.put("VendorTypeList", vendorDAO.GetAllVendorTypes());		
+		model.put("VendorTypeList", vendorDAO.GetAllVendorTypes());
+		
 		
 		 // user Session 
 		 User userSession=(User)session.getAttribute("user");
@@ -71,6 +73,9 @@ public class VendorController {
 		 if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
 			 return "redirect:/login";//UnAuthorised Access of this page 
 		 
+		 Vendor vendor =vendorDAO.GetVendorByUserID(userSession.userID);			
+			model.put("vendor", vendor);	
+			
 	        model.put("userSession", userSession);
 		
 		return "vendorMain";
@@ -142,8 +147,8 @@ public class VendorController {
 	    }
 
 
-	
-	  
+
+		  
 		@RequestMapping(value = "/vendorInfo", method = RequestMethod.GET)
 		public String vendorInfo(Map model,HttpSession session) {		
 			Bank bank = new Bank();
@@ -213,6 +218,41 @@ public class VendorController {
 		
 			return new ModelAndView("redirect:/vendorInfo");
 		}
+		
+		@RequestMapping(value = "/vendorProduct", method = RequestMethod.GET)
+		public String vendorProduct(Map model,HttpSession session) {		
 
+			
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");         
+			model.put("categoryList", vendorDAO.GetAllCategory());
+			
+			VendorProduct vendorProduct= new VendorProduct();
+			model.put("vendorProduct", vendorProduct);
+			
+			 // user Session 
+			 User userSession=(User)session.getAttribute("user");
+			 if(userSession==null)
+				 return "redirect:/login";
+			 
+			/* if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
+				 return "redirect:/login";//UnAuthorised Access of this page 
+*/			 	
+				model.put("userSession", userSession);
+			
+			return "vendorProduct";
+		}
+		
+
+
+		@RequestMapping(value = "/subCategory", method = RequestMethod.GET)
+		public @ResponseBody String GetSubCategory(@RequestParam("id") Long id) {
+			//logger.debug("finding cities for state " + state);
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
+			
+			return new Gson().toJson(vendorDAO.GetSubCategory(id));
+		}
+			
 		
 }
