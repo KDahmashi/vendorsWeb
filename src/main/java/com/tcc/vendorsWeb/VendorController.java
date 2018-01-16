@@ -250,7 +250,6 @@ public class VendorController {
 			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
 			
 			return new Gson().toJson(vendorDAO.GetSubCategory(id));
-		}
-			
+		}		
 		
 }
