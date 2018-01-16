@@ -36,8 +36,9 @@ public class VendorsImpl implements VendorDAO {
 	    	try {
 	    		
 	    		SimpleJdbcCall jdbcCall = new 
-	                SimpleJdbcCall(dataSource).withProcedureName("AddVendor")
+	                SimpleJdbcCall(dataSource).withProcedureName("AddUpdateVendor")
 	                .withoutProcedureColumnMetaDataAccess().declareParameters(
+	                		new SqlParameter( "vendorID_in", Types.BIGINT ),
 	                		new SqlParameter( "userID_in", Types.BIGINT ),
 	                		new SqlParameter( "vendorNameEn_in", Types.VARCHAR ),
 	                		new SqlParameter( "vendorNameAr_in", Types.VARCHAR ),
@@ -52,6 +53,7 @@ public class VendorsImpl implements VendorDAO {
 	
 	    				
 	    			Map<String, Object> result = new HashMap<String, Object>(2);
+	    				result.put("vendorID_in",vendor.vendorID);
 	    				result.put("userID_in",vendor.userID);
 	    				result.put("vendorNameEn_in", vendor.vendorNameEn);
 	    				result.put("vendorNameAr_in", vendor.vendorNameAr);
@@ -260,7 +262,7 @@ public class VendorsImpl implements VendorDAO {
 	    		SimpleJdbcCall jdbcCall = new 
 		                SimpleJdbcCall(dataSource).withProcedureName("GetBanksByVendorID")
 		                .withoutProcedureColumnMetaDataAccess().declareParameters(
-		                		new SqlParameter( "vendorID_in", Types.INTEGER));	            			    				                   
+		                		new SqlParameter( "vendorID_in", Types.BIGINT));	            			    				                   
 		    				
 		    			Map<String, Object> result = new HashMap<String, Object>(2);
 		    				result.put("vendorID_in", vendorID);  		    				 
@@ -294,6 +296,51 @@ public class VendorsImpl implements VendorDAO {
 	             return lstBank;   
 	    	    
 	    }
+	    
+	    // Get vendor by user id
+	    public Vendor GetVendorByUserID(long userID)
+	    {  
+	    	Vendor vendor = new Vendor();
+	    	try {
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetVendorByUserID")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "userID_in", Types.BIGINT));	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("userID_in", userID);  		    				 
+
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	           
+
+	            for (Map<String, Object> item : list) {	 
+	            
+	            	vendor.userID=userID;
+	            	vendor.vendorID=(Long) (item.get("vendorID"));
+	            	vendor.vendorTypeID=(Integer) (item.get("vendorTypeID"));
+	            	
+	            	vendor.vendorNameEn=(String) (item.get("VendorNameEn"));
+	            	vendor.vendorNameAr=(String) (item.get("VendorNameAr"));	
+	            	vendor.email=(String) (item.get("email"));
+	            	vendor.mobileNumber=(String) (item.get("mobileNumber"));
+	            	vendor.lanNumber=(String) (item.get("lanNumber"));
+	            	vendor.webSiteurl=(String) (item.get("webSiteurl"));
+	            	vendor.crNumber=(String) (item.get("crNumber"));
+	            	
+	            }
+	            	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return vendor;  
+	    	}
+	            
+	             return vendor;   
+	    	    
+	    }
 
 	    
 	    
@@ -321,8 +368,65 @@ public class VendorsImpl implements VendorDAO {
 	    		String exc=ex.getMessage();
 	    		 return 0;  
 	    	}        
-}
+	    }
 	    
+	    public  Map<Long, String> GetAllCategory()
+	    {	
+	    	  Map<Long, String> lst = new HashMap<Long, String>();	      
+	    	try {
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetAllCategory")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters();	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);    					    				 
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	    
+		    	            
+	            for (Map<String, Object> item : list) {	 	            	
+	            	lst.put((Long) (item.get("catID")), (String) (item.get("catName")));    	             	
+	            }       	                    
+	            
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lst;  
+	    	}
+	            
+	             return lst;  	          
+	    
+	    }
+	    public  Map<Long, String> GetSubCategory(Long CatID)
+	    {	
+	    	  Map<Long, String> lst = new HashMap<Long, String>();	      
+	    	try {
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetSubCategoryByCatID")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "catID_in", Types.BIGINT));	  	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);  
+		    			result.put("catID_in", CatID);  		
+		    			
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	    
+		    	            
+	            for (Map<String, Object> item : list) {	 	            	
+	            	lst.put((Long) (item.get("subCatID")), (String) (item.get("subCatName")));    	             	
+	            }       	                    
+	            
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lst;  
+	    	}
+	            
+	             return lst;  	          
+	    
+	    }
 	    
 	    
 }  

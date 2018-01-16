@@ -19,63 +19,46 @@
        <div class="form-group row">
 
     <h2><span class="glyphicon glyphicon-folder-open" ></span>     vendor Product         </h2>
-
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">vendor Name English</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="vendorNameEn" /></div>
-                     <div class="col-sm-2"></div>
+                
             </div>
             
-              <div class="form-group row">
+                   <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Vendor Name Arabic</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="vendorNameAr" /></div>
-                     <div class="col-sm-2"></div>
+                <label  class="col-sm-4 col-form-label">Category</label>
+                    <div class="col-sm-4">
+                     <form:select  path="vendorProductID" class="form-control" id="ddlCategory">
+                     <form:option value = "0" label = "Select"/>
+                     <form:options items = "${categoryList}" />
+                  </form:select>   
+                    </div>
+                     <div class="col-sm-2">                
+
+                     </div>
             </div>
                       
                           <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">VendorType</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="vendorTypeID" /></div>
+                <label  class="col-sm-4 col-form-label">Sub Category</label>
+                    <div class="col-sm-4">                     
+                     <form:select  path="vendorProductID" class="form-control"  id="ddlSubcategory">
+                     <form:option value = "0" label = "Select"/>                   
+                  </form:select>   </div>
                      <div class="col-sm-2"></div>
             </div>
             
             
                          <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Email</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="email" /></div>
+                <label  class="col-sm-4 col-form-label">Products</label>
+                    <div class="col-sm-4"> 
+                    <form:select  path="productID" class="form-control"  id="ddlproduct">
+                     <form:option value = "0" label = "Select"/>                   
+                  </form:select></div>
                      <div class="col-sm-2"></div>
             </div>
              
              
-                                      <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Lane Number </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="lanNumber" /></div>
-                     <div class="col-sm-2"></div>
-            </div>
-            
-             						  <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Mobile Number </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="mobileNumber" /></div>
-                     <div class="col-sm-2"></div>
-            </div>
-            
-             						  <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Web Site </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="webSiteurl" /></div>
-                     <div class="col-sm-2"></div>
-            </div>
-            
-             						  <div class="form-group row">
-                  <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">C/R Number </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="crNumber" /></div>
-                     <div class="col-sm-2"></div>
-            </div>     
+ 
                 
                    <div class="form-group row">
                   <div class="col-sm-3"></div>
@@ -90,5 +73,31 @@
     </div>
     
      <jsp:include page="/WEB-INF/views/footer.jsp"/>
+     
+                  <script language="javascript" type="text/javascript"> 
+     $(document).ready(function() { 
+    		$('#ddlCategory').change(    				
+    			function() {
+    				
+    				var selectedID  =$( "#ddlCategory option:selected" ).val()
+    				$.ajax({    					
+    				     type: "GET",
+    				     url: "subCategory",    				    
+    				     data: { id: selectedID } ,// parameters
+    				     success : function(response) {    				    	
+    				    	 var json = JSON.parse(response);    
+    				    	 populateDropdown( '#ddlSubcategory', json)    	
+    				    	 alert(selectedID);
+    		                     		                
+    		                },
+    		                error : function(xhr, status, error) {
+    		                    alert(xhr.responseText);
+    		                    alert(xhr.error);
+    		                }
+    		            }); });	
+	
+    	});
+     
+        </script>
 </body>
 </html>

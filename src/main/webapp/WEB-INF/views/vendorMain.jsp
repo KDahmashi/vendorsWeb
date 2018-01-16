@@ -21,6 +21,10 @@
     <h2><span class="glyphicon glyphicon-folder-open" ></span>     vendor Registration         </h2>
      <h4>    vendor Details         </h4>
 
+         <form:hidden path="vendorID" />
+       
+         <form:hidden   class="form-control" path="vendorID" />
+         
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">vendor Name English</label>
                     <div class="col-sm-4"><form:input  class="form-control" path="vendorNameEn" /></div>
@@ -43,13 +47,7 @@
                      <form:options items = "${VendorTypeList}" />
                   </form:select>   
                     </div>
-                     <div class="col-sm-2">
-                     
-                      <form:select  path="vendorID" class="form-control"  id="ddl2">
-                     <form:option value = "0" label = "Select"/>
-                    
-                  </form:select>   
-        
+                     <div class="col-sm-2">                     
                      </div>
             </div>
             
@@ -97,6 +95,9 @@
                     <div class="col-sm-4"><input type="submit" value="Save & continue" /></div>
                      <div class="col-sm-2"></div>
             </div>
+            
+            
+   
       
     </form:form>
 
@@ -104,41 +105,6 @@
 
     
      <jsp:include page="/WEB-INF/views/footer.jsp"/>
-     
-      
-             <script language="javascript" type="text/javascript">
- 
-     
-     
-     
-     $(document).ready(function() { 
-    		$('#ddl1').change(    				
-    			function() {
-    				
-    				var selectedID  =$( "#ddl1 option:selected" ).val()
-    				$.ajax({    					
-    				     type: "GET",
-    				     url: "subCategory",    				    
-    				     data: { id: selectedID } ,// parameters
-    				     success : function(response) {    				    	
-    				    	 var json = JSON.parse(response);    
-    				    	 populateDropdown( '#ddl2', json)    		                    
-    		                     		                
-    		                },
-    		                error : function(xhr, status, error) {
-    		                    alert(xhr.responseText);
-    		                    alert(xhr.error);
-    		                }
-    		            });
-    			
-    		     });
-			
-    				
-    			
-    	});
-     
-     
- 
-     </script>
+          
 </body>
 </html>
