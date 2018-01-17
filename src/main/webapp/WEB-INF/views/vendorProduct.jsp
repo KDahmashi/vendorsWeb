@@ -57,7 +57,12 @@
                      <div class="col-sm-2"></div>
             </div>
              
-             
+              <div class="form-group row">
+                  <div class="col-sm-2"></div>
+                <label  class="col-sm-4 col-form-label">Notes</label>
+                    <div class="col-sm-5"><form:textarea  class="form-control" path="notes" /></div>
+                     <div class="col-sm-1">  </div>
+            </div>
  
                 
                    <div class="form-group row">
@@ -82,21 +87,40 @@
     				var selectedID  =$( "#ddlCategory option:selected" ).val()
     				$.ajax({    					
     				     type: "GET",
-    				     url: "subCategory",    				    
+    				     url: "GetSubCategory",    				    
     				     data: { id: selectedID } ,// parameters
     				     success : function(response) {    				    	
     				    	 var json = JSON.parse(response);    
     				    	 populateDropdown( '#ddlSubcategory', json)    	
-    				    	 alert(selectedID);
-    		                     		                
+    				    	 clearDropdown('#ddlproduct');
     		                },
     		                error : function(xhr, status, error) {
-    		                    alert(xhr.responseText);
-    		                    alert(xhr.error);
+    		                 /*    alert(xhr.responseText);
+    		                    alert(xhr.error); */
     		                }
     		            }); });	
+    		
+    		
+    		$('#ddlSubcategory').change(    				
+    	 			function() {
+    	 				
+    	 				var selectedID  =$( "#ddlSubcategory option:selected" ).val()
+    	 				$.ajax({    					
+    	 				     type: "GET",
+    	 				     url: "GetProducts",    				    
+    	 				     data: { id: selectedID } ,// parameters
+    	 				     success : function(response) {    				    	
+    	 				    	 var json = JSON.parse(response);    
+    	 				    	 populateDropdown( '#ddlproduct', json)       		                     		                
+    	 		                },
+    	 		                error : function(xhr, status, error) {
+    	 		                   /*  alert(xhr.responseText);
+    	 		                    alert(xhr.error); */
+    	 		                }
+    	 		            }); });	
 	
     	});
+
      
         </script>
 </body>

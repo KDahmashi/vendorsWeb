@@ -243,7 +243,7 @@ public class VendorController {
 			return "vendorProduct";
 		}	
 
-		@RequestMapping(value = "/subCategory", method = RequestMethod.GET)
+		@RequestMapping(value = "/GetSubCategory", method = RequestMethod.GET)
 		public @ResponseBody String GetSubCategory(@RequestParam("id") Long id) {
 			//logger.debug("finding cities for state " + state);
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
@@ -251,5 +251,14 @@ public class VendorController {
 			
 			return new Gson().toJson(vendorDAO.GetSubCategory(id));
 		}		
+		@RequestMapping(value = "/GetProducts", method = RequestMethod.GET)
+		public @ResponseBody String Getproducts(@RequestParam("id") Long id) {
+			//logger.debug("finding cities for state " + state);
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
+			
+			return new Gson().toJson(vendorDAO.GetProducts(id));
+		}	
+		
 		
 }

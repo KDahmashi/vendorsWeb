@@ -427,6 +427,36 @@ public class VendorsImpl implements VendorDAO {
 	             return lst;  	          
 	    
 	    }
+	    public  Map<Long, String> GetProducts(Long SubCatID)
+	    {	
+	    	  Map<Long, String> lst = new HashMap<Long, String>();	      
+	    	try {
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetProductBySubCatID")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "SubCatID_in", Types.BIGINT));	  	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);  
+		    			result.put("SubCatID_in", SubCatID);  		
+		    			
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	    
+		    	            
+	            for (Map<String, Object> item : list) {	 	            	
+	            	lst.put((Long) (item.get("productID")), (String) (item.get("productName")));    	             	
+	            }       	                    
+	            
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lst;  
+	    	}
+	            
+	             return lst;  	          
+	    
+	    }
 	    
 	    
 }  

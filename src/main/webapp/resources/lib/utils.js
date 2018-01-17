@@ -13,6 +13,12 @@ function populateDropdown(name, json){
   	  });       
     ddl.append(option);  
 }
+function clearDropdown(name){    	
+    var ddl=$(name), option="";            
+    ddl.empty();
+    option = "<option value='0'>Select</option>";         
+    ddl.append(option);  
+}
 
 myApp.check={
 	IsDefined:function(d,v){return typeof d==="undefined"?v:d},

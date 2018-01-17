@@ -26,5 +26,6 @@ public List<Bank> GetBanks(long vendorID);
 public Vendor GetVendorByUserID(long userID);
 public  Map<Long, String> GetAllCategory();
 public  Map<Long, String> GetSubCategory(Long CatID);
+public  Map<Long, String> GetProducts(Long SubCatID);
 
 }
