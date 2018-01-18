@@ -28,4 +28,7 @@ public  Map<Long, String> GetAllCategory();
 public  Map<Long, String> GetSubCategory(Long CatID);
 public  Map<Long, String> GetProducts(Long SubCatID);
 
+public List<VendorProduct> GetVendorProductByID(long VendorID);
+public int DeleteVendorProduct(long vendorProductID) ;
+
 }

@@ -193,20 +193,25 @@ public class VendorsImpl implements VendorDAO {
 	    	try {
 	    		
 	    		SimpleJdbcCall jdbcCall = new 
-	                SimpleJdbcCall(dataSource).withProcedureName("AddVendorProduct")
-	                .withoutProcedureColumnMetaDataAccess().declareParameters(
-	                		new SqlParameter( "vendorID_in", Types.BIGINT ),
-	                		new SqlParameter( "productID_in", Types.BIGINT ),
-	                		new SqlParameter( "notes_in", Types.VARCHAR ),
-		    				new SqlOutParameter("result", Types.INTEGER ));
-	                       
-	
-	    				
-	    			Map<String, Object> result = new HashMap<String, Object>(2);
-	    				result.put("vendorID_in",vendorProduct.vendorID);
-	    				result.put("productID_in", vendorProduct.productID);
-	    				result.put("notes_in", vendorProduct.notes);
-	    			 
+		                SimpleJdbcCall(dataSource).withProcedureName("AddVendorProduct")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "vendorID_in", Types.BIGINT ),
+		                		new SqlParameter( "productID_in", Types.BIGINT ),
+		                		new SqlParameter( "notes_in", Types.VARCHAR ),
+		                		new SqlParameter( "subCatID_in", Types.BIGINT ),
+		                		new SqlParameter( "otherProduct_in", Types.VARCHAR ),
+		                		
+			    				new SqlOutParameter("result", Types.INTEGER ));
+		                       
+		
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("vendorID_in",vendorProduct.vendorID);
+		    				result.put("productID_in",vendorProduct.productID);
+		    				result.put("notes_in",vendorProduct.notes);	
+		    				result.put("subCatID_in",vendorProduct.SubCatID);
+		    				result.put("otherProduct_in",vendorProduct.otherProduct);
+		    					    				
 	    				
 	    			result = jdbcCall.execute(result);
 	    			
@@ -458,6 +463,74 @@ public class VendorsImpl implements VendorDAO {
 	    
 	    }
 	    
-	    
+	    // Get all VendorProduct by VendorID 
+	    public List<VendorProduct> GetVendorProductByID(long VendorID)
+	    {  
+	    	
+	    	List<VendorProduct> lst = new ArrayList<VendorProduct>();
+	    	try {
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetVendorProductByID")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "VendorID_in", Types.BIGINT));	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("VendorID_in", VendorID);  		    				 
+
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	           
+
+	            for (Map<String, Object> item : list) {	 
+	            	VendorProduct vendorProduct = new VendorProduct();
+	            	vendorProduct.vendorID=VendorID;
+	            	vendorProduct.vendorProductID=(Long) (item.get("vendorProductID"));	            	
+	            	vendorProduct.SubCatID=(Long) (item.get("subCatID"));
+	            	vendorProduct.productID=(Long) (item.get("productID"));           	
+            	
+	            	vendorProduct.catName=(String) (item.get("catName"));
+	            	vendorProduct.subCatName=(String) (item.get("subCatName"));
+	            	vendorProduct.productName=(String) (item.get("productName"));
+	            	vendorProduct.notes=(String) (item.get("notes"));
+	            	
+	            	lst.add(vendorProduct);
+	            }
+	            	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lst;  
+	    	}
+	            
+	             return lst;   
+	    	    
+	    }
+	    public int DeleteVendorProduct(long vendorProductID)    {
+		 	   
+	    	try {	    		
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("DeleteVendorProduct")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "vendorProductID_in", Types.INTEGER ),		                		
+			    				new SqlOutParameter("result", Types.INTEGER ));                     
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("vendorProductID_in", vendorProductID);  				
+		    			 
+		    				
+		    			result = jdbcCall.execute(result);
+		    			
+		    			return (Integer) result.get("result");		                        	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return 0;  
+	    	}        
+	    }
 }  
 	    

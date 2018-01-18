@@ -5,7 +5,48 @@ public class VendorProduct {
 	public long vendorProductID;
 	public long vendorID;
 	public long productID;
+	public long SubCatID;
+	public String otherProduct;
+	
+	public String catName;
+	public String subCatName;
+	public String productName;
 	public String notes;
+	
+
+	
+	public String getCatName() {
+		return catName;
+	}
+	public void setCatName(String catName) {
+		this.catName = catName;
+	}
+	public String getSubCatName() {
+		return subCatName;
+	}
+	public void setSubCatName(String subCatName) {
+		this.subCatName = subCatName;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public long getSubCatID() {
+		return SubCatID;
+	}
+	public void setSubCatID(long subCatID) {
+		SubCatID = subCatID;
+	}
+	public String getOtherProduct() {
+		return otherProduct;
+	}
+	public void setOtherProduct(String otherProduct) {
+		this.otherProduct = otherProduct;
+	}
+
 	public long getVendorProductID() {
 		return vendorProductID;
 	}

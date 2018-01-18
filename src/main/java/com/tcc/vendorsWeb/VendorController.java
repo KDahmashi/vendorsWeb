@@ -237,7 +237,10 @@ public class VendorController {
 			 
 			/* if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
 				 return "redirect:/login";//UnAuthorised Access of this page 
-*/			 	
+*/			 	 Long vendorId=(Long)session.getAttribute("vendorId");
+			List<VendorProduct> productList= vendorDAO.GetVendorProductByID(vendorId);
+			 model.put("productList", productList);
+			 
 				model.put("userSession", userSession);
 			
 			return "vendorProduct";
@@ -260,5 +263,32 @@ public class VendorController {
 			return new Gson().toJson(vendorDAO.GetProducts(id));
 		}	
 		
+		@RequestMapping(value = "/vendorProduct" ,method = RequestMethod.POST, params = "vendorProduct")
+	    public String addVendorProduct(@ModelAttribute("vendorForm") VendorProduct vendorProduct,
+	            Map<String, Object> model,HttpSession session) {
+	
+		  User userSession=(User)session.getAttribute("user");
+		
+		  Long vendorId=(Long)session.getAttribute("vendorId");
+		   
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
+	        
+			vendorProduct.vendorID=vendorId;
+			vendorDAO.AddVendorProduct(vendorProduct);	        
+		   
+	
+	        return "redirect:vendorProduct";
+	    }
+		@RequestMapping(value="/deleteProduct/{vendorProductID}",method = RequestMethod.GET)
+		public ModelAndView deleteProduct(@PathVariable long vendorProductID){
+			
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
+	        
+			 vendorDAO.DeleteVendorProduct(vendorProductID);	   
+		
+			return new ModelAndView("redirect:/vendorProduct");
+		}
 		
 }
