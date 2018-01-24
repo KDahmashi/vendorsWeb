@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-
+     <div class="form-group row" style="height: 100px;"></div>
 <nav class="navbar-fixed-bottom footer" >
   <div class="container">     
             <div class="row">

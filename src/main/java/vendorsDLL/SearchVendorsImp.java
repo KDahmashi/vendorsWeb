@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 import vendorsModel.SearchVendors;
+import vendorsModel.User;
 
 
 public class SearchVendorsImp implements SearchVendorsDAO {
@@ -57,18 +58,24 @@ public class SearchVendorsImp implements SearchVendorsDAO {
 
             List<Map<String, Object>> list = (List) result.get("#result-set-1");
            
-           // String name1=(String)list.get(0).get("email");
 
             for (Map<String, Object> item : list) {	 
             	SearchVendors vendor = new SearchVendors();
             	  
+            	vendor.vendorID=(Long) (item.get("vendorID"));
             	vendor.vendorNameEn=(String) (item.get("VendorNameEn"));
             	vendor.vendorNameAr=(String) (item.get("VendorNameAr"));
+            	vendor.mobileNumber=(String) (item.get("mobileNumber"));
+            	vendor.lanNumber=(String) (item.get("lanNumber"));
+            	/*vendor.productName=(String) (item.get("productName"));
             	vendor.catName=(String) (item.get("catName"));
-            	vendor.subCatName=(String) (item.get("subCatName"));
-            	vendor.productName=(String) (item.get("productName"));
+            	vendor.subCatName=(String) (item.get("subCatName"));*/
+            	vendor.webSiteurl=(String) (item.get("webSiteurl"));
+            	vendor.email=(String) (item.get("email"));
+            	vendor.statusAr=(String) (item.get("statusAr"));
+            	vendor.statusEn=(String) (item.get("statusEn"));
             	
-            	//vendor.statsID= (Integer) (item.get("statusID"));        	
+            	 	
             	
             	lstvendor.add(vendor);
             }
@@ -89,52 +96,38 @@ public class SearchVendorsImp implements SearchVendorsDAO {
     }
 
 	@Override
-	public List<SearchVendors> findVendors(SearchVendors searchVendors) {
+	public List<SearchVendors> getAllVendors() {
 		List<SearchVendors> lstvendor= new ArrayList<SearchVendors>();
 	      
     	try {	    		
         
     		SimpleJdbcCall jdbcCall = new 
-	                SimpleJdbcCall(dataSource).withProcedureName("SearchVendors")
-	                .withoutProcedureColumnMetaDataAccess().declareParameters(
-	                		new SqlParameter( "vendorName_in", Types.VARCHAR ),
-	                		new SqlParameter( "catName_in", Types.VARCHAR ),
-	                		new SqlParameter( "subCatName_in", Types.VARCHAR ),
-	                		new SqlParameter( "productName_in", Types.VARCHAR ));
-		    				
-	                       
-	
+	                SimpleJdbcCall(dataSource).withProcedureName("GetAllVendor")
+	                .withoutProcedureColumnMetaDataAccess().declareParameters();	            			    				                   
 	    				
-	    			Map<String, Object> result = new HashMap<String, Object>(2);
-	    				result.put("vendorName_in", searchVendors.vendorNameEn);
-	    				result.put("catName_in", searchVendors.catName);
-	    				result.put("subCatName_in", searchVendors.subCatName);
-	    				result.put("productName_in", searchVendors.productName);
-	    			 
-	    				
-	    			result = jdbcCall.execute(result);   		
-    		
-  
+	    			Map<String, Object> result = new HashMap<String, Object>(2);    					    				 
+	    				result = jdbcCall.execute(result);
 
-            List<Map<String, Object>> list = (List) result.get("#result-set-1");
-           
-           // String name1=(String)list.get(0).get("email");
+	    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");
+	      
 
             for (Map<String, Object> item : list) {	 
             	SearchVendors vendor = new SearchVendors();
             	  
+            	vendor.vendorID=(Long) (item.get("vendorID"));
             	vendor.vendorNameEn=(String) (item.get("VendorNameEn"));
             	vendor.vendorNameAr=(String) (item.get("VendorNameAr"));
+            	vendor.mobileNumber=(String) (item.get("mobileNumber"));
+            	vendor.lanNumber=(String) (item.get("lanNumber"));
+            	/*vendor.productName=(String) (item.get("productName"));
             	vendor.catName=(String) (item.get("catName"));
-            	vendor.subCatName=(String) (item.get("subCatName"));
-            	vendor.productName=(String) (item.get("productName"));
-            	vendor.mobileNumber=(Long) (item.get("mobileNumber"));
-            	vendor.lanNumber=(Long) (item.get("lanNumber"));
-            	vendor.email=(String) (item.get("email"));
+            	vendor.subCatName=(String) (item.get("subCatName"));*/
             	vendor.webSiteurl=(String) (item.get("webSiteurl"));
+            	vendor.email=(String) (item.get("email"));
+            	vendor.statusAr=(String) (item.get("statusAr"));
+            	vendor.statusEn=(String) (item.get("statusEn"));
             	
-            	
-            	//vendor.statsID= (Integer) (item.get("statusID"));        	
+            	 	
             	
             	lstvendor.add(vendor);
             }
@@ -147,8 +140,10 @@ public class SearchVendorsImp implements SearchVendorsDAO {
     		 return lstvendor;  
     	}
             
-             return lstvendor;
+             return lstvendor;  
 	}
+
+	
 	
 
 }

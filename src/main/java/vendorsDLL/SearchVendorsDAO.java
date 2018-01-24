@@ -8,7 +8,8 @@ import vendorsModel.SearchVendors;
 public interface SearchVendorsDAO {
 	
 	public List<SearchVendors> findVendors(String VendorNameEn, String catName, String subCatName, String productName);
+	public List<SearchVendors> getAllVendors();
 	
-	public List<SearchVendors> findVendors(SearchVendors searchVendors);
+
 
 }

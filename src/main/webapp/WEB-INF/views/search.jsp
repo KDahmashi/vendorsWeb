@@ -1,8 +1,3 @@
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
- --%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -66,26 +61,26 @@
                 <th scope="col">Vendor Name Ar</th>
                 <th scope="col">Mobile Number</th>
                 <th scope="col">Lane Number</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Cat Name</th>
-                <th scope="col">Sub Cat Name</th>
                 <th scope="col">Web Site url</th>
                 <th scope="col">Email</th>
+                <th scope="col">Status Ar</th>
+                <th scope="col">Status En</th>
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="vendor" items="${search}" varStatus="status">
                 <tr>
                 <td>${status.index + 1}</td>
-                <td >${vendor.vendorNameEn}</td>
+                <td > <a  href="approve?id=${vendor.vendorID}" > ${vendor.vendorNameEn}</a> 
+                	 <%--  <a type="button" class="btn btn-danger" href="deleteProduct?id=${product.vendorProductID}" > <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> --%>
+              </td>
                 <td >${vendor.vendorNameAr}</td>
                 <td >${vendor.mobileNumber}</td>
                 <td >${vendor.lanNumber}</td>
-                <td >${vendor.productName}</td>
-                <td >${vendor.catName}</td>
-                <td >${vendor.subCatName}</td>
                 <td >${vendor.webSiteurl}</td>
                  <td >${vendor.email}</td>
+                 <td >${vendor.statusAr}</td>
+                 <td >${vendor.statusEn}</td>
                 </tr>
                 </c:forEach>   
                 </tbody>          

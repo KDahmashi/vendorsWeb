@@ -1,19 +1,80 @@
 package vendorsModel;
 
 public class SearchVendors {
+	public long vendorID; 
 	
 	public String vendorNameEn;
 	public String vendorNameAr;
 	public int vendorTypeID;
 	public String email;
-	public long lanNumber;
-	public long mobileNumber;
+	public String lanNumber;
+	public String mobileNumber;
 	public String webSiteurl;
 	public int statsID;
+	public String statusAr;
+	public String statusEn;
 	public int productID;
 	public String productName;
 	public String subCatName;
 	public String catName;
+	public long attachmentID;
+	public String fileName;
+	public String attachmentEn;
+	public String attachmentAr;
+	public int attachmentTypeID;
+	public long bankID;
+	public String bankName; 
+	public String iban;
+	
+	public long getAttachmentID() {
+		return attachmentID;
+	}
+	public void setAttachmentID(long attachmentID) {
+		this.attachmentID = attachmentID;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getAttachmentEn() {
+		return attachmentEn;
+	}
+	public void setAttachmentEn(String attachmentEn) {
+		this.attachmentEn = attachmentEn;
+	}
+	public String getAttachmentAr() {
+		return attachmentAr;
+	}
+	public void setAttachmentAr(String attachmentAr) {
+		this.attachmentAr = attachmentAr;
+	}
+	public int getAttachmentTypeID() {
+		return attachmentTypeID;
+	}
+	public void setAttachmentTypeID(int attachmentTypeID) {
+		this.attachmentTypeID = attachmentTypeID;
+	}
+	public long getBankID() {
+		return bankID;
+	}
+	public void setBankID(long bankID) {
+		this.bankID = bankID;
+	}
+	public String getBankName() {
+		return bankName;
+	}
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+	public String getIban() {
+		return iban;
+	}
+	public void setIban(String iban) {
+		this.iban = iban;
+	}
+	
 	public String getVendorNameEn() {
 		return vendorNameEn;
 	}
@@ -38,16 +99,16 @@ public class SearchVendors {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public long getLanNumber() {
+	public String getLanNumber() {
 		return lanNumber;
 	}
-	public void setLanNumber(long lanNumber) {
+	public void setLanNumber(String lanNumber) {
 		this.lanNumber = lanNumber;
 	}
-	public long getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
-	public void setMobileNumber(long mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 	public String getWebSiteurl() {
@@ -61,6 +122,18 @@ public class SearchVendors {
 	}
 	public void setStatsID(int statsID) {
 		this.statsID = statsID;
+	}
+	public String getStatusAr() {
+		return statusAr;
+	}
+	public void setStatusAr(String statusAr) {
+		this.statusAr = statusAr;
+	}
+	public String getStatusEn() {
+		return statusEn;
+	}
+	public void setStatusEn(String statusEn) {
+		this.statusEn = statusEn;
 	}
 	public int getProductID() {
 		return productID;
@@ -87,7 +160,12 @@ public class SearchVendors {
 		this.catName = catName;
 	}
 	
-
+	public long getVendorID() {
+		return vendorID;
+	}
+	public void setVendorID(long vendorID) {
+		this.vendorID = vendorID;
+	}
 	
 	
 

@@ -12,6 +12,31 @@ public class VendorProduct {
 	public String subCatName;
 	public String productName;
 	public String notes;
+	public long getVendorProductID() {
+		return vendorProductID;
+	}
+	public void setVendorProductID(long vendorProductID) {
+		this.vendorProductID = vendorProductID;
+	}
+	public long getVendorID() {
+		return vendorID;
+	}
+	public void setVendorID(long vendorID) {
+		this.vendorID = vendorID;
+	}
+	public long getProductID() {
+		return productID;
+	}
+	public void setProductID(long productID) {
+		this.productID = productID;
+	}
+	public String getNotes() {
+		return notes;
+	}
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+	
 	
 
 	
@@ -46,34 +71,6 @@ public class VendorProduct {
 	public void setOtherProduct(String otherProduct) {
 		this.otherProduct = otherProduct;
 	}
-
-	public long getVendorProductID() {
-		return vendorProductID;
-	}
-	public void setVendorProductID(long vendorProductID) {
-		this.vendorProductID = vendorProductID;
-	}
-	public long getVendorID() {
-		return vendorID;
-	}
-	public void setVendorID(long vendorID) {
-		this.vendorID = vendorID;
-	}
-	public long getProductID() {
-		return productID;
-	}
-	public void setProductID(long productID) {
-		this.productID = productID;
-	}
-	public String getNotes() {
-		return notes;
-	}
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-	
-	
-	
 	
 
 }

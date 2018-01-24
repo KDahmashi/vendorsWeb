@@ -70,9 +70,9 @@
                 
                    <div class="form-group row">
                   <div class="col-sm-3"></div>
-                <label  class="col-sm-3 col-form-label"></label>
+                <label  class="col-sm-4 col-form-label"></label>
 
-                    <div class="col-sm-4"><input type="submit" value="Save" name="vendorProduct"/></div>
+                    <div class="col-sm-3"><input type="submit" value="Save" name="vendorProduct"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
@@ -84,7 +84,7 @@
                 <c:if test="${not empty productList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        products Lists    </h2>
+             <h2>  <i class="glyphicon glyphicon-tags" aria-hidden="true"></i>       products Lists    </h2>
                     	<table class="table table-dark">
                     	 <thead>
                     	<tr>
@@ -105,7 +105,65 @@
                      <td>${product.productName}</td>
                     <td>${product.notes}</td>          
                     <th  >
-                       <a type="button" class="btn btn-danger" href="deleteProduct/${product.vendorProductID}"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
+                       <a type="button" class="btn btn-danger" href="deleteProduct/${product.vendorProductID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
+                     </th>                             
+                </tr>
+                </c:forEach>   
+                </tbody>          
+            </table>
+        </div>
+        
+        	</c:if>        
+     </div>
+      <div class="col-sm-1"></div>  </div>
+
+                       <div class="form-group row">
+                  <div class="col-sm-1"></div>  
+        <div class="col-sm-10">
+                <c:if test="${not empty attachmentTypeList}">    
+        <div align="center">
+            <h1></h1>
+             <h2><i class="fa fa-paperclip  fa-2x" aria-hidden="true"></i>   Upload   Attachments    </h2>
+           
+            
+                    	
+                    	<table class="table table-dark">
+                    	 <thead>
+                    	<tr>
+                 <th scope="col">No</th>
+                 <th scope="col">Attachment  Name</th>
+                <th scope="col"> </th>
+                 <th scope="col">file </th>              
+                  <th scope="col">  <h5 style="color:red">${message}</h5>  </th>
+                </tr>
+    </thead>
+                   <tbody>
+                  <c:forEach var="type" items="${attachmentTypeList}" varStatus="status">
+                <tr>
+                    <td>${status.index + 1}</td>
+                    <td>${type.attachmentAr}</td>
+                    <td colspan="2"> 
+  
+                           <form method="post" action="uploadFile" enctype="multipart/form-data">     
+              <div class="form-group row"> 
+               <div class="col-sm-4"> <input type="text" name="name" value=${type.fileName} class="invisible">
+               <input type="text" name="typeID" value=${type.attachmentTypeID} class="invisible"></div>
+             <div class="col-sm-4">  <input type="file" name="file"/> </div>
+              <div class="col-sm-4"><input type="submit" value="Upload" /></div>
+              
+                              
+           </div>
+        </form>                    
+                    </td>                       
+                   
+                    <th >
+                     <c:set var="rowTypeId" value="${type.attachmentTypeID}"/>
+                      <c:forEach var="attachment" items="${attachmentList}" varStatus="status">     
+                      <c:set var="typeId" value="${attachment.attachmentTypeID}"/>                
+                         <c:if test="${rowTypeId ==typeId}"> 
+                          <a href=${attachment.fileName} target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a>  
+                          </c:if>  
+                           </c:forEach>            
                      </th>                             
                 </tr>
                 </c:forEach>   
@@ -117,9 +175,17 @@
      </div>
       <div class="col-sm-1"></div>  </div>
       
-  
+      
+         <div class="form-group row">
+                  <div class="col-sm-3"></div>
+                <label  class="col-sm-4 col-form-label"></label>
 
+                    <div class="col-sm-3"><input type="submit" value="submit Profile" name="completeProfile"/></div>
+                     <div class="col-sm-2"></div>
+            </div>
+            
     </div>
+    
     
      <jsp:include page="/WEB-INF/views/footer.jsp"/>
      
@@ -178,7 +244,7 @@
     	 			});	
     		
     		$('#ddlproduct').change(    				
-    	 			function() {   	 	
+    	 			function() {   	 		
     	 				
     	 				var Product  =$( "#ddlSubcategory option:selected" ).text()
     	 				var selectedID  =$( "#ddlproduct option:selected" ).val(); 	 			

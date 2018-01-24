@@ -1,12 +1,21 @@
 package com.tcc.vendorsWeb;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import vendorsDLL.ApproveVendorDAO;
 import vendorsDLL.SearchVendorsDAO;
 import vendorsDLL.UserDAO;
 import vendorsDLL.VendorDAO;
 import vendorsModel.Alert;
+import vendorsModel.Attachment;
+import vendorsModel.AttachmentType;
 import vendorsModel.Bank;
+import vendorsModel.VendorBranches;
 import vendorsModel.ContactPerson;
 import vendorsModel.Menu;
 import vendorsModel.SearchVendors;
@@ -23,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
@@ -34,16 +44,23 @@ import org.slf4j.LoggerFactory;
 
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
+
+ 
+import java.io.File; 
+
 
 
 
@@ -103,7 +120,7 @@ public class VendorController {
 	  
 	  @RequestMapping(value = "/search", method = RequestMethod.GET)
 		public ModelAndView searchVendors(HttpSession session, Map model , @ModelAttribute("searchResults")SearchVendors searchResults) {		
-			List<SearchVendors> searchResultslist = new ArrayList<SearchVendors>();
+		  List<SearchVendors> searchResultslist = new ArrayList<SearchVendors>();
 			SearchVendors searchVendors = new SearchVendors();			
 			
 			 // user Session 
@@ -124,7 +141,7 @@ public class VendorController {
 	        	if(searchResults.vendorNameEn!=null) {
 	        		 searchResultslist =searchDAO.findVendors(searchResults.vendorNameEn, searchResults.catName, searchResults.subCatName, searchResults.productName);
 	        	}else
-	        		 searchResultslist =searchDAO.findVendors("tcc", "", "", "");
+	        		 searchResultslist =searchDAO.getAllVendors();
 	        	
 	        	 model1.addObject("searchInput", searchVendors);
 	        	 model1.addObject("search", searchResultslist);
@@ -137,6 +154,8 @@ public class VendorController {
 	        return model1;
 			
 		}
+		
+	  /*                                   Redirect to Search page                                                                      */
 		
 		@RequestMapping(value = "/search", method = RequestMethod.POST)
 	    public String search(@ModelAttribute("searchInput") SearchVendors searchVendors,
@@ -154,6 +173,7 @@ public class VendorController {
 			Bank bank = new Bank();
 			model.put("bank", bank);
 			
+			
 			ContactPerson contactPerson = new ContactPerson();
 			model.put("contactPerson", contactPerson);
 			
@@ -163,7 +183,17 @@ public class VendorController {
 			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	
 			 List<Bank> bankList=vendorDAO.GetBanks(vendorId);
 			 model.put("bankList", bankList);
+			 
+			  
+				model.put("countryList", vendorDAO.GetAllCountries());
+				VendorBranches branch= new VendorBranches();
+				model.put("branch", branch);
 			
+			 List<ContactPerson> contactPersonList=vendorDAO.GetContactPerson(vendorId);
+			 model.put("contactPersonList", contactPersonList);
+			 
+			 List<VendorBranches> branchList=vendorDAO.GetVendorBranchesByID(vendorId);
+			 model.put("BrancheList", branchList);
 				
 			return "vendorInfo";
 		}	
@@ -205,6 +235,89 @@ public class VendorController {
 	        return "redirect:vendorInfo";
 	    }
 		
+/*                                   Approve Button And Update Status                                                                                   */
+		
+		@RequestMapping(value = "/approve", method = RequestMethod.POST, params="approve" )
+	    public String approve(@ModelAttribute("aprooveInput") SearchVendors approveVendors,
+	            Map<String, Object> model, final RedirectAttributes redirect, HttpSession session ,@RequestParam(value="id", required=false) long vendorID ) {
+			
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			  VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");         
+				
+			
+				 // user Session 
+				 User userSession=(User)session.getAttribute("user");
+				 if(userSession==null)
+					 return "redirect:/login";
+				 
+				 /*if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
+					 retu rn "redirect:/login";//UnAuthorised Access of this page 
+*/				 
+				   vendorDAO.UpdatStatus(vendorID, 1);			
+					
+	        return "redirect:/search";
+	    }
+		
+		/*                                   Reject Button And Update Status                                                                                   */
+		
+		@RequestMapping(value = "/approve", method = RequestMethod.POST, params="reject" )
+	    public String reject(@ModelAttribute("aprooveInput") SearchVendors approveVendors,
+	            Map<String, Object> model, final RedirectAttributes redirect, HttpSession session , @RequestParam(value="id", required=false) long vendorID ) {
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			  VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");         
+			  
+				
+				 // user Session 
+				 User userSession=(User)session.getAttribute("user");
+				 if(userSession==null)
+					 return "redirect:/login";
+				 
+				 /*if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
+					 retu rn "redirect:/login";//UnAuthorised Access of this page 
+*/				 
+				   vendorDAO.UpdatStatus(vendorID, 0);			
+					
+				   return "redirect:/search";
+	    }
+	  
+		/*                                   Approve single vendor page                                                                                   */
+		  @RequestMapping(value = "/approve", method = RequestMethod.GET)
+			public String approveVendors(Map model,HttpSession session, @RequestParam(value="id", required=false) long vendorID) {		
+			  context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			  ApproveVendorDAO approveVendorDAO = (ApproveVendorDAO) context.getBean("ApproveVendorDAO");         
+				
+			
+				 // user Session 
+				 User userSession=(User)session.getAttribute("user");
+				 if(userSession==null)
+					 return "redirect:/login";
+				 
+				 /*if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
+					 retu rn "redirect:/login";//UnAuthorised Access of this page 
+*/				 
+				   Vendor vendor =approveVendorDAO.GetVendorByID(vendorID);			
+					model.put("vendor", vendor);	
+					
+					context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+					VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	
+					 List<Bank> bankList=vendorDAO.GetBanks(vendorID);
+					 model.put("bankList", bankList);
+					 
+					 List<VendorProduct> productList=vendorDAO.GetVendorProductByID(vendorID);
+					 model.put("productList", productList);
+					 
+					 List<ContactPerson> contactList=vendorDAO.GetContactPerson(vendorID);
+					 model.put("contactList", contactList);
+					 
+					 List<VendorBranches> branchesList=vendorDAO.GetVendorBranchesByID(vendorID);
+					 model.put("branchesList", branchesList);
+					
+					
+				return "approve";
+				
+			}
+		  
+		 /* */  	
 		
 		@RequestMapping(value="/deleteBank/{bankID}",method = RequestMethod.GET)
 		public ModelAndView deleteBank(@PathVariable long bankID){
@@ -218,6 +331,18 @@ public class VendorController {
 		
 			return new ModelAndView("redirect:/vendorInfo");
 		}
+		@RequestMapping(value="/deleteContactPerson/{contactPersonID}",method = RequestMethod.GET)
+		public ModelAndView deleteContactPerson(@PathVariable long contactPersonID){
+			
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
+	        
+			 vendorDAO.deleteContactPerson(contactPersonID);	        
+		   
+	
+		
+			return new ModelAndView("redirect:/vendorInfo");
+		}		
 		
 		@RequestMapping(value = "/vendorProduct", method = RequestMethod.GET)
 		public String vendorProduct(Map model,HttpSession session) {		
@@ -241,8 +366,14 @@ public class VendorController {
 			List<VendorProduct> productList= vendorDAO.GetVendorProductByID(vendorId);
 			 model.put("productList", productList);
 			 
-				model.put("userSession", userSession);
-			
+				List<AttachmentType> attachmentTypeList= vendorDAO.GetAttachmentTypes();
+				model.put("attachmentTypeList", attachmentTypeList);
+				
+				List<Attachment> attachmentList= vendorDAO.GetAllAttachments(vendorId);
+				model.put("attachmentList", attachmentList);
+			 
+				model.put("userSession", userSession);				
+
 			return "vendorProduct";
 		}	
 
@@ -290,5 +421,133 @@ public class VendorController {
 		
 			return new ModelAndView("redirect:/vendorProduct");
 		}
+		@RequestMapping(value = "/GetAllStates", method = RequestMethod.GET)
+		public @ResponseBody String GetAllStates(@RequestParam("id") Integer id) {
+			//logger.debug("finding cities for state " + state);
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
+			
+			return new Gson().toJson(vendorDAO.GetAllStates(id));
+		}	
+		@RequestMapping(value = "/GetAllCities", method = RequestMethod.GET)
+		public @ResponseBody String GetAllCities(@RequestParam("id") Integer id) {
+			//logger.debug("finding cities for state " + state);
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
+			
+			return new Gson().toJson(vendorDAO.GetAllCities(id));
+		}	
 		
+		@RequestMapping(value = "/vendorInfo" ,method = RequestMethod.POST, params = "branch")
+	    public String addBranch(@ModelAttribute("vendorForm") VendorBranches branch,
+	            Map<String, Object> model,HttpSession session) {
+	
+
+			  User userSession=(User)session.getAttribute("user");
+			
+			  Long vendorId=(Long)session.getAttribute("vendorId");
+			   
+				context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+				VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
+		        
+				branch.vendorID=vendorId;
+				vendorDAO.AddBranch(branch);	        
+			   
+		
+		        return "redirect:vendorInfo";
+	    }
+		
+		
+		@RequestMapping(value="/deleteBranches/{branchesID}",method = RequestMethod.GET)
+		public ModelAndView deleteBranches(@PathVariable long branchesID){
+			
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
+	        
+			 vendorDAO.DeleteVendorBranches(branchesID);	   
+		
+			return new ModelAndView("redirect:/vendorInfo");
+		}
+	
+
+		 @RequestMapping(value="/uploadStatus",method=RequestMethod.POST)
+		    public String uploadStatus() {
+		        return "uploadStatus";
+		    }
+		 
+		    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+		    public String handleFormUpload(@RequestParam("name") String fileName, @RequestParam("typeID") int TypeID,
+		        @RequestParam("file") MultipartFile file,RedirectAttributes redirectAttributes,HttpSession session) {
+
+		    	 
+		    	
+		    	   if (file.isEmpty()) {
+			            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+			            return "redirect:vendorProduct";
+			        }
+		        if (!file.isEmpty()) {	
+		        	 context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+		  			 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     
+		  			 
+		        	   try {
+		        		   String name=file.getOriginalFilename();		        		
+		        		   
+		        		   ServletContext context = session.getServletContext();  	
+		        		   Long vendorId=(Long)session.getAttribute("vendorId");
+		        		   String folderName="vendor"+String.valueOf(vendorId);
+		        		   
+			                   /* File path = new File(context.getRealPath("/WEB-INF/uploads") + File.separator +
+				                        file.getOriginalFilename());  */
+			                    
+			                    String directory = context.getRealPath("/resources/uploads") + File.separator +folderName;   
+						if (!new File(directory).exists())
+							new File(directory).mkdirs();
+						
+						File path = new File(directory +File.separator + fileName+ '.'+ name.substring(name.lastIndexOf(".") + 1));  
+
+		       		    byte[] bytes = file.getBytes();  
+		       		    BufferedOutputStream stream =new BufferedOutputStream(new FileOutputStream(path));  
+		       		    stream.write(bytes);  
+		       		    stream.flush();  
+		       		    stream.close();  
+		       		    
+		       		 Attachment attachment=new Attachment();
+		       		attachment.vendorID=vendorId;
+		       		attachment.attachmentTypeID=TypeID;
+		       		attachment.fileName= "resources/uploads/"+folderName+ '/'+fileName + '.'+ name.substring(name.lastIndexOf(".") + 1) ;
+		       		
+		       		 vendorDAO.AddAttachment(attachment);	
+				            redirectAttributes.addFlashAttribute("message",
+				                        "You successfully uploaded '" + file.getOriginalFilename() + "'");
+
+				        } catch (IOException e) {
+				            e.printStackTrace();
+				        }
+		        	   
+		        		       
+		  	        
+		  			   
+		        	
+		           return "redirect:vendorProduct";
+		       } else {
+		           return "redirect:vendorProduct";
+		       }
+		    }
+		    @RequestMapping(value = "/vendorProduct" ,method = RequestMethod.POST, params = "completeProfile")
+		    public String completeProfile(HttpSession session) {
+		
+			  User userSession=(User)session.getAttribute("user");
+			
+			  Long vendorId=(Long)session.getAttribute("vendorId");
+			   
+				context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+				VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
+		        
+				
+				//vendorDAO.AddVendorProduct(vendorProduct);	        
+			   
+		
+		        return "redirect:vendorProduct";
+		    }
+
 }

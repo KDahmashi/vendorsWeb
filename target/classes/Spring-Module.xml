@@ -16,5 +16,9 @@
 		 <bean id="SearchVendorsDAO" class="vendorsDLL.SearchVendorsImp">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
+	<bean id="ApproveVendorDAO" class="vendorsDLL.ApproveVendorImp">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 
 </beans>

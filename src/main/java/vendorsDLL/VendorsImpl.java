@@ -12,8 +12,10 @@ import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
+import vendorsModel.Attachment;
+import vendorsModel.AttachmentType;
 import vendorsModel.Bank;
-import vendorsModel.Branch;
+import vendorsModel.VendorBranches;
 import vendorsModel.ContactPerson;
 import vendorsModel.Menu;
 import vendorsModel.Vendor;
@@ -154,12 +156,12 @@ public class VendorsImpl implements VendorDAO {
 	  
 	  
 	  
-	  public Integer AddBranch(Branch branch) {
+	  public Integer AddBranch(VendorBranches branch) {
 	    	
 	    	try {
 	    		
 	    		SimpleJdbcCall jdbcCall = new 
-	                SimpleJdbcCall(dataSource).withProcedureName("AddContactPerson")
+	                SimpleJdbcCall(dataSource).withProcedureName("AddBranch")
 	                .withoutProcedureColumnMetaDataAccess().declareParameters(
 	                		new SqlParameter( "vendorID_in", Types.BIGINT ),
 	                		new SqlParameter( "cityID_in", Types.BIGINT ),
@@ -185,8 +187,6 @@ public class VendorsImpl implements VendorDAO {
 	    	}	
 	            
 	}
-	  
-  
 	  
 	  public Integer AddVendorProduct(VendorProduct vendorProduct) {
 	    	
@@ -226,7 +226,6 @@ public class VendorsImpl implements VendorDAO {
 	    	}	
 	            
 	}
-	  
 	    public  Map<Integer, String> GetAllVendorTypes()
 	    {	
 	    	  Map<Integer, String> lst = new HashMap<Integer, String>();	      
@@ -432,6 +431,84 @@ public class VendorsImpl implements VendorDAO {
 	             return lst;  	          
 	    
 	    }
+	    
+	 
+	    
+	 // Get all Contact Person of vendor 
+	    public List<ContactPerson> GetContactPerson(long vendorID)
+	    {
+	
+	    	List<ContactPerson> lstContactPerson= new ArrayList<ContactPerson>();
+	      
+	    	try {	    		
+	        
+
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetContactPersonByVendorID")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "vendorID_in", Types.BIGINT));	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("vendorID_in", vendorID);  		    				 
+
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");
+	           
+
+	            for (Map<String, Object> item : list) {	 
+	            	ContactPerson contactPerson = new ContactPerson();
+	            	  
+	            	contactPerson.contactPersonID=(Long) (item.get("contactPersonID"));
+	            	contactPerson.vendorID= vendorID;
+	            	contactPerson.fullName=(String)item.get("fullName");
+	            	contactPerson.mobile=(String)item.get("mobile");
+	            	contactPerson.email=(String)item.get("email");
+	            	
+	               	
+	            	
+	            	lstContactPerson.add(contactPerson);
+	            }
+	            	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lstContactPerson;  
+	    	}
+	            
+	             return lstContactPerson;   
+	    	    
+	    }
+	    
+	    
+	    public int deleteContactPerson(long contactPersonID)    {
+		 	   
+	    	try {	    		
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("DeleteContactPerson")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "contactPersonID_in", Types.BIGINT ),		                		
+			    				new SqlOutParameter("result", Types.INTEGER ));                     
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("contactPersonID_in", contactPersonID);  				
+		    			 
+		    				
+		    			result = jdbcCall.execute(result);
+		    			
+		    			return (Integer) result.get("result");		                        	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return 0;  
+	    	}        
+	    }
+	    
 	    public  Map<Long, String> GetProducts(Long SubCatID)
 	    {	
 	    	  Map<Long, String> lst = new HashMap<Long, String>();	      
@@ -531,6 +608,329 @@ public class VendorsImpl implements VendorDAO {
 	    		String exc=ex.getMessage();
 	    		 return 0;  
 	    	}        
+	    }
+	    
+		public Integer UpdatStatus(long vendorID, int statusID) {
+			
+try {
+	    		
+	    		SimpleJdbcCall jdbcCall = new 
+	                SimpleJdbcCall(dataSource).withProcedureName("UpdateStatus")
+	                .withoutProcedureColumnMetaDataAccess().declareParameters(
+	                		new SqlParameter( "vendorID_in", Types.BIGINT ),
+	                		new SqlParameter( "statusID_in", Types.INTEGER ));
+	                       
+	
+	    				
+	    			Map<String, Object> result = new HashMap<String, Object>(2);
+	    			
+	    			result.put("vendorID_in",vendorID);
+	    			result.put("statusID_in", statusID);
+	    			
+	    				
+	    				
+	    			 
+	    				
+	    			result = jdbcCall.execute(result);
+	    			
+	    			return (Integer) result.get("result");
+	  
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		
+	    		  
+	    	}	
+			return 0;
+			
+		}
+		
+		public  Map<Integer, String> GetAllCountries()
+	    {	
+	    	  Map<Integer, String> lst = new HashMap<Integer, String>();	      
+	    	try {
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetAllCountries")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters();	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);    					    				 
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	    
+		    	            
+	            for (Map<String, Object> item : list) {	 	            	
+	            	lst.put((Integer) (item.get("countryID")), (String) (item.get("countryName")));    	             	
+	            }       	                    
+	            
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lst;  
+	    	}
+	            
+	             return lst;  	          
+	    
+	    }
+	    public  Map<Integer, String> GetAllStates(Integer countryID)
+	    {	
+	    	  Map<Integer, String> lst = new HashMap<Integer, String>();	      
+	    	try {
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetAllStatesByID")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "countryID_in", Types.INTEGER));	  	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);  
+		    			result.put("countryID_in", countryID);  		
+		    			
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	    
+		    	            
+	            for (Map<String, Object> item : list) {	 	            	
+	            	lst.put((Integer) (item.get("stateID")), (String) (item.get("stateName")));    	             	
+	            }       	                    
+	            
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lst;  
+	    	}
+	            
+	             return lst;  	          
+	    
+	    }
+	    
+	    
+	    public  Map<Integer, String> GetAllCities(Integer stateID)
+	    {	
+	    	  Map<Integer, String> lst = new HashMap<Integer, String>();	      
+	    	try {
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetAllCitiesByID")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "stateID_in", Types.INTEGER));	  	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);  
+		    			result.put("stateID_in", stateID);  		
+		    			
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	    
+		    	            
+	            for (Map<String, Object> item : list) {	 	            	
+	            	lst.put((Integer) (item.get("cityID")), (String) (item.get("cityName")));    	             	
+	            }       	                    
+	            
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lst;  
+	    	}
+	            
+	             return lst;  	          
+	    
+	    }
+	    
+	    
+	    
+	    
+	 // Get all VendorBranch by VendorID 
+	    public List<VendorBranches> GetVendorBranchesByID(long VendorID)
+	    {  
+	    	
+	    	List<VendorBranches> lst = new ArrayList<VendorBranches>();
+	    	try {
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetVendorBranchesByID")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "VendorID_in", Types.BIGINT));	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("VendorID_in", VendorID);  		    				 
+
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	           
+
+	            for (Map<String, Object> item : list) {	 
+	            	VendorBranches vendorBranches = new VendorBranches();
+	            	
+	            	vendorBranches.vendorID=VendorID;
+	            	vendorBranches.branchesID=(Long) (item.get("branchesID"));	            	
+	            	vendorBranches.cityID=(Integer) (item.get("cityID"));
+	            	vendorBranches.stateID=(Integer) (item.get("stateID"));
+	            	vendorBranches.countryID=(Integer) (item.get("countryID"));
+            	
+	            	vendorBranches.cityName=(String) (item.get("cityName"));
+	            	vendorBranches.stateName=(String) (item.get("stateName"));
+	            	vendorBranches.countryName=(String) (item.get("countryName"));
+	            	vendorBranches.sortname=(String) (item.get("sortname"));
+	            	
+	            	lst.add(vendorBranches);
+	            }
+	            	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lst;  
+	    	}
+	            
+	             return lst;   
+	    	    
+	    }
+	    public int DeleteVendorBranches(long branchesID)    {
+		 	   
+	    	try {	    		
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("DeleteBranche")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "branchesID_in", Types.BIGINT ),		                		
+			    				new SqlOutParameter("result", Types.INTEGER ));                     
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("branchesID_in", branchesID);  				
+		    			 
+		    				
+		    			result = jdbcCall.execute(result);
+		    			
+		    			return (Integer) result.get("result");		                        	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return 0;  
+	    	}        
+	    }
+	    
+	   
+	    
+	    public List<AttachmentType> GetAttachmentTypes()
+	    {
+	
+	    	List<AttachmentType> lstType= new ArrayList<AttachmentType>();
+	      
+	    	try {	    		
+	        
+
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetAllAttachmentTypes")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters();
+		                			            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    						    				 
+
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");
+	           
+
+	            for (Map<String, Object> item : list) {	 
+	            	AttachmentType type = new AttachmentType();
+	            	  
+	            	type.attachmentTypeID=(Integer) (item.get("attachmentTypeID"));	            
+	            	type.attachmentAr=(String)item.get("attachmentAr");
+	            	type.attachmentEn=(String)item.get("attachmentEn");
+	            	
+	               	
+	            	
+	            	lstType.add(type);
+	            }
+	            	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lstType;  
+	    	}
+	            
+	             return lstType;   
+	    	    
+	    }
+	    public Integer AddAttachment(Attachment attachment) {
+	    	
+	    	try {
+	    		
+	    		SimpleJdbcCall jdbcCall = new 
+	                SimpleJdbcCall(dataSource).withProcedureName("AddAttachment")
+	                .withoutProcedureColumnMetaDataAccess().declareParameters(
+	                		new SqlParameter( "vendorID_in", Types.BIGINT ),
+	                		new SqlParameter( "attachmentTypeID_in", Types.INTEGER ),
+	                		new SqlParameter( "fileName_in", Types.VARCHAR ),	                		
+		    				new SqlOutParameter("result", Types.INTEGER ));
+	                       
+	
+	    				
+	    			Map<String, Object> result = new HashMap<String, Object>(2);
+	    				result.put("vendorID_in",attachment.vendorID);
+	    				result.put("attachmentTypeID_in", attachment.attachmentTypeID);
+	    				result.put("fileName_in", attachment.fileName);
+	    				
+	    			 
+	    				
+	    			result = jdbcCall.execute(result);
+	    			
+	    			return (Integer) result.get("result");
+	  
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		
+	    		 return 0; 
+	    	}	
+	            
+	}
+	    
+	    public List<Attachment> GetAllAttachments(long VendorID)
+	    {
+	
+	    	List<Attachment> lst= new ArrayList<Attachment>();
+	      
+	    	try {	    		
+	        
+
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetAllAttachments")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+	    		new SqlParameter( "vendorID_in", Types.BIGINT));		            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    			result.put("vendorID_in", VendorID);  		    				 
+
+		    				result = jdbcCall.execute(result);
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");          
+
+	            for (Map<String, Object> item : list) {	 
+	            	Attachment attachment = new Attachment();
+	            	attachment.attachmentID=VendorID;
+	            	attachment.attachmentID=(Long) (item.get("attachmentID"));	
+	            	attachment.attachmentTypeID=(Integer) (item.get("attachmentTypeID"));	            
+	            	attachment.fileName=(String)item.get("fileName");
+ 	
+	            	lst.add(attachment);
+	            }
+	            	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return lst;  
+	    	}
+	            
+	             return lst;   
+	    	    
 	    }
 }  
 	    
