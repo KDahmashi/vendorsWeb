@@ -332,6 +332,8 @@ public class VendorController {
 					 UpdateStatus update = new UpdateStatus();
 					 model.put("update", update);
 					
+					 model.put("userSession", userSession);
+					 
 				return "approve";
 				
 			}

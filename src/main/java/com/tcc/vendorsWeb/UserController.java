@@ -302,7 +302,7 @@ public class UserController {
 					 List<Attachment> attachList=vendorDAO.GetAllAttachments(vendor.vendorID);
 					 model.put("attachList", attachList);
 					
-					 
+					 model.put("userSession", userSession);
 					
 				return "vendorProfile";
 				
