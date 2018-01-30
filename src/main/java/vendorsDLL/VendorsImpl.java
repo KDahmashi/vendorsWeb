@@ -610,41 +610,43 @@ public class VendorsImpl implements VendorDAO {
 	    	}        
 	    }
 	    
-		public Integer UpdatStatus(long vendorID, int statusID) {
+		public Integer UpdatStatus(long vendorID, int statusID, String commentReason) {
 			
-try {
-	    		
-	    		SimpleJdbcCall jdbcCall = new 
-	                SimpleJdbcCall(dataSource).withProcedureName("UpdateStatus")
-	                .withoutProcedureColumnMetaDataAccess().declareParameters(
-	                		new SqlParameter( "vendorID_in", Types.BIGINT ),
-	                		new SqlParameter( "statusID_in", Types.INTEGER ));
-	                       
-	
-	    				
-	    			Map<String, Object> result = new HashMap<String, Object>(2);
-	    			
-	    			result.put("vendorID_in",vendorID);
-	    			result.put("statusID_in", statusID);
-	    			
-	    				
-	    				
-	    			 
-	    				
-	    			result = jdbcCall.execute(result);
-	    			
-	    			return (Integer) result.get("result");
-	  
-	             
-	    	}catch(Exception ex)
-	    	{
-	    		String exc=ex.getMessage();
-	    		
-	    		  
-	    	}	
-			return 0;
-			
-		}
+			try {
+				    		
+				    		SimpleJdbcCall jdbcCall = new 
+				                SimpleJdbcCall(dataSource).withProcedureName("UpdateStatus")
+				                .withoutProcedureColumnMetaDataAccess().declareParameters(
+				                		new SqlParameter( "vendorID_in", Types.BIGINT ),
+				                		new SqlParameter( "statusID_in", Types.INTEGER ),
+				    					new SqlParameter( "comment_in", Types.VARCHAR ));
+				                       
+				
+				    				
+				    			Map<String, Object> result = new HashMap<String, Object>(2);
+				    			
+				    			result.put("vendorID_in",vendorID);
+				    			result.put("statusID_in", statusID);
+				    			result.put("comment_in", commentReason);
+				    			
+				    				
+				    				
+				    			 
+				    				
+				    			result = jdbcCall.execute(result);
+				    			
+				    			return (Integer) result.get("result");
+				  
+				             
+				    	}catch(Exception ex)
+				    	{
+				    		String exc=ex.getMessage();
+				    		
+				    		  
+				    	}	
+						return 0;
+						
+					}
 		
 		public  Map<Integer, String> GetAllCountries()
 	    {	
@@ -917,6 +919,9 @@ try {
 	            	attachment.attachmentID=(Long) (item.get("attachmentID"));	
 	            	attachment.attachmentTypeID=(Integer) (item.get("attachmentTypeID"));	            
 	            	attachment.fileName=(String)item.get("fileName");
+	            	attachment.attachmentEn=(String)item.get("attachmentEn");
+	            	attachment.attachmentAr=(String)item.get("attachmentAr");
+ 	
  	
 	            	lst.add(attachment);
 	            }
@@ -930,6 +935,44 @@ try {
 	    	}
 	            
 	             return lst;   
+	    	    
+	    }
+	    
+	    // Get vendor status and comments
+	    public Vendor GetVendorStatus(long userID)
+	    {  
+	    	Vendor vendor = new Vendor();
+	    	try {
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetVendorStatus")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "userID_in", Types.BIGINT));	            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("userID_in", userID);  		    				 
+
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	           
+
+	            for (Map<String, Object> item : list) {	 
+	            
+	            	vendor.userID=userID;
+	            	vendor.vendorID=(Long) (item.get("vendorID"));	
+	            	vendor.vendorNameEn=(String) (item.get("VendorNameEn"));
+	            	vendor.vendorNameAr=(String) (item.get("VendorNameAr"));	
+	            	vendor.statusAr=(String) (item.get("statusAr"));
+	            	vendor.statusEn=(String) (item.get("statusEn"));
+	            	vendor.commentReason=(String) (item.get("commentReason"));            		            	
+	            }
+            
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		 return vendor;  
+	    	}
+	            
+	             return vendor;   
 	    	    
 	    }
 }  

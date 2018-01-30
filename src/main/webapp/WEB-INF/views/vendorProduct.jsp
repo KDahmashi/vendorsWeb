@@ -19,52 +19,54 @@
     
        <div class="form-group row">
 
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Products         </h2>
-                
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Products         </h2>             
             </div>
+                   
+        <div class='alert alert-danger ${alert.getVisible()} ' id='alertBar' role="alert"> 
+        <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>${alert.getMessage()} <div id='alert'> </div>  </div>
             
                    <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Category</label>
+                <label  class="col-sm-2 col-form-label">Category</label>
                     <div class="col-sm-4">
                      <form:select  path="vendorProductID" class="form-control" id="ddlCategory">
                      <form:option value = "0" label = "Select"/>
                      <form:options items = "${categoryList}" />
                   </form:select>   
                     </div>
-                     <div class="col-sm-2">                
+                     <div class="col-sm-4">                
 
                      </div>
             </div>
                       
                           <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Sub Category</label>
+                <label  class="col-sm-2 col-form-label">Sub Category</label>
                     <div class="col-sm-4">                     
                      <form:select  path="SubCatID" class="form-control"  id="ddlSubcategory">
                      <form:option value = "0" label = "Select"/>                   
                   </form:select>   </div>
-                     <div class="col-sm-2"></div>
+                     <div class="col-sm-4"></div>
             </div>
             
             
                          <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Products</label>
+                <label  class="col-sm-2 col-form-label">Products</label>
                     <div class="col-sm-4"> 
                     <form:select  path="productID" class="form-control"  id="ddlproduct">
                      <form:option value = "0" label = "Select"/>                   
                   </form:select></div>
                      <div class="col-sm-2">
                      <form:input  class="form-control invisible" path="otherProduct"   id="otherProduct" placeholder="other Product (if not in list)" /> 
-                     </div>
+                     </div>  <div class="col-sm-2"></div>
             </div>
              
               <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Notes</label>
-                    <div class="col-sm-5"><form:textarea  class="form-control" path="notes" /></div>
-                     <div class="col-sm-1">  </div>
+                <label  class="col-sm-2 col-form-label">Notes</label>
+                    <div class="col-sm-6"><form:textarea  class="form-control" id="txtNote" path="notes" /></div>
+                     <div class="col-sm-2">  </div>
             </div>
  
                 
@@ -72,7 +74,7 @@
                   <div class="col-sm-3"></div>
                 <label  class="col-sm-4 col-form-label"></label>
 
-                    <div class="col-sm-3"><input type="submit" value="Save" name="vendorProduct"/></div>
+                    <div class="col-sm-3"><input type="submit"  id= "btnVendorProduct" value="Save" onclick="return validateVendorProduct();" class="btn btn-info" name="vendorProduct"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
@@ -85,8 +87,8 @@
         <div align="center">
             <h1></h1>
              <h2>  <i class="glyphicon glyphicon-tags" aria-hidden="true"></i>       products Lists    </h2>
-                    	<table class="table table-dark">
-                    	 <thead>
+                    	<table class="table table-sm table-hover table-striped table-bordered">
+                    	 <thead class="bg-primary">
                     	<tr>
                  <th scope="col">No</th>
                  <th scope="col">Category  Name</th>
@@ -124,17 +126,17 @@
         <div align="center">
             <h1></h1>
              <h2><i class="fa fa-paperclip  fa-2x" aria-hidden="true"></i>   Upload   Attachments    </h2>
-           
+          
             
                     	
-                    	<table class="table table-dark">
-                    	 <thead>
+                    	<table class="table table-sm table-hover table-striped table-bordered">
+                    	 <thead class="bg-primary ">
                     	<tr>
                  <th scope="col">No</th>
                  <th scope="col">Attachment  Name</th>
                 <th scope="col"> </th>
                  <th scope="col">file </th>              
-                  <th scope="col">  <h5 style="color:red">${message}</h5>  </th>
+                  <th scope="col"> <h5 > ${message}</h5> </th>
                 </tr>
     </thead>
                    <tbody>
@@ -149,19 +151,21 @@
                <div class="col-sm-4"> <input type="text" name="name" value=${type.fileName} class="invisible">
                <input type="text" name="typeID" value=${type.attachmentTypeID} class="invisible"></div>
              <div class="col-sm-4">  <input type="file" name="file"/> </div>
-              <div class="col-sm-4"><input type="submit" value="Upload" /></div>
+              <div class="col-sm-4"><button type="submit" class="btn btn-info"   > <i class="fa fa-cloud-upload " aria-hidden="true"> </i>Upload</button>
+              
+              </div>
               
                               
            </div>
         </form>                    
                     </td>                       
                    
-                    <th >
+                    <th >${attachment.fileName}
                      <c:set var="rowTypeId" value="${type.attachmentTypeID}"/>
                       <c:forEach var="attachment" items="${attachmentList}" varStatus="status">     
                       <c:set var="typeId" value="${attachment.attachmentTypeID}"/>                
                          <c:if test="${rowTypeId ==typeId}"> 
-                          <a href=${attachment.fileName} target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a>  
+                          <a href=${attachment.fileName} target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i> View</a>  
                           </c:if>  
                            </c:forEach>            
                      </th>                             
@@ -175,22 +179,37 @@
      </div>
       <div class="col-sm-1"></div>  </div>
       
-      
+        <form:form method="post" >
+    
          <div class="form-group row">
                   <div class="col-sm-3"></div>
                 <label  class="col-sm-4 col-form-label"></label>
 
-                    <div class="col-sm-3"><input type="submit" value="submit Profile" name="completeProfile"/></div>
+                    <div class="col-sm-3"></div>
                      <div class="col-sm-2"></div>
             </div>
             
+                <div class="form-group row">
+                  <div class="col-sm-2"></div>
+                <label  class="col-sm-2 col-form-label"></label>
+                     <div class="col-sm-2"><a href="vendorInfo"  class="btn btn-warning" > Back</a></div>
+                      <div class="col-sm-2"></div>
+                      <div class="col-sm-2">
+                      <input type="submit" value="submit Profile"  class="btn btn-success"  name="completeProfile"/></div>
+                     <div class="col-sm-2"></div>
+                     
+                     
+            </div>
+           </form:form> 
     </div>
     
     
      <jsp:include page="/WEB-INF/views/footer.jsp"/>
      
                   <script language="javascript" type="text/javascript"> 
+                  
      $(document).ready(function() { 
+    	    	
     		$('#ddlCategory').change(    				
     			function() {
     				
@@ -263,6 +282,42 @@
 	
     	});
 
+     
+     
+     function validateVendorProduct() {  	
+    	 $('#alert').empty(); 
+    	 var isValid = true;
+    	
+    		var selectedID  =$( "#ddlproduct option:selected" ).val();	  
+    	  
+    	  if ($( "#ddlproduct option:selected" ).val()==0)
+    	  {    
+    		 
+    		  if (($("#ddlSubcategory option:selected").text() =='Other')&& ($("#otherProduct").val().length >1))
+        	  { 
+        		  isValid = true;   		      		  
+        	  } else
+        	  {    	
+        		  $('#alert').append("please select the product details ! ");
+        		  isValid = false; 
+        	  }
+    	  } 
+        	   
+    	
+ 	  if (isValid)
+	  {    		 
+		  $('#alertBar').removeClass( "show" );
+		  $('#alertBar').addClass( "hide" );	
+		  return true;
+	  }
+	  else
+		  {    		  
+		  $('#alertBar').removeClass( "hide" );
+		  $('#alertBar').addClass( "show" );alert(00);
+		  return false;
+		  } 
+    	
+     }
      
         </script>
 </body>

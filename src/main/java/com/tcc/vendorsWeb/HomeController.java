@@ -110,8 +110,11 @@ public class HomeController {
 		 if(userSession==null)
 			 return new ModelAndView("redirect:/login");
 		 
+		 context= new ClassPathXmlApplicationContext("Spring-Module.xml");				
+		 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");    
+		   
+	        model.addObject("vendor", vendorDAO.GetVendorStatus(userSession.userID));
 	        model.addObject("userSession", userSession);
-		
 	     
 	        
 		 }catch(Exception ex)

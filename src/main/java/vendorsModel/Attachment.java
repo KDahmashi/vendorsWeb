@@ -6,7 +6,22 @@ public class Attachment {
 	public int attachmentTypeID;
 	public Long vendorID;
 	public String fileName;
+	public String attachmentAr;
+	public String attachmentEn;
 	
+	
+	public String getAttachmentAr() {
+		return attachmentAr;
+	}
+	public void setAttachmentAr(String attachmentAr) {
+		this.attachmentAr = attachmentAr;
+	}
+	public String getAttachmentEn() {
+		return attachmentEn;
+	}
+	public void setAttachmentEn(String attachmentEn) {
+		this.attachmentEn = attachmentEn;
+	}
 	public Long getAttachmentID() {
 		return attachmentID;
 	}

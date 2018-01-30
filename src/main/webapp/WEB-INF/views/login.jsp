@@ -93,18 +93,18 @@
     		  isValid = false;
     	  }
     	
-    	  if (isValid)
-    	  {    		 
-    		  $('#alertBar').removeClass( "visible" );
-    		  $('#alertBar').addClass( "invisible" );
-    		  return true;
-    	  }
-    	  else
-    		  {    		  
-    		  $('#alertBar').removeClass( "invisible" );
-    		  $('#alertBar').addClass( "visible" );
-    		  return false;
-    		  }
+ 	  if (isValid)
+	  {    		 
+		  $('#alertBar').removeClass( "show" );
+		  $('#alertBar').addClass( "hide" );
+		  return true;
+	  }
+	  else
+		  {    		  
+		  $('#alertBar').removeClass( "hide" );
+		  $('#alertBar').addClass( "show" );
+		  return false;
+		  }
     	
     	});
     </script>

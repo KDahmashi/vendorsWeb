@@ -44,10 +44,11 @@ public  Map<Integer, String> GetAllCities(Integer stateID);
 public  Map<Integer, String> GetAllStates(Integer countryID);
 public  Map<Integer, String> GetAllCountries();
 
-public Integer UpdatStatus(long vendorID, int statusID);
+public Integer UpdatStatus(long vendorID, int statusID, String commentReason);
 
 public List<AttachmentType> GetAttachmentTypes();
 public Integer AddAttachment(Attachment attachment);
 public List<Attachment> GetAllAttachments(long VendorID);
+public Vendor GetVendorStatus(long userID);
 
 }

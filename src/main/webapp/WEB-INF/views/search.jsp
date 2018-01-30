@@ -5,13 +5,19 @@
 <html>
 <head>
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	 
 <title>Insert title here</title>
 </head>
 <body>
 
+
+
 <jsp:include page="/WEB-INF/views/header.jsp"/>
 
- 
+
+		
+
       
          <form:form method="post" modelAttribute="searchInput">
 
@@ -53,8 +59,8 @@
         <div align="center">
             <h1></h1>
              <h2><span class="glyphicon glyphicon-edit" ></span>        Vendors Search      </h2>
-                    	<table class="table table-dark">
-                    	 <thead>
+                    	<table  id="example" class="table table-sm table-hover table-striped table-bordered">
+                    	 <thead class="bg-primary ">
                     	<tr>
                 <th scope="col">No</th>
                 <th scope="col">Vendor Name En</th>
@@ -97,7 +103,6 @@
     		alert(msg);
 </script>
         </c:if>
-        	
 
 
 </body>

@@ -1,7 +1,7 @@
 package vendorsModel;
 
 public class Alert {
-	public String  Visible="invisible";
+	public String  Visible="hide";
 	public String Message;
 	
 	public String getVisible() {

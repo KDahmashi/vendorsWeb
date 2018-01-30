@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <html>
@@ -14,16 +15,17 @@
     
     <c:if test="${not empty userList}">
     
-        <div align="center">
-            <h1></h1>
+        <div align="center">         
              <h2><span class="glyphicon glyphicon-edit" ></span>        User List      </h2>
-                    	<table class="table table-condensed table-hover table-striped" >
-                    	 <thead>
+                    
+                       <div class="form-group row">
+                  <div class="col-sm-2"></div> <div class="col-sm-8">
+                    	<table class="table table-sm table-hover table-striped table-bordered">
+                    <thead class="bg-primary">​
                     	<tr>
                  <th scope="col">No</th>
                  <th scope="col">User Name</th>
-                <th scope="col">Email</th>
-                  <th scope="col"></th>
+                <th scope="col">Email</th>               
                   <th scope="col"></th>
                 </tr>
     </thead>
@@ -34,10 +36,7 @@
                     <td>${user.name}</td>
                     <td>${user.email}</td>
                     <th  >
-                                     
-                    </th>
-                    <th  >
-                       <a type="button" class="btn btn-danger" href="deleteUser/${user.userID}"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete</a>
+                       <a type="button" class="btn btn-danger" href="deleteUser/${user.userID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                    
                      </th>
                              
@@ -46,7 +45,9 @@
                 </tbody>          
             </table>
         </div>
-        
+        </div>
+                  <div class="col-sm-2"></div>
+                  </div>
         	</c:if>
         	
         	

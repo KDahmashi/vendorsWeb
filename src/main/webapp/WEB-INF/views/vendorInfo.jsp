@@ -45,8 +45,8 @@
         <div align="center">
             <h1></h1>
              <h2><span class="glyphicon glyphicon-edit" ></span>        banks       </h2>
-                    	<table class="table table-dark">
-                    	 <thead>
+                    	<table class="table table-sm table-hover table-striped table-bordered">
+                    <thead class="bg-primary">​
                     	<tr>
                  <th scope="col">No</th>
                  <th scope="col">Bank Name</th>
@@ -113,8 +113,8 @@
         <div align="center">
             <h1></h1>
              <h2><span class="glyphicon glyphicon-edit" ></span>        Contact Persons       </h2>
-                    	<table class="table table-dark">
-                    	 <thead>
+                    	<table class="table table-sm table-hover table-striped table-bordered">
+                    <thead class="bg-primary">​
                     	<tr>
                  <th scope="col">No</th>
                  <th scope="col">Full Name</th>
@@ -189,8 +189,8 @@
         <div align="center">
             <h1></h1>
              <h2><span class="glyphicon glyphicon-edit" ></span>        Branch Lists    </h2>
-                    	<table class="table table-dark">
-                    	 <thead>
+                    	<table class="table table-sm table-hover table-striped table-bordered">
+                    <thead class="bg-primary">​
                     	<tr>
                  <th scope="col">No</th>
                  <th scope="col">Country  Name</th>

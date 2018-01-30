@@ -13,9 +13,30 @@ public class Vendor {
 	public String webSiteurl;
 	public int statsID;
 	public String crNumber;
+	public String statusAr;
+	public String statusEn;
+	public String commentReason;
 	
 	
 	
+	public String getStatusAr() {
+		return statusAr;
+	}
+	public void setStatusAr(String statusAr) {
+		this.statusAr = statusAr;
+	}
+	public String getStatusEn() {
+		return statusEn;
+	}
+	public void setStatusEn(String statusEn) {
+		this.statusEn = statusEn;
+	}
+	public String getCommentReason() {
+		return commentReason;
+	}
+	public void setCommentReason(String commentReason) {
+		this.commentReason = commentReason;
+	}
 	public String getCrNumber() {
 		return crNumber;
 	}

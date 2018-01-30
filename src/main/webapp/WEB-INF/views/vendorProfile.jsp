@@ -17,7 +17,7 @@
 
   <div class="form-group row">
 <div class="col-sm-12">
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Vendor         </h2>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Vendor Profile         </h2>
      <h4>    vendor Details         </h4>
 	</div></div>
 	
@@ -261,29 +261,6 @@
      <div class="col-sm-2"></div>
         </div>
       </form:form>      
-      
-               <form:form method="post" modelAttribute="update">
-               <div class="form-group row">
-                  		<label  class="col-sm-2 col-form-label">Comment</label>                
-                  		<div class="col-sm-8">
-                  		<form:textarea  class="form-control" path="comment" /> 
-                  		</div>		
-               </div>                  
- 			     
-               
-      
-             <div class="form-group row">
-               <div class="col-sm-2"></div>
-                  <div class="col-sm-4">
-                    <input type="submit" class="btn btn-success" value="Approve" name="approve"/> 
-                  </div> 
-                  <div class="col-sm-4">
-                    <input type="submit" class="btn btn-danger" value="Reject" name="reject"/> 
-                  </div>  	 
-              </div>  
-       
- 			</form:form>	
-      
  		
  		
     </div>

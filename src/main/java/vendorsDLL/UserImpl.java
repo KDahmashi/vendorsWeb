@@ -1,6 +1,9 @@
 package vendorsDLL;
 import vendorsModel.User;
+import vendorsModel.Category;
 import vendorsModel.Menu;
+import vendorsModel.Products;
+import vendorsModel.SubCategory;
 
 import java.sql.Types;
 import java.util.ArrayList;
@@ -119,7 +122,7 @@ public class UserImpl  implements  UserDAO{
 	    		SimpleJdbcCall jdbcCall = new 
 		                SimpleJdbcCall(dataSource).withProcedureName("DeleteUser")
 		                .withoutProcedureColumnMetaDataAccess().declareParameters(
-		                		new SqlParameter( "userID_in", Types.INTEGER ),		                		
+		                		new SqlParameter( "userID_in", Types.BIGINT ),		                		
 			    				new SqlOutParameter("result", Types.INTEGER ));                     
 		    				
 		    			Map<String, Object> result = new HashMap<String, Object>(2);
@@ -238,5 +241,137 @@ public class UserImpl  implements  UserDAO{
 	    
 	    }
 	    
+public Integer AddCategory(Category categor) {
+	    	
+	    	try {
+	    		
+	    		SimpleJdbcCall jdbcCall = new 
+	                SimpleJdbcCall(dataSource).withProcedureName("AddCategory")
+	                .withoutProcedureColumnMetaDataAccess().declareParameters(
+	                		new SqlParameter( "catName_in", Types.VARCHAR ),
+		    				new SqlOutParameter("result", Types.INTEGER ));
+	                       
+	
+	    				
+	    			Map<String, Object> result = new HashMap<String, Object>(2);
+	    				result.put("catName_in", categor.catName);
+	    			 
+	    				result = jdbcCall.execute(result);
+		    			
+		    			return (Integer) result.get("result");
+	    				
+	    			
+	  
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		String exc=ex.getMessage();
+	    		
+	    		 return 0; 
+	    	}	
+	            
+	}
+
+public Integer AddSubCategory(SubCategory subCategory) {
+	
+	try {
+		
+		SimpleJdbcCall jdbcCall = new 
+            SimpleJdbcCall(dataSource).withProcedureName("AddSubCategory")
+            .withoutProcedureColumnMetaDataAccess().declareParameters(
+            		new SqlParameter( "catID_in", Types.BIGINT),
+            		new SqlParameter( "subCatName_in", Types.VARCHAR ),
+    				new SqlOutParameter("result", Types.INTEGER ));
+                   
+
+				
+			Map<String, Object> result = new HashMap<String, Object>(2);
+			    
+			    result.put("catID_in", subCategory.catID);
+				result.put("subCatName_in", subCategory.subCatName);
+			 
+				result = jdbcCall.execute(result);
+    			
+    			return (Integer) result.get("result");
+				
+			
+
+         
+	}catch(Exception ex)
+	{
+		String exc=ex.getMessage();
+		
+		 return 0; 
+	}	
+        
+}
+	
+
+
+public Integer AddProducts(Products products) {
+	
+	try {
+		
+		SimpleJdbcCall jdbcCall = new 
+            SimpleJdbcCall(dataSource).withProcedureName("AddProduct")
+            .withoutProcedureColumnMetaDataAccess().declareParameters(
+            		new SqlParameter( "subCatID_in", Types.BIGINT),
+            		new SqlParameter( "productName_in", Types.VARCHAR ),
+    				new SqlOutParameter("result", Types.INTEGER ));
+                   
+
+				
+			Map<String, Object> result = new HashMap<String, Object>(2);
+			    
+			    result.put("subCatID_in", products.subCatID);
+				result.put("productName_in", products.productName);
+			 
+				result = jdbcCall.execute(result);
+    			
+    			return (Integer) result.get("result");
+				
+			
+
+         
+	}catch(Exception ex)
+	{
+		String exc=ex.getMessage();
+		
+		 return 0; 
+	}	
+        
+}
+
+
+public int DeleteProduct(long productID)    {
+	   
+	try {	    		
+    
+		SimpleJdbcCall jdbcCall = new 
+                SimpleJdbcCall(dataSource).withProcedureName("DeleteProduct")
+                .withoutProcedureColumnMetaDataAccess().declareParameters(
+                		new SqlParameter( "productID_in", Types.BIGINT ),		                		
+	    				new SqlOutParameter("result", Types.INTEGER ));                     
+    				
+    			Map<String, Object> result = new HashMap<String, Object>(2);
+    				result.put("productID_in", productID);  				
+    			 
+    				
+    			result = jdbcCall.execute(result);
+    			
+    			return (Integer) result.get("result");		                        	            
+    
+         
+	}catch(Exception ex)
+	{
+		String exc=ex.getMessage();
+		 return 0;  
+	}        
+     
+   
+
+}
+
+
 
 }

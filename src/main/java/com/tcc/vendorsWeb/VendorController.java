@@ -19,6 +19,7 @@ import vendorsModel.VendorBranches;
 import vendorsModel.ContactPerson;
 import vendorsModel.Menu;
 import vendorsModel.SearchVendors;
+import vendorsModel.UpdateStatus;
 import vendorsModel.User;
 import vendorsModel.Vendor;
 import vendorsModel.VendorProduct;
@@ -118,9 +119,11 @@ public class VendorController {
 	        return "redirect:vendorInfo";
 	    }
 	  
+	/*                                   Get Search                                                                                   */
+	  
 	  @RequestMapping(value = "/search", method = RequestMethod.GET)
 		public ModelAndView searchVendors(HttpSession session, Map model , @ModelAttribute("searchResults")SearchVendors searchResults) {		
-		  List<SearchVendors> searchResultslist = new ArrayList<SearchVendors>();
+			List<SearchVendors> searchResultslist = new ArrayList<SearchVendors>();
 			SearchVendors searchVendors = new SearchVendors();			
 			
 			 // user Session 
@@ -141,10 +144,17 @@ public class VendorController {
 	        	if(searchResults.vendorNameEn!=null) {
 	        		 searchResultslist =searchDAO.findVendors(searchResults.vendorNameEn, searchResults.catName, searchResults.subCatName, searchResults.productName);
 	        	}else
-	        		 searchResultslist =searchDAO.getAllVendors();
+	        		 searchResultslist =searchDAO.findVendors("", "", "", "");
 	        	
 	        	 model1.addObject("searchInput", searchVendors);
 	        	 model1.addObject("search", searchResultslist);
+	        	 
+	        	 /*context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+	 			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
+	 			
+	 		
+	        	 model1.addObject("jsonList", new Gson().toJson(vendorDAO.GetAllStates(1)));*/
+	        	 
 
 	        } catch (Exception ex) {
 	        	String ss=ex.getMessage();
@@ -154,7 +164,7 @@ public class VendorController {
 	        return model1;
 			
 		}
-		
+	  
 	  /*                                   Redirect to Search page                                                                      */
 		
 		@RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -164,9 +174,8 @@ public class VendorController {
 			redirect.addFlashAttribute("searchResults",searchVendors);
 	        return "redirect:search";
 	    }
-
-
-
+		
+	/*                                                                                                                                    */
 		  
 		@RequestMapping(value = "/vendorInfo", method = RequestMethod.GET)
 		public String vendorInfo(Map model,HttpSession session) {		
@@ -238,12 +247,13 @@ public class VendorController {
 /*                                   Approve Button And Update Status                                                                                   */
 		
 		@RequestMapping(value = "/approve", method = RequestMethod.POST, params="approve" )
-	    public String approve(@ModelAttribute("aprooveInput") SearchVendors approveVendors,
+	    public String approve(@ModelAttribute("aprooveInput") UpdateStatus approveVendors,
 	            Map<String, Object> model, final RedirectAttributes redirect, HttpSession session ,@RequestParam(value="id", required=false) long vendorID ) {
 			
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
-			  VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");         
-				
+			  VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
+			  UpdateStatus update = new UpdateStatus();
+			  ModelAndView model1 = new ModelAndView("approve");
 			
 				 // user Session 
 				 User userSession=(User)session.getAttribute("user");
@@ -253,18 +263,22 @@ public class VendorController {
 				 /*if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
 					 retu rn "redirect:/login";//UnAuthorised Access of this page 
 */				 
-				   vendorDAO.UpdatStatus(vendorID, 1);			
+				   vendorDAO.UpdatStatus(vendorID, 1, approveVendors.comment);
+				   model1.addObject("aprooveInput", vendorDAO);
 					
 	        return "redirect:/search";
+	        
 	    }
 		
 		/*                                   Reject Button And Update Status                                                                                   */
 		
 		@RequestMapping(value = "/approve", method = RequestMethod.POST, params="reject" )
-	    public String reject(@ModelAttribute("aprooveInput") SearchVendors approveVendors,
+	    public String reject(@ModelAttribute("aprooveInput") UpdateStatus approveVendors,
 	            Map<String, Object> model, final RedirectAttributes redirect, HttpSession session , @RequestParam(value="id", required=false) long vendorID ) {
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
-			  VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");         
+			  VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
+			  UpdateStatus update = new UpdateStatus();
+			  ModelAndView model1 = new ModelAndView("approve");
 			  
 				
 				 // user Session 
@@ -275,8 +289,8 @@ public class VendorController {
 				 /*if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
 					 retu rn "redirect:/login";//UnAuthorised Access of this page 
 */				 
-				   vendorDAO.UpdatStatus(vendorID, 0);			
-					
+				   vendorDAO.UpdatStatus(vendorID, 0, approveVendors.comment);			
+				   model1.addObject("aprooveInput", vendorDAO);
 				   return "redirect:/search";
 	    }
 	  
@@ -311,14 +325,18 @@ public class VendorController {
 					 
 					 List<VendorBranches> branchesList=vendorDAO.GetVendorBranchesByID(vendorID);
 					 model.put("branchesList", branchesList);
+					 
+					 List<Attachment> attachList=vendorDAO.GetAllAttachments(vendorID);
+					 model.put("attachList", attachList);
 					
+					 UpdateStatus update = new UpdateStatus();
+					 model.put("update", update);
 					
 				return "approve";
 				
 			}
 		  
-		 /* */  	
-		
+		 /* 		 /*                                                                                                                                     */
 		@RequestMapping(value="/deleteBank/{bankID}",method = RequestMethod.GET)
 		public ModelAndView deleteBank(@PathVariable long bankID){
 			
@@ -345,7 +363,7 @@ public class VendorController {
 		}		
 		
 		@RequestMapping(value = "/vendorProduct", method = RequestMethod.GET)
-		public String vendorProduct(Map model,HttpSession session) {		
+		public String vendorProduct(Map model,HttpSession session,@ModelAttribute("alert") Alert alert) {		
 
 			
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
@@ -373,7 +391,7 @@ public class VendorController {
 				model.put("attachmentList", attachmentList);
 			 
 				model.put("userSession", userSession);				
-
+				model.put("alert",alert);
 			return "vendorProduct";
 		}	
 
@@ -396,7 +414,8 @@ public class VendorController {
 		
 		@RequestMapping(value = "/vendorProduct" ,method = RequestMethod.POST, params = "vendorProduct")
 	    public String addVendorProduct(@ModelAttribute("vendorForm") VendorProduct vendorProduct,
-	            Map<String, Object> model,HttpSession session) {
+	            Map<String, Object> model,HttpSession session,RedirectAttributes redirectAttributes) {
+			
 	
 		  User userSession=(User)session.getAttribute("user");
 		
@@ -479,10 +498,12 @@ public class VendorController {
 		    public String handleFormUpload(@RequestParam("name") String fileName, @RequestParam("typeID") int TypeID,
 		        @RequestParam("file") MultipartFile file,RedirectAttributes redirectAttributes,HttpSession session) {
 
-		    	 
 		    	
 		    	   if (file.isEmpty()) {
-			            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+
+						Alert alert =new Alert();  
+						alert.Visible="show";alert.Message="Please select a file to upload";
+			            redirectAttributes.addFlashAttribute("alert",alert );
 			            return "redirect:vendorProduct";
 			        }
 		        if (!file.isEmpty()) {	
@@ -544,10 +565,10 @@ public class VendorController {
 				VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
 		        
 				
-				//vendorDAO.AddVendorProduct(vendorProduct);	        
+				  vendorDAO.UpdatStatus(vendorId, 3, "Your profile is successfully submitted and it is under review ");	        
 			   
 		
-		        return "redirect:vendorProduct";
+		        return "redirect:VendorHome";
 		    }
 
 }

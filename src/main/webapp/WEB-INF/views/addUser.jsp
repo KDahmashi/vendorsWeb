@@ -59,7 +59,7 @@
                  <div class="col-sm-3"></div>
             </div>
             
-                  <div class="form-group row invisible" id='alertBar'>
+                  <div class="form-group row hide" id='alertBar'>
                   <div class="col-sm-2"></div>
     <div class="col-sm-8">  <div class='alert alert-danger'   role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i><div id='alert'> </div>  </div></div>
        <div class="col-sm-2"></div>
@@ -125,14 +125,14 @@
     	  
     	  if (isValid)
     	  {    		 
-    		  $('#alertBar').removeClass( "visible" );
-    		  $('#alertBar').addClass( "invisible" );
+    		  $('#alertBar').removeClass( "show" );
+    		  $('#alertBar').addClass( "hide" );
     		  return true;
     	  }
     	  else
     		  {    		  
-    		  $('#alertBar').removeClass( "invisible" );
-    		  $('#alertBar').addClass( "visible" );
+    		  $('#alertBar').removeClass( "hide" );
+    		  $('#alertBar').addClass( "show" );
     		  return false;
     		  }
     	

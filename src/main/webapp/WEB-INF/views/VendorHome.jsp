@@ -1,5 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,7 +17,11 @@
  
        <div class="form-group row">
     <h2><i class="fa fa-building-o" aria-hidden="true"></i>    Welcome to Vendor Management           </h2>
-         <h4>    please complete your Registration          </h4>
+          <div class="form-group row">
+                  <div class="col-sm-2"></div> <div class="col-sm-8"> <h4>     ${vendor.getCommentReason()}       </h4> </div>
+                  <div class="col-sm-2"></div>
+                  </div>
+       
     </div>
     
 
