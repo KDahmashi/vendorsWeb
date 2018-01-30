@@ -95,9 +95,7 @@ public class UserController {
 			 UserDAO userDAO = (UserDAO) context.getBean("UserDAO");     	       
 	        
 		        userDAO.deleteUser(userID);	        
-		   
 	
-		
 			return new ModelAndView("redirect:/home");
 		}
 		
