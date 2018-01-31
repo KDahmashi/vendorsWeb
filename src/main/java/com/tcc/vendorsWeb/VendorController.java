@@ -75,13 +75,13 @@ public class VendorController {
 	
 	
 	@RequestMapping(value = "/vendorMain", method = RequestMethod.GET)
-	public String vendorMain(Map model,HttpSession session) {		
+	public String vendorMain(Map model,HttpSession session, @ModelAttribute("alert") Alert alert) {		
 
 		
 		context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
 		VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");         
 		model.put("VendorTypeList", vendorDAO.GetAllVendorTypes());
-		
+		model.put("alert", alert);
 		
 		 // user Session 
 		 User userSession=(User)session.getAttribute("user");
@@ -103,7 +103,7 @@ public class VendorController {
 
 	@RequestMapping(value = "/vendorMain" ,method = RequestMethod.POST)
 	    public String vendorMain(@ModelAttribute("vendorForm") Vendor vendor,
-	            Map<String, Object> model,HttpSession session) {
+	            Map<String, Object> model,HttpSession session ,final RedirectAttributes redirectAttributes) {
 	
 		  User userSession=(User)session.getAttribute("user");
 		  vendor.userID=userSession.userID;
@@ -112,9 +112,14 @@ public class VendorController {
 			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
 	        
 			Long vendorId=vendorDAO.AddVendor(vendor);	
-			
-			session.setAttribute("vendorId", vendorId);				
-		   
+			 if(vendorId==-2) {
+				   Alert alert =new Alert();  
+					alert.Visible="show";alert.Message="Vendor is already exist";
+					redirectAttributes.addFlashAttribute("alert", alert);
+					return "redirect:vendorMain";
+			   }
+			 
+			session.setAttribute("vendorId", vendorId);				   
 	
 	        return "redirect:vendorInfo";
 	    }
@@ -178,14 +183,23 @@ public class VendorController {
 	/*                                                                                                                                    */
 		  
 		@RequestMapping(value = "/vendorInfo", method = RequestMethod.GET)
-		public String vendorInfo(Map model,HttpSession session) {		
+		public String vendorInfo(Map model,HttpSession session, @ModelAttribute("alert") Alert alert) {		
+			
+			 // user Session 
+			 User userSession=(User)session.getAttribute("user");
+			 if(userSession==null)
+				 return "redirect:/login";
+			 
+			 if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
+				 return "redirect:/login";//UnAuthorised Access of this page 
+			
 			Bank bank = new Bank();
 			model.put("bank", bank);
-			
+			model.put("userSession", userSession);
 			
 			ContactPerson contactPerson = new ContactPerson();
 			model.put("contactPerson", contactPerson);
-			
+			model.put("alert", alert);
 			Long vendorId=(Long)session.getAttribute("vendorId");
 			
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
@@ -210,7 +224,7 @@ public class VendorController {
 
 		@RequestMapping(value = "/vendorInfo" ,method = RequestMethod.POST, params = "AddBank")
 		    public String addBank(@ModelAttribute("vendorForm") Bank bank,
-		            Map<String, Object> model,HttpSession session) {
+		            Map<String, Object> model,HttpSession session ,final RedirectAttributes redirectAttributes) {
 		
 			  User userSession=(User)session.getAttribute("user");
 			
@@ -220,7 +234,13 @@ public class VendorController {
 				VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
 		        
 				bank.vendorID=vendorId;
-				vendorDAO.AddBank(bank);	        
+				int result=vendorDAO.AddBank(bank);	   
+				if(result==-2) {
+					   Alert alert =new Alert();  
+						alert.Visible="show";alert.Message="Bank is already exist";
+						redirectAttributes.addFlashAttribute("alert", alert);
+						return "redirect:vendorInfo";
+				   }
 			   
 		
 		        return "redirect:vendorInfo";
@@ -228,7 +248,7 @@ public class VendorController {
 		
 		@RequestMapping(value = "/vendorInfo" ,method = RequestMethod.POST ,params = "AddPerson")
 	    public String addPerson(@ModelAttribute("vendorForm") ContactPerson contactPerson,
-	            Map<String, Object> model,HttpSession session) {
+	            Map<String, Object> model,HttpSession session ,final RedirectAttributes redirectAttributes) {
 	
 		  User userSession=(User)session.getAttribute("user");
 		
@@ -238,8 +258,13 @@ public class VendorController {
 			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
 	        
 			contactPerson.vendorID=vendorId;
-			vendorDAO.AddContactPerson(contactPerson);	        
-		   
+			int result=vendorDAO.AddContactPerson(contactPerson);	        
+			if(result==-2) {
+				   Alert alert =new Alert();  
+					alert.Visible="show";alert.Message="Person is already exist";
+					redirectAttributes.addFlashAttribute("alert", alert);
+					return "redirect:vendorInfo";
+			   }
 	
 	        return "redirect:vendorInfo";
 	    }
@@ -260,9 +285,9 @@ public class VendorController {
 				 if(userSession==null)
 					 return "redirect:/login";
 				 
-				 /*if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
-					 retu rn "redirect:/login";//UnAuthorised Access of this page 
-*/				 
+				 if(!new UserManager().isAuthorised(userSession.menu,"search"))
+					 return "redirect:/login";//UnAuthorised Access of this page 
+				 
 				   vendorDAO.UpdatStatus(vendorID, 1, approveVendors.comment);
 				   model1.addObject("aprooveInput", vendorDAO);
 					
@@ -286,9 +311,9 @@ public class VendorController {
 				 if(userSession==null)
 					 return "redirect:/login";
 				 
-				 /*if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
-					 retu rn "redirect:/login";//UnAuthorised Access of this page 
-*/				 
+				 if(!new UserManager().isAuthorised(userSession.menu,"search"))
+					 return "redirect:/login";//UnAuthorised Access of this page 
+				 
 				   vendorDAO.UpdatStatus(vendorID, 0, approveVendors.comment);			
 				   model1.addObject("aprooveInput", vendorDAO);
 				   return "redirect:/search";
@@ -306,9 +331,9 @@ public class VendorController {
 				 if(userSession==null)
 					 return "redirect:/login";
 				 
-				 /*if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
-					 retu rn "redirect:/login";//UnAuthorised Access of this page 
-*/				 
+				 if(!new UserManager().isAuthorised(userSession.menu,"search"))
+					 return "redirect:/login";//UnAuthorised Access of this page 
+				 
 				   Vendor vendor =approveVendorDAO.GetVendorByID(vendorID);			
 					model.put("vendor", vendor);	
 					
@@ -380,9 +405,10 @@ public class VendorController {
 			 if(userSession==null)
 				 return "redirect:/login";
 			 
-			/* if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
+			 if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
 				 return "redirect:/login";//UnAuthorised Access of this page 
-*/			 	 Long vendorId=(Long)session.getAttribute("vendorId");
+			 
+			 	 Long vendorId=(Long)session.getAttribute("vendorId");
 			List<VendorProduct> productList= vendorDAO.GetVendorProductByID(vendorId);
 			 model.put("productList", productList);
 			 
@@ -427,8 +453,13 @@ public class VendorController {
 			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
 	        
 			vendorProduct.vendorID=vendorId;
-			vendorDAO.AddVendorProduct(vendorProduct);	        
-		   
+			int result=vendorDAO.AddVendorProduct(vendorProduct);	        
+			if(result==-2) {
+				   Alert alert =new Alert();  
+					alert.Visible="show";alert.Message="this Product is already exist";
+					redirectAttributes.addFlashAttribute("alert", alert);
+					return "redirect:vendorProduct";
+			   }
 	
 	        return "redirect:vendorProduct";
 	    }
@@ -461,7 +492,7 @@ public class VendorController {
 		
 		@RequestMapping(value = "/vendorInfo" ,method = RequestMethod.POST, params = "branch")
 	    public String addBranch(@ModelAttribute("vendorForm") VendorBranches branch,
-	            Map<String, Object> model,HttpSession session) {
+	            Map<String, Object> model,HttpSession session ,RedirectAttributes redirectAttributes) {
 	
 
 			  User userSession=(User)session.getAttribute("user");
@@ -472,8 +503,13 @@ public class VendorController {
 				VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
 		        
 				branch.vendorID=vendorId;
-				vendorDAO.AddBranch(branch);	        
-			   
+				int result=vendorDAO.AddBranch(branch);	        
+				if(result==-2) {
+					   Alert alert =new Alert();  
+						alert.Visible="show";alert.Message="branch is already exist";
+						redirectAttributes.addFlashAttribute("alert", alert);
+						return "redirect:vendorInfo";
+				   }
 		
 		        return "redirect:vendorInfo";
 	    }

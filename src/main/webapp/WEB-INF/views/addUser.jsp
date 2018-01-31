@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>User Registration</title>
 </head>
 <body>
 
@@ -20,6 +20,9 @@
     
       <h2><span class="glyphicon glyphicon-user" ></span>     User Registration         </h2>
       
+             <div class="form-group row">                <div class="col-sm-1"> </div>        
+ <div class="col-sm-10"><div class='alert alert-danger ${alert.getVisible()}' id='alertBar' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i> <div id='alert'>${alert.getMessage()} </div>  </div>
+       </div><div class="col-sm-1"></div>            </div>
        
        <div class="form-group row">
                   <div class="col-sm-2"></div>
@@ -59,12 +62,7 @@
                  <div class="col-sm-3"></div>
             </div>
             
-                  <div class="form-group row hide" id='alertBar'>
-                  <div class="col-sm-2"></div>
-    <div class="col-sm-8">  <div class='alert alert-danger'   role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i><div id='alert'> </div>  </div></div>
-       <div class="col-sm-2"></div>
-       </div>
-       
+
        
     </form:form>
 

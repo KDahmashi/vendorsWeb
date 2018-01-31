@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Login</title>
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 <div class="col-md-4">
 	<h1><i class="fa fa-lock red"></i> Login </h1>
 	
-	<div class='alert alert-danger ${alert.getVisible()}' id='alertBar' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>${alert.getMessage()} <div id='alert'> </div>  </div>
+	<div class='alert alert-danger ${alert.getVisible()}' id='alertBar' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i> <div id='alert'>${alert.getMessage()} </div>  </div>
        
   <div class="form-group">   
              <div class="form-group row">

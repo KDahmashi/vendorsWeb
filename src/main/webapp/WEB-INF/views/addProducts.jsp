@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Category Information</title>
+<title>Products Information</title>
 </head>
 <body>
 

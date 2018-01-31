@@ -20,19 +20,23 @@
        <div class="form-group row">
 
     <h2><span class="glyphicon glyphicon-folder-open" ></span>     vendor Registration         </h2>
+     <div class="form-group row">                <div class="col-sm-1"> </div>        
+ <div class="col-sm-10"><div class='alert alert-danger ${alert.getVisible()}' id='alertBar' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i> <div id='alert'>${alert.getMessage()} </div>  </div>
+       </div><div class="col-sm-1"></div>            </div>
+    
      <h4>    Bank Details         </h4>
 
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Bank Name</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="bankName" /></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="bankName" id="bankName" /></div>
                      <div class="col-sm-2"></div>
             </div>
             
               <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Bank IBAN</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="iban" /></div>
-                     <div class="col-sm-2"> <input type="submit" class="btn btn-info" value="Add Bank" name="AddBank"/>  </div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="iban" id="iban" /></div>
+                     <div class="col-sm-2"> <input type="submit" class="btn btn-info" value="Add Bank" name="AddBank" onclick="return validateBank();"/>  </div>
             </div>
         </form:form>    
         
@@ -81,7 +85,7 @@
                           <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Full Name </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="fullName" /></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="fullName" id="fullName" /></div>
                      <div class="col-sm-2"></div>
             </div>
             
@@ -89,7 +93,7 @@
                          <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Mobile Number</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="mobile" /></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="mobile" id="mobile"/></div>
                      <div class="col-sm-2"></div>
             </div>
              
@@ -97,9 +101,9 @@
                                       <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Email </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="email" /></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="email" id="email"/></div>
                      <div class="col-sm-2">
-                     <input type="submit" class="btn btn-info" value="Add Person" name="AddPerson"/> </div>
+                     <input type="submit" class="btn btn-info" value="Add Person" name="AddPerson"  onclick="return validatePerson();"/> </div>
             </div>
             
             
@@ -176,7 +180,7 @@
                      <form:option value = "0" label = "Select"/>                   
                   </form:select>   </div>
                      
-                     <div class="col-sm-2"> <input type="submit" class="btn btn-info" value="Add Branch" name="branch"/>  </div>
+                     <div class="col-sm-2"> <input type="submit" class="btn btn-info" value="Add Branch" name="branch" onclick="return validateBranch();"/>  </div>
             </div>
                         
             
@@ -281,6 +285,87 @@
         		                }
         		            }); });	
     	 			
+    		
+    		
+    		
+    		function validateBank() {  	
+    	    	 $('#alert').empty(); 
+    	    	 var isValid = true;    	    	
+    	   
+    	    	  if ($('#bankName').val().length <1)
+    	    	  {    		 
+    	    		  $('#alert').append("enter bank Name ! ");  isValid = false;
+    	    	  }  
+    	    	  
+
+    	    	  if ($('#iban').val().length <1)
+    	    	  {    		 
+    	    		  $('#alert').append("enter iban ! ");  isValid = false;   		      		  
+    	    	  } 	    	  
+ 
+    	    	  if (isValid)	  {   		 
+    	    		  $('#alertBar').removeClass( "show" ); 		  $('#alertBar').addClass( "hide" ); 		  return true;
+    	    	  }
+    	    	  else  {    		  
+    	    		  $('#alertBar').removeClass( "hide" ); 		  $('#alertBar').addClass( "show" );   $(window).scrollTop(0);		  return false;
+    	    		  }
+    	    	
+    	    	}
+    		
+    		function validatePerson() {  	
+   	    	 $('#alert').empty(); 
+   	    	 var isValid = true;    
+   	    	 
+   	    	if ($('#fullName').val().length <1)
+	    	  {    		 
+	    		  $('#alert').append("enter full Name ! ");  isValid = false;
+	    	  }  
+   	   
+	   	   if ($('#email').val().length <1)
+	       	  {    		 
+	       		  $('#alert').append("enter email ! ");	       		  isValid = false;   		      		  
+	       	  }
+	       	  else
+	       		  if (!validateEmail($('#email').val()))
+	           	  {    		 
+	           		  $('#alert').append("wrong email ! ");	           		  isValid = false;
+	           	  }
+
+       	  if ($('#mobile').val().length <10)
+       	  {    		 
+       		  $('#alert').append("enter currect mobile Number ! ");       		  isValid = false;
+       	  }	    	  
+
+   	    	  if (isValid)	  {   		 
+   	    		  $('#alertBar').removeClass( "show" ); 		  $('#alertBar').addClass( "hide" ); 		  return true;
+   	    	  }
+   	    	  else  {    		  
+   	    		  $('#alertBar').removeClass( "hide" ); 		  $('#alertBar').addClass( "show" );   $(window).scrollTop(0);		  return false;
+   	    		  }
+   	    	
+   	    	}
+    		
+    		function validateBranch() {  	
+   	    	 $('#alert').empty(); 
+   	    	 var isValid = true;    	    	
+   	   
+   	    	 if ( $( "#ddlCity option:selected" ).val() ==0)
+       	  {    		 
+       		  $('#alert').append("select your Branch ! ");
+       		  isValid = false;
+       	  } 
+       	  	    	  
+
+   	    	  if (isValid)	  {   		 
+   	    		  $('#alertBar').removeClass( "show" ); 		  $('#alertBar').addClass( "hide" ); 		  return true;
+   	    	  }
+   	    	  else  {    		  
+   	    		  $('#alertBar').removeClass( "hide" ); 		  $('#alertBar').addClass( "show" );   	 $(window).scrollTop(0);	  return false;
+   	    		  }
+   	    	
+   	    	}
+    		
+    		
     		</script>
      
      

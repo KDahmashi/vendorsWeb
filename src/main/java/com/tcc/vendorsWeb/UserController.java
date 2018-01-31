@@ -65,10 +65,10 @@ public class UserController {
 
 	 
 		@RequestMapping(value = "/addUser", method = RequestMethod.GET)
-		public String addUser(Map model) {		
+		public String addUser(Map model,@ModelAttribute("alert") Alert alert) {		
 			User user = new User();			
 			model.put("user", user);			
-			
+			model.put("alert", alert);
 			
 			
 			return "addUser";
@@ -76,13 +76,19 @@ public class UserController {
 	 
 	  @RequestMapping(value = "/addUser" ,method = RequestMethod.POST)
 	    public String addUser(@ModelAttribute("userForm") User user,
-	            Map<String, Object> model) {		   
+	            Map<String, Object> model,final RedirectAttributes redirectAttributes) {		   
 		   
 			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
 			 UserDAO userDAO = (UserDAO) context.getBean("UserDAO");     	       
 	        
-		        userDAO.AddUser(user);	        
-		   
+		      int result=  userDAO.AddUser(user);	        
+		   if(result==-2) {
+			   Alert alert =new Alert();  
+				alert.Visible="show";alert.Message="User is already exist";
+				redirectAttributes.addFlashAttribute("alert", alert);
+				return "redirect:addUser";
+		   }
+			   
 	
 	        return "redirect:home";
 	    }

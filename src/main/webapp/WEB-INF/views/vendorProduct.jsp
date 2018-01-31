@@ -21,9 +21,10 @@
 
     <h2><span class="glyphicon glyphicon-folder-open" ></span>     Products         </h2>             
             </div>
-                   
-        <div class='alert alert-danger ${alert.getVisible()} ' id='alertBar' role="alert"> 
-        <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>${alert.getMessage()} <div id='alert'> </div>  </div>
+                  <div class="form-group row">                <div class="col-sm-1"> </div>        
+ <div class="col-sm-10"><div class='alert alert-danger ${alert.getVisible()}' id='alertBar' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i> <div id='alert'> ${alert.getMessage()}</div>  </div>
+       </div><div class="col-sm-1"></div>            </div>  
+       
             
                    <div class="form-group row">
                   <div class="col-sm-2"></div>
@@ -306,15 +307,11 @@
     	
  	  if (isValid)
 	  {    		 
-		  $('#alertBar').removeClass( "show" );
-		  $('#alertBar').addClass( "hide" );	
-		  return true;
+		  $('#alertBar').removeClass( "show" );		  $('#alertBar').addClass( "hide" );			  return true;
 	  }
 	  else
 		  {    		  
-		  $('#alertBar').removeClass( "hide" );
-		  $('#alertBar').addClass( "show" );alert(00);
-		  return false;
+		  $('#alertBar').removeClass( "hide" );		  $('#alertBar').addClass( "show" );		$(window).scrollTop(0);  return false;
 		  } 
     	
      }
