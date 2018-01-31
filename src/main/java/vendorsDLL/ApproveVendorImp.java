@@ -65,7 +65,7 @@ public class ApproveVendorImp implements ApproveVendorDAO {
              
     	}catch(Exception ex)
     	{
-    		String exc=ex.getMessage();
+    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
     		 return vendor;  
     	}
             

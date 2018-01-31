@@ -83,8 +83,8 @@ public class SearchVendorsImp implements SearchVendorsDAO {
         
              
     	}catch(Exception ex)
-    	{
-    		String exc=ex.getMessage();
+    	{   	
+    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
     		 return lstvendor;  
     	}
             

@@ -60,7 +60,7 @@ public class UserImpl  implements  UserDAO{
 	             
 	    	}catch(Exception ex)
 	    	{
-	    		String exc=ex.getMessage();
+	    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
 	    		
 	    		 return 0; 
 	    	}	
@@ -103,7 +103,7 @@ public class UserImpl  implements  UserDAO{
 	             
 	    	}catch(Exception ex)
 	    	{
-	    		String exc=ex.getMessage();
+	    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
 	    		 return lstUser;  
 	    	}
 	            
@@ -136,7 +136,7 @@ public class UserImpl  implements  UserDAO{
 	             
 	    	}catch(Exception ex)
 	    	{
-	    		String exc=ex.getMessage();
+	    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
 	    		 return 0;  
 	    	}        
 	         
@@ -172,9 +172,8 @@ public class UserImpl  implements  UserDAO{
 	            	user.userID=(Long) (item.get("userID"));
 	            	user.userTypeID= (Integer) (item.get("userTypeID"));
 	            	user.name=(String)item.get("name");
-	            	user.email=(String)item.get("email");
-	            	
-	            	user.statusID= (Integer) (item.get("statusID"));        		            	
+	            	user.email=(String)item.get("email");	            	
+	            	       		            	
 	          
 	            }
 	            	            
@@ -182,8 +181,8 @@ public class UserImpl  implements  UserDAO{
 	             
 	    	}catch(Exception ex)
 	    	{
-	    		String exc=ex.getMessage();
-	    		exc="";
+	    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
+	    		
 	    		  
 	    	}
 	            
@@ -230,7 +229,7 @@ public class UserImpl  implements  UserDAO{
 	             
 	    	}catch(Exception ex)
 	    	{
-	    		String exc=ex.getMessage();
+	    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
 	    		 return lstMenu;  
 	    	}
 	            
@@ -265,7 +264,7 @@ public Integer AddCategory(Category categor) {
 	             
 	    	}catch(Exception ex)
 	    	{
-	    		String exc=ex.getMessage();
+	    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
 	    		
 	    		 return 0; 
 	    	}	
@@ -299,7 +298,7 @@ public Integer AddSubCategory(SubCategory subCategory) {
          
 	}catch(Exception ex)
 	{
-		String exc=ex.getMessage();
+		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
 		
 		 return 0; 
 	}	
@@ -335,7 +334,7 @@ public Integer AddProducts(Products products) {
          
 	}catch(Exception ex)
 	{
-		String exc=ex.getMessage();
+		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
 		
 		 return 0; 
 	}	
@@ -364,7 +363,7 @@ public int DeleteProduct(long productID)    {
          
 	}catch(Exception ex)
 	{
-		String exc=ex.getMessage();
+		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
 		 return 0;  
 	}        
      
