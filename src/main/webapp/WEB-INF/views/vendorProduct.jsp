@@ -31,7 +31,7 @@
                 <label  class="col-sm-2 col-form-label">Category</label>
                     <div class="col-sm-4">
                      <form:select  path="vendorProductID" class="form-control" id="ddlCategory">
-                     <form:option value = "0" label = "Select"/>
+                     <form:option value = "0" label = "Select Category"/>
                      <form:options items = "${categoryList}" />
                   </form:select>   
                     </div>
@@ -45,7 +45,7 @@
                 <label  class="col-sm-2 col-form-label">Sub Category</label>
                     <div class="col-sm-4">                     
                      <form:select  path="SubCatID" class="form-control"  id="ddlSubcategory">
-                     <form:option value = "0" label = "Select"/>                   
+                     <form:option value = "0" label = "Select Sub Category"/>                   
                   </form:select>   </div>
                      <div class="col-sm-4"></div>
             </div>
@@ -56,7 +56,7 @@
                 <label  class="col-sm-2 col-form-label">Products</label>
                     <div class="col-sm-4"> 
                     <form:select  path="productID" class="form-control"  id="ddlproduct">
-                     <form:option value = "0" label = "Select"/>                   
+                     <form:option value = "0" label = "Select Product"/>                   
                   </form:select></div>
                      <div class="col-sm-2">
                      <form:input  class="form-control invisible" path="otherProduct"   id="otherProduct" placeholder="other Product (if not in list)" /> 
@@ -66,7 +66,7 @@
               <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-2 col-form-label">Notes</label>
-                    <div class="col-sm-6"><form:textarea  class="form-control" id="txtNote" path="notes" /></div>
+                    <div class="col-sm-6"><form:textarea  class="form-control" id="txtNote" path="notes" placeholder="Write Note"/></div>
                      <div class="col-sm-2">  </div>
             </div>
  
@@ -87,14 +87,14 @@
                 <c:if test="${not empty productList}">    
         <div align="center">
             <h1></h1>
-             <h2>  <i class="glyphicon glyphicon-tags" aria-hidden="true"></i>       products Lists    </h2>
+             <h2>  <i class="glyphicon glyphicon-tags" aria-hidden="true"></i>       Products Lists    </h2>
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	 <thead class="bg-primary">
                     	<tr>
                  <th scope="col">No</th>
                  <th scope="col">Category  Name</th>
-                <th scope="col">Subcategory Name </th>
-                 <th scope="col">product Name </th>
+                <th scope="col">Sub Category Name </th>
+                 <th scope="col">Product Name </th>
                 <th scope="col">Details </th>
                   <th scope="col"></th>
                 </tr>

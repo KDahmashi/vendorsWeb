@@ -18,7 +18,7 @@
   <div class="form-group row">
 <div class="col-sm-12">
     <h2><span class="glyphicon glyphicon-folder-open" ></span>     Vendor         </h2>
-     <h4>    vendor Details         </h4>
+     <h4>    Vendor Details         </h4>
 	</div></div>
 	
 	<div class="form-group row">
@@ -51,7 +51,7 @@
              
                                       <div class="form-group row">
                   
-                <label  class="col-sm-4 col-form-label">Lane Number </label>
+                <label  class="col-sm-4 col-form-label">LAN Number </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="lanNumber" disabled="true"/></div>
                      <div class="col-sm-2"></div>
             </div>
@@ -127,7 +127,7 @@
                     	<tr>
                  <th scope="col">No</th>
                  <th scope="col">Bank Name</th>
-                <th scope="col">iban</th>                 
+                <th scope="col">IBAN</th>                 
                   
                 </tr>
     </thead>
@@ -266,7 +266,7 @@
                <div class="form-group row">
                   		<label  class="col-sm-2 col-form-label">Comment</label>                
                   		<div class="col-sm-8">
-                  		<form:textarea  class="form-control" path="comment" /> 
+                  		<form:textarea  class="form-control" path="comment" placeholder="Write Comment to Vendor"/> 
                   		</div>		
                </div>                  
  			     

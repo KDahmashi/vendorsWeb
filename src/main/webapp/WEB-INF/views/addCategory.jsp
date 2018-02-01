@@ -46,7 +46,7 @@
     
        <div class="form-group row">
 
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Add new Category         </h2>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Add New Category         </h2>
      
 
                   <div class="col-sm-2"></div>
@@ -68,7 +68,7 @@
     
        <div class="form-group row">
 
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     SubCategory         </h2>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Sub Category         </h2>
                 
             </div>
             
@@ -92,7 +92,7 @@
                 <c:if test="${not empty categoryList}">   
              <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        List of SubCategory       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        List Of SubCategory       </h2>
                     
                   	 <table  id="tblGrid" class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">

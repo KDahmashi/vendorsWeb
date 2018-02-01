@@ -30,18 +30,18 @@
              
                 <label  class="col-sm-4 col-form-label">Email</label>                
                  <div class="col-sm-8">
-                 <form:input  class="form-control" path="email" id="email"/>
+                 <form:input  class="form-control" path="email" id="email" placeholder="Email"/>
  		</div></div>
         
                  <div class="form-group row">
                  
                 <label  class="col-sm-4 col-form-label">Password</label>
-                    <div class="col-sm-8"><form:input type="password" class="form-control" path="password" id="password"/></div>
+                    <div class="col-sm-8"><form:input type="password" class="form-control" path="password" id="password" placeholder="Password"/></div>
             </div>
            
                <div class="form-group row">
                 <div class="col-sm-4"> </div>
-                <div class="col-sm-4"> <a href="login"  class="btn btn-warning" > cancel</a>  </div>
+                <div class="col-sm-4"> <a href="login"  class="btn btn-warning" > Cancel</a>  </div>
                  <div class="col-sm-4"> <input type="submit" class="btn btn-success" value="Login" name="Login"/>           </div>
                 
             </div>

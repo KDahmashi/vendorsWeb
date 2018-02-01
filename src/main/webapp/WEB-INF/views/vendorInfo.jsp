@@ -19,7 +19,7 @@
     
        <div class="form-group row">
 
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     vendor Registration         </h2>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Vendor Registration         </h2>
      <div class="form-group row">                <div class="col-sm-1"> </div>        
  <div class="col-sm-10"><div class='alert alert-danger ${alert.getVisible()}' id='alertBar' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i> <div id='alert'>${alert.getMessage()} </div>  </div>
        </div><div class="col-sm-1"></div>            </div>
@@ -28,14 +28,14 @@
 
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Bank Name</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="bankName" id="bankName" /></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="bankName" id="bankName" placeholder="Bank Name"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
               <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Bank IBAN</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="iban" id="iban" /></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="iban" id="iban" placeholder="Bank IBAN"/></div>
                      <div class="col-sm-2"> <input type="submit" class="btn btn-info" value="Add Bank" name="AddBank" onclick="return validateBank();"/>  </div>
             </div>
         </form:form>    
@@ -48,13 +48,13 @@
                 <c:if test="${not empty bankList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        banks       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        Banks       </h2>
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
                  <th scope="col">No</th>
                  <th scope="col">Bank Name</th>
-                <th scope="col">iban</th>                 
+                <th scope="col">IBAN</th>                 
                   <th scope="col"></th>
                 </tr>
     </thead>
@@ -85,7 +85,7 @@
                           <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Full Name </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="fullName" id="fullName" /></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="fullName" id="fullName" placeholder="Full Name"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
@@ -93,7 +93,7 @@
                          <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Mobile Number</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="mobile" id="mobile"/></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="mobile" id="mobile" placeholder="Mobile Number"/></div>
                      <div class="col-sm-2"></div>
             </div>
              
@@ -101,7 +101,7 @@
                                       <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Email </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="email" id="email"/></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="email" id="email" placeholder="Email"/></div>
                      <div class="col-sm-2">
                      <input type="submit" class="btn btn-info" value="Add Person" name="AddPerson"  onclick="return validatePerson();"/> </div>
             </div>
@@ -157,18 +157,18 @@
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Country</label>
                     <div class="col-sm-4">                     
-                     <form:select  path="branchesID" class="form-control"  id="ddlCountry">
-                     <form:option value = "0" label = "Select"/>     
+                     <form:select  path="branchesID" class="form-control"  id="ddlCountry" >
+                     <form:option value = "0" label = "Select Country"/>     
                       <form:options items = "${countryList}" />              
                   </form:select>   </div>
                      <div class="col-sm-2"></div>
             </div>
                                 <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">state</label>
+                <label  class="col-sm-4 col-form-label">State</label>
                     <div class="col-sm-4">                     
                      <form:select  path="branchesID" class="form-control"  id="ddlStateID">
-                     <form:option value = "0" label = "Select"/>                   
+                     <form:option value = "0" label = "Select State"/>                   
                   </form:select>   </div>
                      <div class="col-sm-2"></div>
             </div>
@@ -177,7 +177,7 @@
                 <label  class="col-sm-4 col-form-label">City</label>
                     <div class="col-sm-4">                     
                      <form:select  path="cityID" class="form-control"  id="ddlCity">
-                     <form:option value = "0" label = "Select"/>                   
+                     <form:option value = "0" label = "Select City"/>                   
                   </form:select>   </div>
                      
                      <div class="col-sm-2"> <input type="submit" class="btn btn-info" value="Add Branch" name="branch" onclick="return validateBranch();"/>  </div>
@@ -197,7 +197,7 @@
                     <thead class="bg-primary">​
                     	<tr>
                  <th scope="col">No</th>
-                 <th scope="col">Country  Name</th>
+                 <th scope="col">Country Name</th>
                 <th scope="col">State Name </th>
                  <th scope="col">City Name </th>
                   <th scope="col"></th>

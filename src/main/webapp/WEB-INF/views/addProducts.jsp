@@ -22,7 +22,7 @@
     
        <div class="form-group row">
 
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Add new Products          </h2>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Add New Products          </h2>
                 
             </div>
             
@@ -57,7 +57,7 @@
                     
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        List of Products       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        List Of Products       </h2>
 
                     	 <table id="tblGrid" class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary ">​

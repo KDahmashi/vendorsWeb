@@ -27,8 +27,8 @@
          <form:hidden   class="form-control" path="vendorID" />
          
                   
-                <label  class="col-sm-4 col-form-label">vendor Name English</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="vendorNameEn" disabled="true"/></div>
+                <label  class="col-sm-4 col-form-label">Vendor Name English</label>
+                    <div class="col-sm-4"><form:input  class="form-control" path="vendorNameEn" disabled="true" /></div>
                      <div class="col-sm-2"></div>
             </div>
             
@@ -51,7 +51,7 @@
              
                                       <div class="form-group row">
                   
-                <label  class="col-sm-4 col-form-label">Lane Number </label>
+                <label  class="col-sm-4 col-form-label">LAN Number </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="lanNumber" disabled="true"/></div>
                      <div class="col-sm-2"></div>
             </div>
@@ -65,7 +65,7 @@
             
              						  <div class="form-group row">
                   
-                <label  class="col-sm-4 col-form-label">Web Site </label>
+                <label  class="col-sm-4 col-form-label">Web Site URL</label>
                     <div class="col-sm-4"><form:input  class="form-control" path="webSiteurl" disabled="true"/></div>
                      <div class="col-sm-2"></div>
             </div>
@@ -127,7 +127,7 @@
                     	<tr>
                  <th scope="col">No</th>
                  <th scope="col">Bank Name</th>
-                <th scope="col">iban</th>                 
+                <th scope="col">IBAN</th>                 
                   
                 </tr>
     </thead>

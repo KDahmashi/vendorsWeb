@@ -26,11 +26,11 @@
               <div class="col-sm-2"></div>
                 <label  class="col-sm-2 col-form-label">Vendor Name</label>                
                  <div class="col-sm-2">
-                 <form:input  class="form-control" path="vendorNameEn" />                 
+                 <form:input  class="form-control" path="vendorNameEn" placeholder="Vendor Name Arabic or English"/>                 
  		</div>
  		<label  class="col-sm-2 col-form-label">Product Name</label>                
                  <div class="col-sm-2">
-                 <form:input  class="form-control" path="productName" />
+                 <form:input  class="form-control" path="productName" placeholder="Product Name"/>
  		</div>
  		 <div class="col-sm-2"></div>
  	</div>
@@ -39,12 +39,12 @@
  			  <div class="col-sm-2"></div>           
                 <label  class="col-sm-2 col-form-label">Category Name</label>                
                  <div class="col-sm-2">
-                 <form:input  class="form-control" path="catName" /> 		</div> 		
+                 <form:input  class="form-control" path="catName" placeholder="Category Name"/> 		</div> 		
  			
              
                 <label  class="col-sm-2 col-form-label">Sub Category Name</label>                
                  <div class="col-sm-2">
-                 <form:input  class="form-control" path="subCatName" /> 		</div>
+                 <form:input  class="form-control" path="subCatName" placeholder="Sub Category Name"/> 		</div>
                   <div class="col-sm-2">
                     <input type="submit" class="btn btn-success" value="Search"/> 
                   </div>
@@ -66,8 +66,8 @@
                 <th scope="col">Vendor Name En</th>
                 <th scope="col">Vendor Name Ar</th>
                 <th scope="col">Mobile Number</th>
-                <th scope="col">Lane Number</th>
-                <th scope="col">Web Site url</th>
+                <th scope="col">LAN Number</th>
+                <th scope="col">Web Site URL</th>
                 <th scope="col">Email</th>
                 <th scope="col">Status Ar</th>
                 <th scope="col">Status En</th>

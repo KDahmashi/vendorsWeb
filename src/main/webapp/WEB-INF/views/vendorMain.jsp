@@ -18,7 +18,7 @@
     
        <div class="form-group row">
 
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     vendor Registration         </h2>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Vendor Registration         </h2>
      <h4>    vendor Details         </h4>
          <div class="form-group row">                <div class="col-sm-1"> </div>        
  <div class="col-sm-10"><div class='alert alert-danger ${alert.getVisible()}' id='alertBar' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i> <div id='alert'>${alert.getMessage()} </div>  </div>
@@ -29,15 +29,15 @@
          <form:hidden   class="form-control" path="vendorID" />
          
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">vendor Name English</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="vendorNameEn"  id="vendorNameEn"/></div>
+                <label  class="col-sm-4 col-form-label">Vendor Name English</label>
+                    <div class="col-sm-4"><form:input  class="form-control" path="vendorNameEn"  id="vendorNameEn" placeholder="Vendor Name English"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
               <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Vendor Name Arabic</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="vendorNameAr" id="vendorNameAr"/></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="vendorNameAr" id="vendorNameAr" placeholder="Vendor Name Arabic"/></div>
                      <div class="col-sm-2"></div>
             </div>
                       
@@ -46,7 +46,7 @@
                 <label  class="col-sm-4 col-form-label">VendorType</label>
                     <div class="col-sm-4">
                      <form:select  path="vendorTypeID" class="form-control" id="ddlVendorType">
-                     <form:option value = "0" label = "Select"/>
+                     <form:option value = "0" label = "Select Vendor Type"/>
                      <form:options items = "${VendorTypeList}" />
                   </form:select>   
                     </div>
@@ -58,36 +58,36 @@
                          <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Email</label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="email" id="email"/></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="email" id="email" placeholder="Email"/></div>
                      <div class="col-sm-2"></div>
             </div>
              
              
                                       <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Lane Number </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="lanNumber" id="lanNumber" /></div>
+                <label  class="col-sm-4 col-form-label">LAN Number </label>
+                    <div class="col-sm-4"><form:input  class="form-control" path="lanNumber" id="lanNumber" placeholder="LAN Number"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
              						  <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">Mobile Number </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="mobileNumber" id="mobileNumber" /></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="mobileNumber" id="mobileNumber" placeholder="Mobile Number"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
              						  <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Web Site </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="webSiteurl" id="webSiteurl" /></div>
+                <label  class="col-sm-4 col-form-label">Web Site URL</label>
+                    <div class="col-sm-4"><form:input  class="form-control" path="webSiteurl" id="webSiteurl" placeholder="Web Site URL"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
              						  <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label">C/R Number </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="crNumber" id="crNumber"/></div>
+                    <div class="col-sm-4"><form:input  class="form-control" path="crNumber" id="crNumber" placeholder="C/R Number 10 Digit"/></div>
                      <div class="col-sm-2"></div>
             </div>     
                 

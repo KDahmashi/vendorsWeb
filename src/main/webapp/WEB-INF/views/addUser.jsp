@@ -57,7 +57,7 @@
                 
                              <div class="form-group row">
                 <div class="col-sm-2"> </div>
-                <div class="col-sm-4"> <a href="login"  class="btn btn-warning" > cancel</a> </div>
+                <div class="col-sm-4"> <a href="login"  class="btn btn-warning" > Cancel</a> </div>
                  <div class="col-sm-3"> <input type="submit" class="btn btn-success" value="Register"/>           </div>
                  <div class="col-sm-3"></div>
             </div>
