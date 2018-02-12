@@ -1,9 +1,13 @@
 package com.tcc.vendorsWeb;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-
-
-
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 
 import vendorsDLL.UserDAO;
 import vendorsDLL.VendorDAO;
@@ -24,13 +28,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -311,6 +316,82 @@ public class UserController {
 				return "vendorProfile";
 				
 			}
-	  
+			@RequestMapping(value="/downloadFile/{attachmentID}",method = RequestMethod.GET)
+			public String downloadFile1(@PathVariable long attachmentID,HttpSession session,
+					HttpServletResponse resonse,RedirectAttributes redirectAttributes) throws IOException{
+				
+				context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+				 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");    	       
+		      
+				 // user Session 
+				 User userSession=(User)session.getAttribute("user");
+				 if(userSession==null) 
+					 return "redirect:/login";
+				
+				Attachment attachment =vendorDAO.GetAttachment(userSession.userID, attachmentID);			
+				if(attachment.url!=null)
+					{     
+					try {
+					   ServletContext context = session.getServletContext();  
+					   String directory = context.getRealPath(attachment.url);																				
+					   File file = new File(directory);  
+				       FileInputStream inputStream = new FileInputStream(file);
+								         
+				        //  MIME type 
+				        String mimeType = context.getMimeType(directory);
+				        if (mimeType == null) {								           
+					            mimeType = "application/octet-stream";
+						        }
+				        
+				        //  content attributes 
+					        resonse.setContentType(mimeType);
+					        resonse.setContentLength((int) file.length());
+								 
+					        //  headers 
+					        String headerKey = "Content-Disposition";
+					        String headerValue = String.format("attachment; filename=\"%s\"",
+			        		file.getName());
+					        resonse.setHeader(headerKey, headerValue);
+								 
+					        //  output stream 
+					        OutputStream outStream = resonse.getOutputStream();
+								 
+					        byte[] buffer = new byte[4096];
+					        int bytesRead = -1;
+								 
+					        // write bytes 
+					        while ((bytesRead = inputStream.read(buffer)) != -1) {
+					            outStream.write(buffer, 0, bytesRead);
+					        }
+								 
+					        inputStream.close();
+					        outStream.close();
+   
+								} catch (Exception ex){	
+									   redirectAttributes.addFlashAttribute("message", "Error in download file please try again ");
+								        return "redirect:../message";
+								}								
+					}			
+				return"";
+			}
+			@RequestMapping(value="/deleteAttachment/{attachmentID}",method = RequestMethod.GET)
+			public ModelAndView deleteProduct(@PathVariable long attachmentID,HttpSession session){
+				
+				context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+				 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	
+				 
+				 // user Session 
+				 User userSession=(User)session.getAttribute("user");
+				
+				 
+				 Attachment attachment =vendorDAO.GetAttachment(userSession.userID, attachmentID);
+				 ServletContext context = session.getServletContext(); 
+				 String directory = context.getRealPath(attachment.url);																				
+				   File file = new File(directory); 
+				   file.delete();
+				 vendorDAO.DeleteAttachment(attachmentID);	   
+			
+				return new ModelAndView("redirect:/vendorProduct");
+			}
 	  
 }

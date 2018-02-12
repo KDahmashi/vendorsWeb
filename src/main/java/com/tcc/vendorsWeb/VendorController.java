@@ -133,8 +133,8 @@ public class VendorController {
 			
 			 // user Session 
 			 User userSession=(User)session.getAttribute("user");
-			 if(userSession==null)
-				 return new ModelAndView("redirect:/login");
+			 if((userSession==null) ||(userSession.userTypeID!=2))
+				 return new ModelAndView("redirect:/login");		
 			 
 		        model.put("userSession", userSession);
 		        
@@ -328,8 +328,8 @@ public class VendorController {
 			
 				 // user Session 
 				 User userSession=(User)session.getAttribute("user");
-				 if(userSession==null)
-					 return "redirect:/login";
+				 if((userSession==null) ||(userSession.userTypeID!=2))
+					 return "redirect:/login"; 
 				 
 				 if(!new UserManager().isAuthorised(userSession.menu,"search"))
 					 return "redirect:/login";//UnAuthorised Access of this page 
@@ -546,10 +546,12 @@ public class VendorController {
 			        }
 		        if (!file.isEmpty()) {	
 		        	 context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
-		  			 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     
-		  			 
+		  			 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");   
+		  			 String fName=fileName.replace(" ", "");fName=fName.replace("/", "");
+		  			
 		        	   try {
-		        		   String name=file.getOriginalFilename();		        		
+		        		   String name=file.getOriginalFilename();			        		   
+		        		  
 		        		   
 		        		   ServletContext context = session.getServletContext();  	
 		        		   Long vendorId=(Long)session.getAttribute("vendorId");
@@ -562,7 +564,7 @@ public class VendorController {
 						if (!new File(directory).exists())
 							new File(directory).mkdirs();
 						
-						File path = new File(directory +File.separator + fileName+ '.'+ name.substring(name.lastIndexOf(".") + 1));  
+						File path = new File(directory +File.separator + fName+ '.'+ name.substring(name.lastIndexOf(".") + 1));  
 
 		       		    byte[] bytes = file.getBytes();  
 		       		    BufferedOutputStream stream =new BufferedOutputStream(new FileOutputStream(path));  
@@ -573,7 +575,9 @@ public class VendorController {
 		       		 Attachment attachment=new Attachment();
 		       		attachment.vendorID=vendorId;
 		       		attachment.attachmentTypeID=TypeID;
-		       		attachment.fileName= "resources/uploads/"+folderName+ '/'+fileName + '.'+ name.substring(name.lastIndexOf(".") + 1) ;
+		       		attachment.fileName= fileName ;
+		       		attachment.url= "resources/uploads/"+folderName+ '/'+fName + '.'+ name.substring(name.lastIndexOf(".") + 1) ;
+		       		
 		       		
 		       		 vendorDAO.AddAttachment(attachment);	
 				            redirectAttributes.addFlashAttribute("message",

@@ -246,9 +246,19 @@
                 <c:forEach var="attachList" items="${attachList}" varStatus="status">
                 <tr>
                     <td>${status.index + 1}</td> 
-                    <td>${attachList.attachmentEn}</td>
+                    <td>                
+                    <c:set var="typeId" value="${attachList.attachmentTypeID}"/> 
+                    <c:if test="${typeId >0}"> 
+                         ${attachList.attachmentEn}
+                          
+                          </c:if>                 
+                         <c:if test="${typeId ==0}"> 
+                         ${attachList.fileName}
+                          
+                          </c:if>  
+                    </td>
                     <td>${attachList.attachmentAr}</td>
-                    <td><a href=${attachList.fileName} target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a></td>              
+                    <td><a href=${attachList.url} target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a></td>              
                                              
                 </tr>
                 </c:forEach>   
@@ -275,10 +285,10 @@
              <div class="form-group row">
                <div class="col-sm-2"></div>
                   <div class="col-sm-4">
-                    <input type="submit" class="btn btn-success" value="Approve" name="approve"/> 
+                    <input type="submit" class="btn btn-success" value="Approve" onclick="return confirm('Are you want to Approve this vendor ?');" name="approve"/> 
                   </div> 
                   <div class="col-sm-4">
-                    <input type="submit" class="btn btn-danger" value="Reject" name="reject"/> 
+                    <input type="submit" class="btn btn-danger" value="Reject" onclick="return confirm('Are you want to Reject this vendor ?');" name="reject"/> 
                   </div>  	 
               </div>  
        

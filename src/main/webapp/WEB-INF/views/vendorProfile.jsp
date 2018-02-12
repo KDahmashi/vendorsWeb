@@ -246,9 +246,22 @@
                 <c:forEach var="attachList" items="${attachList}" varStatus="status">
                 <tr>
                     <td>${status.index + 1}</td> 
-                    <td>${attachList.attachmentEn}</td>
+                    <td>
+                    
+                    <c:set var="typeId" value="${attachList.attachmentTypeID}"/> 
+                    <c:if test="${typeId >0}"> 
+                         ${attachList.attachmentEn}
+                          
+                          </c:if>                 
+                         <c:if test="${typeId ==0}"> 
+                         ${attachList.fileName}
+                          
+                          </c:if>  
+                    
+                    
+                    </td>
                     <td>${attachList.attachmentAr}</td>
-                    <td><a href=${attachList.fileName} target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a></td>              
+                    <td><a href="downloadFile/${attachList.attachmentID}" target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a></td>              
                                              
                 </tr>
                 </c:forEach>   

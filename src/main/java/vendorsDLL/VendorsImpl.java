@@ -867,7 +867,8 @@ public class VendorsImpl implements VendorDAO {
 	                .withoutProcedureColumnMetaDataAccess().declareParameters(
 	                		new SqlParameter( "vendorID_in", Types.BIGINT ),
 	                		new SqlParameter( "attachmentTypeID_in", Types.INTEGER ),
-	                		new SqlParameter( "fileName_in", Types.VARCHAR ),	                		
+	                		new SqlParameter( "fileName_in", Types.VARCHAR ),	
+	                		new SqlParameter( "url_in", Types.VARCHAR ),	
 		    				new SqlOutParameter("result", Types.INTEGER ));
 	                       
 	
@@ -876,6 +877,7 @@ public class VendorsImpl implements VendorDAO {
 	    				result.put("vendorID_in",attachment.vendorID);
 	    				result.put("attachmentTypeID_in", attachment.attachmentTypeID);
 	    				result.put("fileName_in", attachment.fileName);
+	    				result.put("url_in", attachment.url);
 	    				
 	    			 
 	    				
@@ -914,12 +916,13 @@ public class VendorsImpl implements VendorDAO {
 
 	            for (Map<String, Object> item : list) {	 
 	            	Attachment attachment = new Attachment();
-	            	attachment.attachmentID=VendorID;
+	            	attachment.vendorID=VendorID;
 	            	attachment.attachmentID=(Long) (item.get("attachmentID"));	
 	            	attachment.attachmentTypeID=(Integer) (item.get("attachmentTypeID"));	            
 	            	attachment.fileName=(String)item.get("fileName");
 	            	attachment.attachmentEn=(String)item.get("attachmentEn");
 	            	attachment.attachmentAr=(String)item.get("attachmentAr");
+	            	attachment.url=(String)item.get("url");
  	
  	
 	            	lst.add(attachment);
@@ -973,7 +976,66 @@ public class VendorsImpl implements VendorDAO {
 	            
 	             return vendor;   
 	    	    
-	    }	   
-	   
+	    }	  
+	    public Attachment GetAttachment(long userID ,long attachmentID)
+	    {
+	
+	    	Attachment attachment = new Attachment();
+	      
+	    	try {	
+	    				SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetAttachment")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "userID_in", Types.BIGINT),
+		                		new SqlParameter( "attachmentID_in", Types.BIGINT));		            			    				                   
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    			result.put("userID_in", userID);  	
+		    			result.put("attachmentID_in", attachmentID);  
+
+		    				result = jdbcCall.execute(result);
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");          
+
+	            for (Map<String, Object> item : list) {	 	            	
+	            	attachment.attachmentID=attachmentID;
+	            	attachment.vendorID=(Long) (item.get("vendorID"));	
+	            	attachment.attachmentTypeID=(Integer) (item.get("attachmentTypeID"));	            
+	            	attachment.fileName=(String)item.get("fileName");	
+	            	attachment.url=(String)item.get("url");
+	            }	             
+	    	}catch(Exception ex)
+	    	{
+	    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
+	    		 return attachment;  
+	    	}
+	            
+	             return attachment;   
+	    	    
+	    }
+	    public int DeleteAttachment(long attachmentID)    {
+		 	   
+	    	try {	    		
+	        
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("DeleteAttachment")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters(
+		                		new SqlParameter( "attachmentID_in", Types.INTEGER ),		                		
+			    				new SqlOutParameter("result", Types.INTEGER ));                     
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    				result.put("attachmentID_in", attachmentID);  				
+		    			 
+		    				
+		    			result = jdbcCall.execute(result);
+		    			
+		    			return (Integer) result.get("result");		                        	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
+	    		 return 0;  
+	    	}        
+	    }
 }  
 	    

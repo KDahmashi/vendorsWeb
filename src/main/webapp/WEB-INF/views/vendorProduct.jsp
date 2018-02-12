@@ -119,9 +119,62 @@
         	</c:if>        
      </div>
       <div class="col-sm-1"></div>  </div>
+      
+         <div class="form-group row">
+                  
+        <div class="col-sm-1"></div>
+       <div class="col-sm-10">
+      
+       <c:if test="${not empty attachmentList}">    
+        <div align="center">
+            <h1></h1>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        Attachment List       </h2>
+                    	<table class="table table-sm table-hover table-striped table-bordered">
+                    	  <thead class="bg-primary ">
+                    	<tr>
+                 <th scope="col">No</th>
+                <th scope="col">Attachment En</th>
+                <th scope="col">Attachment Ar</th>
+                <th scope="col">Download</th>    
+                 <th scope="col"></th>
+                </tr>
+    </thead>
+                   <tbody>
+                <c:forEach var="attachList" items="${attachmentList}" varStatus="status">
+                <tr>
+                    <td>${status.index + 1}</td> 
+                    <td>
+                    
+                    <c:set var="typeId" value="${attachList.attachmentTypeID}"/> 
+                    <c:if test="${typeId >0}"> 
+                         ${attachList.attachmentEn}
+                          
+                          </c:if>                 
+                         <c:if test="${typeId ==0}"> 
+                         ${attachList.fileName}
+                          
+                          </c:if>  
+                    
+                    
+                    </td>
+                    <td>${attachList.attachmentAr}</td>
+                    <td><a href="downloadFile/${attachList.attachmentID}" target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a></td>              
+                     <th  >
+                       <a type="button" class="btn btn-danger" href="deleteAttachment/${attachList.attachmentID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
+                     </th>                            
+                </tr>
+                </c:forEach>   
+                </tbody>          
+            </table>
+        </div>
+        
+        	</c:if>  
+      
+      </div>    <div class="col-sm-1"></div></div>
+      
 
                        <div class="form-group row">
-                  <div class="col-sm-1"></div>  
+                    <div class="col-sm-1"></div>
         <div class="col-sm-10">
                 <c:if test="${not empty attachmentTypeList}">    
         <div align="center">
@@ -136,8 +189,7 @@
                  <th scope="col">No</th>
                  <th scope="col">Attachment  Name</th>
                 <th scope="col"> </th>
-                 <th scope="col">file </th>              
-                  <th scope="col"> <h5 > ${message}</h5> </th>
+                 <th scope="col">file <h5 > ${message}</h5></th>              
                 </tr>
     </thead>
                    <tbody>
@@ -159,26 +211,42 @@
                               
            </div>
         </form>                    
+                    </td>                     
+                     
+                </tr>
+                </c:forEach>  
+                 
+                                <tr>
+                    <td></td>
+                    <td >Other Attachements</td>
+                    <td colspan="2"> 
+  
+                           <form method="post" action="uploadFile" enctype="multipart/form-data">     
+              <div class="form-group row"> 
+               <div class="col-sm-4"> Attachement Name <input type="text" name="name"  >
+               <input type="text" name="typeID" value=0 class="invisible"></div>
+             <div class="col-sm-4">  <input type="file" name="file"/> </div>
+              <div class="col-sm-4"><button type="submit" class="btn btn-info"   > <i class="fa fa-cloud-upload " aria-hidden="true"> </i>Upload</button>
+              
+              </div>
+              
+                              
+           </div>
+        </form>                    
                     </td>                       
                    
-                    <th >${attachment.fileName}
-                     <c:set var="rowTypeId" value="${type.attachmentTypeID}"/>
-                      <c:forEach var="attachment" items="${attachmentList}" varStatus="status">     
-                      <c:set var="typeId" value="${attachment.attachmentTypeID}"/>                
-                         <c:if test="${rowTypeId ==typeId}"> 
-                          <a href=${attachment.fileName} target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i> View</a>  
-                          </c:if>  
-                           </c:forEach>            
-                     </th>                             
+                                               
                 </tr>
-                </c:forEach>   
+                
                 </tbody>          
             </table>
         </div>
         
         	</c:if>        
      </div>
-      <div class="col-sm-1"></div>  </div>
+     <div class="col-sm-1"></div>  </div>
+      
+                     
       
         <form:form method="post" >
     

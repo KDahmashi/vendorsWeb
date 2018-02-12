@@ -6,6 +6,7 @@ public class Attachment {
 	public int attachmentTypeID;
 	public Long vendorID;
 	public String fileName;
+	public String url;
 	public String attachmentAr;
 	public String attachmentEn;
 	
@@ -46,6 +47,11 @@ public class Attachment {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		url = url;
+	}
 
 }

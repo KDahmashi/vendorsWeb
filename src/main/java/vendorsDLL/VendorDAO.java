@@ -51,4 +51,6 @@ public Integer AddAttachment(Attachment attachment);
 public List<Attachment> GetAllAttachments(long VendorID);
 public Vendor GetVendorStatus(long userID);
 
+public Attachment GetAttachment(long userID ,long attachmentID);
+public int DeleteAttachment(long attachmentID);
 }

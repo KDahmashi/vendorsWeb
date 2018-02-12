@@ -9,6 +9,7 @@ import vendorsBLL.*;
 import vendorsDLL.SearchVendorsDAO;
 import vendorsDLL.UserDAO;
 import vendorsDLL.VendorDAO;
+import vendorsModel.Alert;
 import vendorsModel.Bank;
 import vendorsModel.ContactPerson;
 import vendorsModel.SearchVendors;
@@ -78,8 +79,9 @@ public class HomeController {
 			 
 			 // user Session 
 		 User userSession=(User)session.getAttribute("user");
-		 if(userSession==null)
-			 return new ModelAndView("redirect:/login");						
+		 if((userSession==null) ||(userSession.userTypeID!=2))
+			 return new ModelAndView("redirect:/login");		
+		 
 		   context= new ClassPathXmlApplicationContext("Spring-Module.xml");				
 		   UserDAO customerDAO = (UserDAO) context.getBean("UserDAO");    
 	        
@@ -125,6 +127,30 @@ public class HomeController {
 	    }
 			
 
-
+	 @RequestMapping(value= "/message", method = RequestMethod.GET)
+	    public ModelAndView message(HttpSession session,@ModelAttribute("message") String message) {
+		 
+		 ModelAndView model = new ModelAndView("message");
+		 try {
+			 
+			 // user Session 
+		 User userSession=(User)session.getAttribute("user");
+		 if(userSession==null)
+			 return new ModelAndView("redirect:/login");
+		 
+		 context= new ClassPathXmlApplicationContext("Spring-Module.xml");				
+		 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");    
+		   
+	        model.addObject("vendor", vendorDAO.GetVendorStatus(userSession.userID));
+	        model.addObject("userSession", userSession);
+	        model.addObject("message",message);
+	        
+		 }catch(Exception ex)
+		 {
+			 String XX=ex.getMessage();
+		 }
+	        return model;
+	    }
+			
 
 }
