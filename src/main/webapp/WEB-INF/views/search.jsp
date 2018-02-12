@@ -62,15 +62,15 @@
                     	<table  id="example" class="table table-sm table-hover table-striped table-bordered">
                     	 <thead class="bg-primary ">
                     	<tr>
-                <th scope="col">No</th>
-                <th scope="col">Vendor Name En</th>
-                <th scope="col">Vendor Name Ar</th>
-                <th scope="col">Mobile Number</th>
-                <th scope="col">LAN Number</th>
-                <th scope="col">Web Site URL</th>
-                <th scope="col">Email</th>
-                <th scope="col">Status Ar</th>
-                <th scope="col">Status En</th>
+                <th class="text-center" scope="col">No</th>
+                <th class="text-center" scope="col">Vendor Name En</th>
+                <th class="text-center" scope="col">Vendor Name Ar</th>
+                <th class="text-center" scope="col">Mobile Number</th>
+                <th class="text-center" scope="col">LAN Number</th>
+                <th class="text-center" scope="col">Web Site URL</th>
+                <th class="text-center" scope="col">Email</th>
+                <th class="text-center" scope="col">Status Ar</th>
+                <th class="text-center" scope="col">Status En</th>
                 </tr>
     </thead>
                    <tbody>
@@ -80,13 +80,13 @@
                 <td > <a  href="approve?id=${vendor.vendorID}" > ${vendor.vendorNameEn}</a> 
                 	 <%--  <a type="button" class="btn btn-danger" href="deleteProduct?id=${product.vendorProductID}" > <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> --%>
               </td>
-                <td >${vendor.vendorNameAr}</td>
-                <td >${vendor.mobileNumber}</td>
-                <td >${vendor.lanNumber}</td>
-                <td >${vendor.webSiteurl}</td>
-                 <td >${vendor.email}</td>
-                 <td >${vendor.statusAr}</td>
-                 <td >${vendor.statusEn}</td>
+                <td class="text-center">${vendor.vendorNameAr}</td>
+                <td class="text-center">${vendor.mobileNumber}</td>
+                <td class="text-center">${vendor.lanNumber}</td>
+                <td class="text-center">${vendor.webSiteurl}</td>
+                 <td class="text-center">${vendor.email}</td>
+                 <td class="text-center">${vendor.statusAr}</td>
+                 <td class="text-center">${vendor.statusEn}</td>
                 </tr>
                 </c:forEach>   
                 </tbody>          

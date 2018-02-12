@@ -62,12 +62,12 @@
                     	 <table id="tblGrid" class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary ">​
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Product Name</th>                
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Product Name</th>                
                   <th scope="col"></th>
                 </tr>
     </thead>
-                   <tbody>
+                   <tbody class="text-center">
                    
                 </tbody>          
             </table>

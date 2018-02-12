@@ -23,19 +23,19 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">User Name</th>
-                <th scope="col">Email</th>               
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">User Name</th>
+                <th  class="text-center" scope="col">Email</th>               
                   <th scope="col"></th>
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="user" items="${userList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${user.name}</td>
-                    <td>${user.email}</td>
-                    <th  >
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${user.name}</td>
+                    <td class="text-center">${user.email}</td>
+                    <th  class="text-center">
                        <a type="button" class="btn btn-danger" href="deleteUser/${user.userID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                    
                      </th>

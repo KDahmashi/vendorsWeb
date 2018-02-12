@@ -52,19 +52,19 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Bank Name</th>
-                <th scope="col">IBAN</th>                 
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Bank Name</th>
+                <th  class="text-center" scope="col">IBAN</th>                 
                   <th scope="col"></th>
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="bank" items="${bankList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${bank.bankName}</td>
-                    <td>${bank.iban}</td>              
-                    <th  >
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${bank.bankName}</td>
+                    <td class="text-center">${bank.iban}</td>              
+                    <th class="text-center" >
                        <a type="button" class="btn btn-danger" href="deleteBank/${bank.bankID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
                      </th>                             
                 </tr>
@@ -120,21 +120,21 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Full Name</th>
-                <th scope="col">Mobile Number</th>
-                <th scope="col">Email</th>                 
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Full Name</th>
+                <th  class="text-center" scope="col">Mobile Number</th>
+                <th  class="text-center" scope="col">Email</th>                 
                   <th scope="col"></th>
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="contactPerson" items="${contactPersonList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${contactPerson.fullName}</td>
-                    <td>${contactPerson.mobile}</td>
-                    <td>${contactPerson.email}</td>              
-                    <th  >
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${contactPerson.fullName}</td>
+                    <td class="text-center">${contactPerson.mobile}</td>
+                    <td class="text-center">${contactPerson.email}</td>              
+                    <th class="text-center">
                        <a type="button" class="btn btn-danger" href="deleteContactPerson/${contactPerson.contactPersonID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
                      </th>                             
                 </tr>
@@ -196,22 +196,22 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Country Name</th>
-                <th scope="col">State Name </th>
-                 <th scope="col">City Name </th>
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Country Name</th>
+                <th  class="text-center" scope="col">State Name </th>
+                 <th class="text-center" scope="col">City Name </th>
                   <th scope="col"></th>
                 </tr>
     </thead>
                    <tbody>
                   <c:forEach var="branch" items="${BrancheList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${branch.countryName}</td>
-                    <td>${branch.stateName}</td>      
-                     <td>${branch.cityName}</td>
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${branch.countryName}</td>
+                    <td class="text-center">${branch.stateName}</td>      
+                     <td class="text-center">${branch.cityName}</td>
                               
-                    <th  >
+                    <th  class="text-center">
                        <a type="button" class="btn btn-danger" href="deleteBranches/${branch.branchesID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
                      </th>                             
                 </tr>

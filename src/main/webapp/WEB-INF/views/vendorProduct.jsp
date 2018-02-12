@@ -91,23 +91,23 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	 <thead class="bg-primary">
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Category  Name</th>
-                <th scope="col">Sub Category Name </th>
-                 <th scope="col">Product Name </th>
-                <th scope="col">Details </th>
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Category  Name</th>
+                <th  class="text-center" scope="col">Sub Category Name </th>
+                 <th class="text-center" scope="col">Product Name </th>
+                <th  class="text-center"scope="col">Details </th>
                   <th scope="col"></th>
                 </tr>
     </thead>
                    <tbody>
                   <c:forEach var="product" items="${productList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${product.catName}</td>
-                    <td>${product.subCatName}</td>      
-                     <td>${product.productName}</td>
-                    <td>${product.notes}</td>          
-                    <th  >
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${product.catName}</td>
+                    <td class="text-center">${product.subCatName}</td>      
+                     <td class="text-center">${product.productName}</td>
+                    <td class="text-center">${product.notes}</td>          
+                    <th class="text-center">
                        <a type="button" class="btn btn-danger" href="deleteProduct/${product.vendorProductID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
                      </th>                             
                 </tr>
@@ -132,18 +132,17 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">
                     	<tr>
-                 <th scope="col">No</th>
-                <th scope="col">Attachment En</th>
-                <th scope="col">Attachment Ar</th>
-                <th scope="col">Download</th>    
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Attachment Name</th>
+                 <th class="text-center" scope="col">Download</th>    
                  <th scope="col"></th>
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="attachList" items="${attachmentList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td> 
-                    <td>
+                    <td class="text-center">${status.index + 1}</td> 
+                    <td class="text-center">
                     
                     <c:set var="typeId" value="${attachList.attachmentTypeID}"/> 
                     <c:if test="${typeId >0}"> 
@@ -157,9 +156,8 @@
                     
                     
                     </td>
-                    <td>${attachList.attachmentAr}</td>
-                    <td><a href="downloadFile/${attachList.attachmentID}" target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a></td>              
-                     <th  >
+                    <td class="text-center"><a href="downloadFile/${attachList.attachmentID}" target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a></td>              
+                     <th  class="text-center">
                        <a type="button" class="btn btn-danger" href="deleteAttachment/${attachList.attachmentID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
                      </th>                            
                 </tr>
@@ -186,18 +184,19 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	 <thead class="bg-primary ">
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Attachment  Name</th>
-                <th scope="col"> </th>
-                 <th scope="col">file <h5 > ${message}</h5></th>              
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Attachment  Name Ar</th>
+                 <th class="text-center" scope="col">Attachment  Name En</th>
+                 <th class="text-center" scope="col">File <h5 > ${message}</h5></th>              
                 </tr>
     </thead>
                    <tbody>
                   <c:forEach var="type" items="${attachmentTypeList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${type.attachmentAr}</td>
-                    <td colspan="2"> 
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${type.attachmentAr}</td>
+                    <td class="text-center">${type.attachmentEn}</td>
+                    <td colspan="1"> 
   
                            <form method="post" action="uploadFile" enctype="multipart/form-data">     
               <div class="form-group row"> 
@@ -216,10 +215,10 @@
                 </tr>
                 </c:forEach>  
                  
-                                <tr>
+                                <tr class="text-center">
                     <td></td>
-                    <td >Other Attachements</td>
-                    <td colspan="2"> 
+                    <td class="text-center">Other Attachements</td>
+                    <td class="text-center" colspan="2"> 
   
                            <form method="post" action="uploadFile" enctype="multipart/form-data">     
               <div class="form-group row"> 

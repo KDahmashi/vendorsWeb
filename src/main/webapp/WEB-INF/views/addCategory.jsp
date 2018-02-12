@@ -27,15 +27,15 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Category</th>                             
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Category</th>                             
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="category" items="${categoryList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${category.value}</td>                                                                
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${category.value}</td>                                                                
                 </tr>
                 </c:forEach>   
                 </tbody>          
@@ -97,12 +97,12 @@
                   	 <table  id="tblGrid" class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Sub Category Name</th>                
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Sub Category Name</th>                
                 
                 </tr>
     </thead>
-                   <tbody>
+                   <tbody class="text-center">
                 
                 </tbody>          
             </table>

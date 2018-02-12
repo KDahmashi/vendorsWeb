@@ -155,11 +155,11 @@
     		  isValid = false;
     	  }
     	  
-    	  if ($('#crNumber').val().length !=10)
+    	 /* if ($('#crNumber').val().length !=10)
     	  {    		 
     		  $('#alert').append("enter currect CR Number! ");
     		  isValid = false;
-    	  }
+    	  }*/
     	 
 	 
     	  

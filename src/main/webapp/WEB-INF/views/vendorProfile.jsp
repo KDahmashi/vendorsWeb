@@ -88,21 +88,21 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">​
                     	  <tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Product Name</th>
-                <th scope="col">Category Name</th>
-                <th scope="col">Sub Category Name</th>
-                <th scope="col">Notes</th>                 
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Product Name</th>
+                <th  class="text-center" scope="col">Category Name</th>
+                <th  class="text-center" scope="col">Sub Category Name</th>
+                <th  class="text-center" scope="col">Notes</th>                 
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="productList" items="${productList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${productList.productName}</td>
-                    <td>${productList.catName}</td>
-                    <td>${productList.subCatName}</td>
-                    <td>${productList.notes}</td>              
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${productList.productName}</td>
+                    <td class="text-center">${productList.catName}</td>
+                    <td class="text-center">${productList.subCatName}</td>
+                    <td class="text-center">${productList.notes}</td>              
                                                
                 </tr>
                 </c:forEach>   
@@ -125,18 +125,18 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Bank Name</th>
-                <th scope="col">IBAN</th>                 
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Bank Name</th>
+                <th  class="text-center" scope="col">IBAN</th>                 
                   
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="bank" items="${bankList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${bank.bankName}</td>
-                    <td>${bank.iban}</td>              
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${bank.bankName}</td>
+                    <td class="text-center">${bank.iban}</td>              
                   
                                     
                                                  
@@ -160,20 +160,20 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Full Name</th>
-                <th scope="col">Mobile</th>
-                <th scope="col">Email</th>                 
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Full Name</th>
+                <th  class="text-center" scope="col">Mobile</th>
+                <th  class="text-center" scope="col">Email</th>                 
                   
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="contactList" items="${contactList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${contactList.fullName}</td>
-                    <td>${contactList.mobile}</td> 
-                    <td>${contactList.email}</td>              
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${contactList.fullName}</td>
+                    <td class="text-center">${contactList.mobile}</td> 
+                    <td class="text-center">${contactList.email}</td>              
                                                
                 </tr>
                 </c:forEach>   
@@ -196,22 +196,22 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">
                     	<tr>
-                 <th scope="col">No</th>
-                 <th scope="col">Country Name</th>
-                <th scope="col">State Name</th>
-                <th scope="col">City Name</th>
-                <th scope="col">Sort Name</th>                 
+                 <th class="text-center" scope="col">No</th>
+                 <th class="text-center" scope="col">Country Name</th>
+                <th  class="text-center" scope="col">State Name</th>
+                <th  class="text-center" scope="col">City Name</th>
+                <th  class="text-center" scope="col">Sort Name</th>                 
                   
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="branchesList" items="${branchesList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${branchesList.countryName}</td>
-                    <td>${branchesList.stateName}</td> 
-                    <td>${branchesList.cityName}</td>
-                    <td>${branchesList.sortname}</td>              
+                    <td class="text-center">${status.index + 1}</td>
+                    <td class="text-center">${branchesList.countryName}</td>
+                    <td class="text-center">${branchesList.stateName}</td> 
+                    <td class="text-center">${branchesList.cityName}</td>
+                    <td class="text-center">${branchesList.sortname}</td>              
                                               
                 </tr>
                 </c:forEach>   
@@ -235,18 +235,18 @@
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">
                     	<tr>
-                 <th scope="col">No</th>
-                <th scope="col">Attachment En</th>
-                <th scope="col">Attachment Ar</th>
-                <th scope="col">Download</th>    
+                 <th class="text-center" scope="col">No</th>
+                <th  class="text-center" scope="col">Attachment En</th>
+                <th  class="text-center" scope="col">Attachment Ar</th>
+                <th  class="text-center" scope="col">Download</th>    
                 
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="attachList" items="${attachList}" varStatus="status">
                 <tr>
-                    <td>${status.index + 1}</td> 
-                    <td>
+                    <td class="text-center">${status.index + 1}</td> 
+                    <td class="text-center">
                     
                     <c:set var="typeId" value="${attachList.attachmentTypeID}"/> 
                     <c:if test="${typeId >0}"> 
@@ -260,8 +260,8 @@
                     
                     
                     </td>
-                    <td>${attachList.attachmentAr}</td>
-                    <td><a href="downloadFile/${attachList.attachmentID}" target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a></td>              
+                    <td class="text-center">${attachList.attachmentAr}</td>
+                    <td class="text-center"><a href="downloadFile/${attachList.attachmentID}" target="_blank"> <i class="fa fa-cloud-download fa-2x" aria-hidden="true"></i></a></td>              
                                              
                 </tr>
                 </c:forEach>   
