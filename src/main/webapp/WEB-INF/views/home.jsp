@@ -4,6 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
         <title>Home</title>
     </head>
     <body> 
@@ -11,7 +12,17 @@
   
  
    <jsp:include page="/WEB-INF/views/header.jsp"/>
+          	<!-- <script type='text/javascript' src='resources/lib/jquery-1.12.4.js'></script> -->
+<script type='text/javascript' src='resources/lib/jquery.dataTables.min.js'></script>
+<script type='text/javascript' src='resources/lib/dataTables.bootstrap.min.js'></script>
+<script type='text/javascript' src='resources/lib/dataTables.bootstrap.min.css'></script>
+<!-- <script type='text/javascript' src='resources/lib/bootstrap.min.css'></script> -->
    
+         <script type="text/javascript">  
+      $(document).ready(function() {
+    $('#userTable').DataTable();
+} );
+      </script>
     
     <c:if test="${not empty userList}">
     
@@ -20,7 +31,8 @@
                     
                        <div class="form-group row">
                   <div class="col-sm-2"></div> <div class="col-sm-8">
-                    	<table class="table table-sm table-hover table-striped table-bordered">
+                  
+                    	<table id="userTable" class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
                  <th class="text-center" scope="col">No</th>

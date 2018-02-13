@@ -2,11 +2,12 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+
 <html>
 <head>
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	 
+ 
 <title>Search</title>
 </head>
 <body>
@@ -14,6 +15,18 @@
 
 
 <jsp:include page="/WEB-INF/views/header.jsp"/>
+          	<!-- <script type='text/javascript' src='resources/lib/jquery-1.12.4.js'></script> -->
+<script type='text/javascript' src='resources/lib/jquery.dataTables.min.js'></script>
+<script type='text/javascript' src='resources/lib/dataTables.bootstrap.min.js'></script>
+<script type='text/javascript' src='resources/lib/dataTables.bootstrap.min.css'></script>
+<!-- <script type='text/javascript' src='resources/lib/bootstrap.min.css'></script> -->
+   
+         <script type="text/javascript">  
+      $(document).ready(function() {
+    $('#searchTable').DataTable(); 
+} );
+
+      </script>
 
 
 		
@@ -54,12 +67,14 @@
  		
     </form:form>
  
+  
+      
 <%--  <c:if test="${not empty search}"> --%>
     
         <div align="center">
             <h1></h1>
              <h2><span class="glyphicon glyphicon-edit" ></span>        Vendors Search      </h2>
-                    	<table  id="example" class="table table-sm table-hover table-striped table-bordered">
+                    	<table  id="searchTable" class="table table-sm table-hover table-striped table-bordered">
                     	 <thead class="bg-primary ">
                     	<tr>
                 <th class="text-center" scope="col">No</th>
@@ -103,6 +118,7 @@
     		alert(msg);
 </script>
         </c:if>
+        
 
 
 </body>

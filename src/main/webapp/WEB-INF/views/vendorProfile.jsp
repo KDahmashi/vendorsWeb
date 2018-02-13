@@ -10,6 +10,18 @@
 <body>
 
 <jsp:include page="/WEB-INF/views/header.jsp"/>
+             	<!-- <script type='text/javascript' src='resources/lib/jquery-1.12.4.js'></script> -->
+<script type='text/javascript' src='resources/lib/jquery.dataTables.min.js'></script>
+<script type='text/javascript' src='resources/lib/dataTables.bootstrap.min.js'></script>
+<script type='text/javascript' src='resources/lib/dataTables.bootstrap.min.css'></script>
+<!-- <script type='text/javascript' src='resources/lib/bootstrap.min.css'></script> -->
+   
+         <script type="text/javascript">  
+      $(document).ready(function() {
+    $('#attachmentTable').DataTable();
+} );
+      </script>
+      
 
       <div align="center">
          <form:form method="post" modelAttribute="vendor">
@@ -232,7 +244,7 @@
         <div align="center">
             <h1></h1>
              <h2><span class="glyphicon glyphicon-edit" ></span>        Attachment List       </h2>
-                    	<table class="table table-sm table-hover table-striped table-bordered">
+                    	<table id="attachmentTable" class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">
                     	<tr>
                  <th class="text-center" scope="col">No</th>
