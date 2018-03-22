@@ -6,7 +6,7 @@ public class ContactPerson {
 	public long vendorID ;
 	public String fullName;
 	public String mobile;
-	public String email;
+	public String emailPerson;
 	public long getContactPersonID() {
 		return contactPersonID;
 	}
@@ -31,12 +31,13 @@ public class ContactPerson {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-	public String getEmail() {
-		return email;
+	public String getEmailPerson() {
+		return emailPerson;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailPerson(String emailPerson) {
+		this.emailPerson = emailPerson;
 	}
+	
 	
 	
 	

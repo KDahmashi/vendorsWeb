@@ -71,15 +71,15 @@ public class VendorController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private ApplicationContext context;
-	
+	private ApplicationContext context; 
 	
 	@RequestMapping(value = "/vendorMain", method = RequestMethod.GET)
 	public String vendorMain(Map model,HttpSession session, @ModelAttribute("alert") Alert alert) {		
 
 		
 		context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
-		VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");         
+		VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");
+		model.put("CompanyTypeList", vendorDAO.GetAllCompanyTypes());
 		model.put("VendorTypeList", vendorDAO.GetAllVendorTypes());
 		model.put("alert", alert);
 		
@@ -91,8 +91,9 @@ public class VendorController {
 		 if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
 			 return "redirect:/login";//UnAuthorised Access of this page 
 		 
-		 Vendor vendor =vendorDAO.GetVendorByUserID(userSession.userID);			
-			model.put("vendor", vendor);	
+		 
+		 Vendor vendorMain =vendorDAO.GetVendorByUserID(userSession.userID);			
+			model.put("vendorMain", vendorMain);	
 			
 	        model.put("userSession", userSession);
 		
@@ -123,6 +124,7 @@ public class VendorController {
 	
 	        return "redirect:vendorInfo";
 	    }
+	
 	  
 	/*                                   Get Search                                                                                   */
 	  
@@ -181,6 +183,66 @@ public class VendorController {
 	    }
 		
 	/*                                                                                                                                    */
+		
+		
+		
+		/*                                   Get Rejected Vendors                                                                                   */
+		  
+		  @RequestMapping(value = "/rejected", method = RequestMethod.GET)
+			public ModelAndView rejectedVendors(HttpSession session, Map model , @ModelAttribute("rejectedResults")SearchVendors rejectedResults) {		
+				List<SearchVendors> rejectedResultslist = new ArrayList<SearchVendors>();
+				SearchVendors rejectedVendors = new SearchVendors();			
+				
+				 // user Session 
+				 User userSession=(User)session.getAttribute("user");
+				 if((userSession==null) ||(userSession.userTypeID!=2))
+					 return new ModelAndView("redirect:/login");		
+				 
+			        model.put("userSession", userSession);
+			        
+				
+				 ModelAndView model1 = new ModelAndView("rejected");
+				
+		        try {
+		         
+		        	context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+		        	SearchVendorsDAO searchDAO = (SearchVendorsDAO) context.getBean("SearchVendorsDAO");    
+		        	
+		        	if(rejectedResults.vendorNameEn!=null) {
+		        		rejectedResultslist =searchDAO.findRejectedVendors(rejectedResults.vendorNameEn, rejectedResults.catName, rejectedResults.subCatName, rejectedResults.productName);
+		        	}else
+		        		rejectedResultslist =searchDAO.findRejectedVendors("", "", "", "");
+		        	
+		        	 model1.addObject("rejectedInput", rejectedVendors);
+		        	 model1.addObject("rejected", rejectedResultslist);
+		        	 
+		        	 /*context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+		 			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
+		 			
+		 		
+		        	 model1.addObject("jsonList", new Gson().toJson(vendorDAO.GetAllStates(1)));*/
+		        	 
+
+		        } catch (Exception ex) {
+		        	String ss=ex.getMessage();
+		    
+		        }
+		       
+		        return model1;
+				
+			}
+		  
+		  /*                                   Redirect to Search page                                                                      */
+			
+			@RequestMapping(value = "/rejected", method = RequestMethod.POST)
+		    public String rejectedVendors(@ModelAttribute("rejectedInput") SearchVendors rejectedVendors,
+		            Map<String, Object> model, final RedirectAttributes redirect) {
+		
+				redirect.addFlashAttribute("rejectedResults",rejectedVendors);
+		        return "redirect:rejected";
+		    }
+			
+		 
 		  
 		@RequestMapping(value = "/vendorInfo", method = RequestMethod.GET)
 		public String vendorInfo(Map model,HttpSession session, @ModelAttribute("alert") Alert alert) {		
@@ -389,6 +451,7 @@ public class VendorController {
 			return new ModelAndView("redirect:/vendorInfo");
 		}		
 		
+		
 		@RequestMapping(value = "/vendorProduct", method = RequestMethod.GET)
 		public String vendorProduct(Map model,HttpSession session,@ModelAttribute("alert") Alert alert) {		
 
@@ -453,7 +516,11 @@ public class VendorController {
 			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	       
 	        
 			vendorProduct.vendorID=vendorId;
-			int result=vendorDAO.AddVendorProduct(vendorProduct);	        
+			int result=0;
+				for (Long productID : vendorProduct.productIDList) {
+					vendorProduct.productID=productID;
+					result=vendorDAO.AddVendorProduct(vendorProduct);	
+				}
 			if(result==-2) {
 				   Alert alert =new Alert();  
 					alert.Visible="show";alert.Message="this Product is already exist";
@@ -611,6 +678,34 @@ public class VendorController {
 			   
 		
 		        return "redirect:VendorHome";
+		    }
+		    
+		    @RequestMapping(value= "/expiredDate",method = RequestMethod.GET)
+		    public ModelAndView expiredDate(HttpSession session) throws IOException{
+			 
+			 ModelAndView model = new ModelAndView("expiredDate");
+			 try {
+				 
+				 // user Session 
+			 User userSession=(User)session.getAttribute("user");
+			 if((userSession==null) ||(userSession.userTypeID!=2))
+				 return new ModelAndView("redirect:/login");		
+			 
+			   context= new ClassPathXmlApplicationContext("Spring-Module.xml");				
+			   VendorDAO customerDAO = (VendorDAO) context.getBean("VendorDAO");    
+		        
+		        List<Vendor> listExpiedDate = customerDAO.GetAllExpiredCRDate();
+		       
+		        model.addObject("listExpiedDate", listExpiedDate);	     
+		        model.addObject("userSession", userSession);
+			
+		     
+		        
+			 }catch(Exception ex)
+			 {
+				 String XX=ex.getMessage();
+			 }
+		        return model;
 		    }
 
 }

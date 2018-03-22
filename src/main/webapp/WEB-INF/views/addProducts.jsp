@@ -2,10 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Products Information</title>
+<title><spring:message code="ProductsInformation"/></title>
 </head>
 <body>
 
@@ -22,13 +23,13 @@
     
        <div class="form-group row">
 
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Add New Products          </h2>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>  <spring:message code="AddNewProducts"/>  </h2>
                 
             </div>
             
                    <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Category</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="Category"/></label>
                     <div class="col-sm-4">
                      <form:select  path="productID" class="form-control" id="ddlCategory">
                      <form:option value = "0" label = "Select"/>
@@ -40,7 +41,7 @@
                  
                 <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label"> Sub Category</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="SubCategory"/></label>
                     <div class="col-sm-4">
                      <form:select  path="subCatID" class="form-control" id="ddlSubCategory">
                      <form:option value = "0" label = "Select"/>
@@ -57,13 +58,13 @@
                     
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        List Of Products       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>  <spring:message code="ListOfProducts"/>  </h2>
 
                     	 <table id="tblGrid" class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary ">​
                     	<tr>
-                 <th class="text-center" scope="col">No</th>
-                 <th class="text-center" scope="col">Product Name</th>                
+                 <th class="text-center" scope="col"><spring:message code="No"/></th>
+                 <th class="text-center" scope="col"><spring:message code="ProductName"/></th>                
                   <th scope="col"></th>
                 </tr>
     </thead>
@@ -86,9 +87,9 @@
        
             
              <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Product Name</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="ProductName"/></label>
                     <div class="col-sm-4"><form:input  class="form-control" path="productName" /></div>
-                     <div class="col-sm-2"><input type="submit" class="btn btn-info" value="Add Product" name="addProducts"/></div>
+                     <div class="col-sm-2"><input type="submit" class="btn btn-info" value=<spring:message code="AddProduct"/> name="addProducts"/></div>
         </div>
    
    </form:form>

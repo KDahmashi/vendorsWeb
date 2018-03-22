@@ -7,6 +7,7 @@ import vendorsModel.Attachment;
 import vendorsModel.AttachmentType;
 import vendorsModel.Bank;
 import vendorsModel.ContactPerson;
+import vendorsModel.User;
 import vendorsModel.Vendor;
 import vendorsModel.VendorBranches;
 import vendorsModel.VendorProduct;
@@ -24,6 +25,7 @@ public int deleteBank(long bankID);
 public int deleteContactPerson(long contactPersonID);
 
 public  Map<Integer, String> GetAllVendorTypes();
+public  Map<Integer, String> GetAllCompanyTypes();
 public List<Bank> GetBanks(long vendorID);
 public List<ContactPerson> GetContactPerson(long vendorID);
 
@@ -53,4 +55,6 @@ public Vendor GetVendorStatus(long userID);
 
 public Attachment GetAttachment(long userID ,long attachmentID);
 public int DeleteAttachment(long attachmentID);
+
+public List<Vendor>  GetAllExpiredCRDate();
 }

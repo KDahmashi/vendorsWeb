@@ -25,7 +25,30 @@ public class SearchVendors {
 	public long bankID;
 	public String bankName; 
 	public String iban;
+	public String fullName;
+	public String mobile;
+	public String emailPerson;
 	
+	
+	
+	public String getEmailPerson() {
+		return emailPerson;
+	}
+	public void setEmailPerson(String emailPerson) {
+		this.emailPerson = emailPerson;
+	}
+	public String getFullName() {
+		return fullName;
+	}
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 	public long getAttachmentID() {
 		return attachmentID;
 	}

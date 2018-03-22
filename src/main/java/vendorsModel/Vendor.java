@@ -1,5 +1,7 @@
 package vendorsModel;
 
+import java.sql.Date;
+
 public class Vendor {
 	
 	public long vendorID;
@@ -16,9 +18,30 @@ public class Vendor {
 	public String statusAr;
 	public String statusEn;
 	public String commentReason;
+	public String crDateBeginning;
+	public String crDateExpire;
+	public String fax;
 	
 	
 	
+	public String getFax() {
+		return fax;
+	}
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+	public String getCrDateBeginning() {
+		return crDateBeginning;
+	}
+	public void setCrDateBeginning(String crDateBeginning) {
+		this.crDateBeginning = crDateBeginning;
+	}
+	public String getCrDateExpire() {
+		return crDateExpire;
+	}
+	public void setCrDateExpire(String crDateExpire) {
+		this.crDateExpire = crDateExpire;
+	}
 	public String getStatusAr() {
 		return statusAr;
 	}

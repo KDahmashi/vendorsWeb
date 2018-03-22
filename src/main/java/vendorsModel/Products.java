@@ -1,6 +1,9 @@
 package vendorsModel;
 
+import java.util.List;
+
 public class Products {
+	
 	
 	public long productID;
 	public long subCatID ;
@@ -23,6 +26,7 @@ public class Products {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+	
 	
 	
 

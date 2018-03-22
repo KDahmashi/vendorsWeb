@@ -2,10 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Vendor Information</title>
+<title><spring:message code="VendorInformation"/></title>
 </head>
 <body>
 
@@ -19,24 +20,24 @@
     
        <div class="form-group row">
 
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Vendor Registration         </h2>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>     <spring:message code="VendorRegistration"/>         </h2>
      <div class="form-group row">                <div class="col-sm-1"> </div>        
  <div class="col-sm-10"><div class='alert alert-danger ${alert.getVisible()}' id='alertBar' role="alert"> <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i> <div id='alert'>${alert.getMessage()} </div>  </div>
        </div><div class="col-sm-1"></div>            </div>
     
-     <h4>    Bank Details         </h4>
+     <h4>    <spring:message code="BankDetails"/>         </h4>
 
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Bank Name</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="BankName"/></label>
                     <div class="col-sm-4"><form:input  class="form-control" path="bankName" id="bankName" placeholder="Bank Name"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
               <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Bank IBAN</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="IBAN"/> </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="iban" id="iban" placeholder="Bank IBAN"/></div>
-                     <div class="col-sm-2"> <input type="submit" class="btn btn-info" value="Add Bank" name="AddBank" onclick="return validateBank();"/>  </div>
+                     <div class="col-sm-2"> <input type="submit" class="btn btn-info" value=<spring:message code="AddBank"/> name="AddBank" onclick="return validateBank();"/>  </div>
             </div>
         </form:form>    
         
@@ -48,13 +49,13 @@
                 <c:if test="${not empty bankList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        Banks       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        <spring:message code="Banks"/>       </h2>
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
-                 <th class="text-center" scope="col">No</th>
-                 <th class="text-center" scope="col">Bank Name</th>
-                <th  class="text-center" scope="col">IBAN</th>                 
+                 <th class="text-center" scope="col"><spring:message code="No"/></th>
+                 <th class="text-center" scope="col"><spring:message code="BankName"/></th>
+                <th  class="text-center" scope="col"><spring:message code="IBAN"/></th>                 
                   <th scope="col"></th>
                 </tr>
     </thead>
@@ -65,7 +66,7 @@
                     <td class="text-center">${bank.bankName}</td>
                     <td class="text-center">${bank.iban}</td>              
                     <th class="text-center" >
-                       <a type="button" class="btn btn-danger" href="deleteBank/${bank.bankID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
+                       <a type="button" class="btn btn-danger" href="deleteBank/${bank.bankID}" onclick="return confirm(<spring:message code="DeleteClick"/>);"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
                      </th>                             
                 </tr>
                 </c:forEach>   
@@ -80,11 +81,11 @@
      
       <form:form method="post" modelAttribute="contactPerson">
                       
-      <h4>   Contact Person   </h4>
+      <h4>   <spring:message code="ContactPerson"/>   </h4>
                       
                           <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Full Name </label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="FullName"/> </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="fullName" id="fullName" placeholder="Full Name"/></div>
                      <div class="col-sm-2"></div>
             </div>
@@ -92,7 +93,7 @@
             
                          <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Mobile Number</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="MobileNumber"/></label>
                     <div class="col-sm-4"><form:input  class="form-control" path="mobile" id="mobile" placeholder="Mobile Number"/></div>
                      <div class="col-sm-2"></div>
             </div>
@@ -100,10 +101,10 @@
              
                                       <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Email </label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="email" id="email" placeholder="Email"/></div>
+                <label  class="col-sm-4 col-form-label"><spring:message code="Email"/></label>
+                    <div class="col-sm-4"><form:input  class="form-control" path="emailPerson" id="email" placeholder="email"/></div>
                      <div class="col-sm-2">
-                     <input type="submit" class="btn btn-info" value="Add Person" name="AddPerson"  onclick="return validatePerson();"/> </div>
+                     <input type="submit" class="btn btn-info" value=<spring:message code="AddPerson"/> name="AddPerson"  onclick="return validatePerson();"/> </div>
             </div>
             
             
@@ -116,14 +117,14 @@
                 <c:if test="${not empty contactPersonList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        Contact Persons       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        <spring:message code="ContactList"/>       </h2>
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
-                 <th class="text-center" scope="col">No</th>
-                 <th class="text-center" scope="col">Full Name</th>
-                <th  class="text-center" scope="col">Mobile Number</th>
-                <th  class="text-center" scope="col">Email</th>                 
+                 <th class="text-center" scope="col"><spring:message code="No"/></th>
+                 <th class="text-center" scope="col"><spring:message code="FullName"/></th>
+                <th  class="text-center" scope="col"><spring:message code="MobileNumber"/></th>
+                <th  class="text-center" scope="col"><spring:message code="Email"/></th>                 
                   <th scope="col"></th>
                 </tr>
     </thead>
@@ -133,9 +134,9 @@
                     <td class="text-center">${status.index + 1}</td>
                     <td class="text-center">${contactPerson.fullName}</td>
                     <td class="text-center">${contactPerson.mobile}</td>
-                    <td class="text-center">${contactPerson.email}</td>              
+                    <td class="text-center">${contactPerson.emailPerson}</td>              
                     <th class="text-center">
-                       <a type="button" class="btn btn-danger" href="deleteContactPerson/${contactPerson.contactPersonID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
+                       <a type="button" class="btn btn-danger" href="deleteContactPerson/${contactPerson.contactPersonID}" onclick="return confirm(<spring:message code="DeleteClick"/>);"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
                      </th>                             
                 </tr>
                 </c:forEach>   
@@ -151,11 +152,11 @@
        <form:form method="post" modelAttribute="branch">
          
             
-           <h4>   Branch  </h4>
+           <h4>   <spring:message code="Branch"/>  </h4>
             
                                  <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Country</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="Country"/></label>
                     <div class="col-sm-4">                     
                      <form:select  path="branchesID" class="form-control"  id="ddlCountry" >
                      <form:option value = "0" label = "Select Country"/>     
@@ -165,7 +166,7 @@
             </div>
                                 <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">State</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="State"/></label>
                     <div class="col-sm-4">                     
                      <form:select  path="branchesID" class="form-control"  id="ddlStateID">
                      <form:option value = "0" label = "Select State"/>                   
@@ -174,13 +175,13 @@
             </div>
                                 <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">City</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="City"/></label>
                     <div class="col-sm-4">                     
                      <form:select  path="cityID" class="form-control"  id="ddlCity">
                      <form:option value = "0" label = "Select City"/>                   
                   </form:select>   </div>
                      
-                     <div class="col-sm-2"> <input type="submit" class="btn btn-info" value="Add Branch" name="branch" onclick="return validateBranch();"/>  </div>
+                     <div class="col-sm-2"> <input type="submit" class="btn btn-info" value=<spring:message code="AddBranch"/> name="branch" onclick="return validateBranch();"/>  </div>
             </div>
                         
             
@@ -192,14 +193,14 @@
                 <c:if test="${not empty BrancheList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        Branch Lists    </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        <spring:message code="BranchesList"/>    </h2>
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
-                 <th class="text-center" scope="col">No</th>
-                 <th class="text-center" scope="col">Country Name</th>
-                <th  class="text-center" scope="col">State Name </th>
-                 <th class="text-center" scope="col">City Name </th>
+                 <th class="text-center" scope="col"><spring:message code="No"/></th>
+                 <th class="text-center" scope="col"><spring:message code="CountryName"/></th>
+                <th  class="text-center" scope="col"><spring:message code="StateName"/> </th>
+                 <th class="text-center" scope="col"><spring:message code="CityName"/> </th>
                   <th scope="col"></th>
                 </tr>
     </thead>
@@ -212,7 +213,7 @@
                      <td class="text-center">${branch.cityName}</td>
                               
                     <th  class="text-center">
-                       <a type="button" class="btn btn-danger" href="deleteBranches/${branch.branchesID}" onclick="return confirm('Are you sure you want to delete this item?');"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
+                       <a type="button" class="btn btn-danger" href="deleteBranches/${branch.branchesID}" onclick="return confirm(<spring:message code="DeleteClick"/>);"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                   
                      </th>                             
                 </tr>
                 </c:forEach>   
@@ -226,9 +227,9 @@
     <div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-2 col-form-label"></label>
-                     <div class="col-sm-2"><a href="vendorMain"  class="btn btn-warning" > Back</a></div>
+                     <div class="col-sm-2"><a href="vendorMain"  class="btn btn-warning" > <spring:message code="Back"/></a></div>
                       <div class="col-sm-2"></div>
-                      <div class="col-sm-2"><a href="vendorProduct"  class="btn btn-success" > Save & Continue</a></div>
+                      <div class="col-sm-2"><a href="vendorProduct"  class="btn btn-success" > <spring:message code="Save&Continue"/></a></div>
                      <div class="col-sm-2"></div>
                      
                      

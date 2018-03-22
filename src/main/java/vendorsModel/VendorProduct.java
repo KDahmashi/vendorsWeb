@@ -1,5 +1,7 @@
 package vendorsModel;
 
+import java.util.List;
+
 public class VendorProduct {
 	
 	public long vendorProductID;
@@ -7,6 +9,8 @@ public class VendorProduct {
 	public long productID;
 	public long SubCatID;
 	public String otherProduct;
+	
+	public List<Long> productIDList;
 	
 	public String catName;
 	public String subCatName;
@@ -71,6 +75,14 @@ public class VendorProduct {
 	public void setOtherProduct(String otherProduct) {
 		this.otherProduct = otherProduct;
 	}
+	public List<Long> getProductIDList() {
+		return productIDList;
+	}
+	public void setProductIDList(List<Long> productIDList) {
+		this.productIDList = productIDList;
+	}
+	
+	
 	
 
 }

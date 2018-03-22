@@ -2,10 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Category Information</title>
+<title><spring:message code="CategoryInformation"/></title>
 </head>
 <body>
 
@@ -23,12 +24,12 @@
                 <c:if test="${not empty categoryList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        List of Category       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>  <spring:message code="ListOfCategory"/>  </h2>
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">​
                     	<tr>
-                 <th class="text-center" scope="col">No</th>
-                 <th class="text-center" scope="col">Category</th>                             
+                 <th class="text-center" scope="col"><spring:message code="No"/></th>
+                 <th class="text-center" scope="col"><spring:message code="Category"/></th>                             
                 </tr>
     </thead>
                    <tbody>
@@ -46,13 +47,13 @@
     
        <div class="form-group row">
 
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Add New Category         </h2>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>  <spring:message code="AddNewCategory"/>  </h2>
      
 
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Category Name</label>
+                <label  class="col-sm-4 col-form-label"> <spring:message code="CategoryName"/> </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="catName" /></div>
-                     <div class="col-sm-2"><input type="submit" class="btn btn-info" value="Add Catergory" name="addCategory"/></div>
+                     <div class="col-sm-2"><input type="submit" class="btn btn-info" value=<spring:message code="AddCategory"/> name="addCategory"/></div>
             </div>
             
               
@@ -68,13 +69,13 @@
     
        <div class="form-group row">
 
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Sub Category         </h2>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>  <spring:message code="SubCategory"/>  </h2>
                 
             </div>
             
                    <div class="form-group row">
                   <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Category</label>
+                <label  class="col-sm-4 col-form-label"> <spring:message code="Category"/> </label>
                     <div class="col-sm-4">
                      <form:select  path="catID" class="form-control" id="ddlCategory">
                      <form:option value = "0" label = "Select"/>
@@ -92,13 +93,13 @@
                 <c:if test="${not empty categoryList}">   
              <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        List Of SubCategory       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>  <spring:message code="ListOfSubCategory"/>  </h2>
                     
                   	 <table  id="tblGrid" class="table table-sm table-hover table-striped table-bordered">
                     <thead class="bg-primary">
                     	<tr>
-                 <th class="text-center" scope="col">No</th>
-                 <th class="text-center" scope="col">Sub Category Name</th>                
+                 <th class="text-center" scope="col"><spring:message code="No"/></th>
+                 <th class="text-center" scope="col"><spring:message code="SubCategoryName"/></th>                
                 
                 </tr>
     </thead>
@@ -112,9 +113,9 @@
       <div class="col-sm-3"></div>  </div>
             
              <div class="col-sm-2"></div>
-                <label  class="col-sm-4 col-form-label">Sub Category Name</label>
+                <label  class="col-sm-4 col-form-label"> <spring:message code="SubCategoryName"/> </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="subCatName" /></div>
-                     <div class="col-sm-2"><input type="submit" class="btn btn-info" value="Add SubCatergory" name="addSubCategory"/></div>
+                     <div class="col-sm-2"><input type="submit" class="btn btn-info" value=<spring:message code="AddSubCatergory"/> name="addSubCategory"/></div>
  
  
       </form:form>

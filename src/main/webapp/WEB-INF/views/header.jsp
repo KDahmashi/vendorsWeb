@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
   <link rel='stylesheet' href='resources/lib/theme/theme.css'>
@@ -22,8 +23,8 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">
-      <i class="fa fa-home" aria-hidden="true"> Vendor Management </i>      
-      	
+      <i class="fa fa-home" aria-hidden="true"> <spring:message code="VendorManagement"/> </i>      
+
       </a>
     </div>
 
@@ -54,15 +55,21 @@
           </a>
           <ul class="dropdown-menu">           
             <!-- <li role="separator" class="divider"></li> -->
-            <li> <a href="logout"><i class="fa fa-sign-out fa-1x text-danger" aria-hidden="true"></i>Logout</a> </li>
+            <li> <a href="logout"><i class="fa fa-sign-out fa-1x text-danger" aria-hidden="true"></i><spring:message code="Logout"/></a> </li>
           </ul>
         </li>
          	</c:if>
+         	
+      <span style="float: left">
+      <div  id='langBar' >
+       		<a href="?lang=ar"><img src="resources/lib/theme/images/ar.png" class="rounded" width="25" height="25"></a>
+			<a href="?lang=en"><img src="resources/lib/theme/images/en.png" class="img-responsive" width="25" height="25"></a></div>
+	   </span>
         
             <!--  --  menu for public user -- -->
        <c:if test="${empty userSession.name}"> 
-      	 <li class="active"><a href="login"><i class="fa fa-sign-in fa-1x text-danger" aria-hidden="true"></i> Login <span class="sr-only">(current)</span></a></li>
-        <li><a href="<c:url value='addUser' />"><i class="fa fa-registered fa-1x text-danger" aria-hidden="true"></i> Registration</a></li> 
+      	 <li class="active"><a href="login"><i class="fa fa-sign-in fa-1x text-danger" aria-hidden="true"></i> <spring:message code="Login"/> <span class="sr-only">(current)</span></a></li>
+        <li><a href="<c:url value='addUser' />"><i class="fa fa-registered fa-1x text-danger" aria-hidden="true"></i> <spring:message code="Registration"/></a></li> 
       	</c:if>
       </ul>
      

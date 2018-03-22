@@ -2,10 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title> Vendor Profile</title>
+<title> <spring:message code="VendorProfile"/></title>
 </head>
 <body>
 
@@ -29,8 +30,8 @@
 
   <div class="form-group row">
 <div class="col-sm-12">
-    <h2><span class="glyphicon glyphicon-folder-open" ></span>     Vendor Profile         </h2>
-     <h4>    vendor Details         </h4>
+    <h2><span class="glyphicon glyphicon-folder-open" ></span>     <spring:message code="VendorProfile"/>         </h2>
+     <h4>    <spring:message code="VendorDetails"/>         </h4>
 	</div></div>
 	
 	<div class="form-group row">
@@ -39,14 +40,14 @@
          <form:hidden   class="form-control" path="vendorID" />
          
                   
-                <label  class="col-sm-4 col-form-label">Vendor Name English</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="VendorNameEnglish"/></label>
                     <div class="col-sm-4"><form:input  class="form-control" path="vendorNameEn" disabled="true" /></div>
                      <div class="col-sm-2"></div>
             </div>
             
               <div class="form-group row">
                  
-                <label  class="col-sm-4 col-form-label">Vendor Name Arabic</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="VendorNameArabic"/></label>
                     <div class="col-sm-4"><form:input  class="form-control"  path="vendorNameAr" disabled="true" /></div>
                      <div class="col-sm-2"></div>
             </div>
@@ -55,7 +56,7 @@
             
                          <div class="form-group row">
                   
-                <label  class="col-sm-4 col-form-label">Email</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="Email"/></label>
                     <div class="col-sm-4"><form:input  class="form-control"  path="email" disabled="true"/></div>
                      <div class="col-sm-2"></div>
             </div>
@@ -63,28 +64,28 @@
              
                                       <div class="form-group row">
                   
-                <label  class="col-sm-4 col-form-label">LAN Number </label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="LANNumber"/> </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="lanNumber" disabled="true"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
              						  <div class="form-group row">
                   
-                <label  class="col-sm-4 col-form-label">Mobile Number </label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="MobileNumber"/> </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="mobileNumber" disabled="true"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
              						  <div class="form-group row">
                   
-                <label  class="col-sm-4 col-form-label">Web Site URL</label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="WebSite"/></label>
                     <div class="col-sm-4"><form:input  class="form-control" path="webSiteurl" disabled="true"/></div>
                      <div class="col-sm-2"></div>
             </div>
             
              						  <div class="form-group row">
                   
-                <label  class="col-sm-4 col-form-label">C/R Number </label>
+                <label  class="col-sm-4 col-form-label"><spring:message code="C/RNumber"/> </label>
                     <div class="col-sm-4"><form:input  class="form-control" path="crNumber" disabled="true"/></div>
                      <div class="col-sm-2"></div>
             </div>     
@@ -96,24 +97,24 @@
                 <c:if test="${not empty productList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        Product List       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        <spring:message code="ProductList"/>       </h2>
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">​
                     	  <tr>
-                 <th class="text-center" scope="col">No</th>
-                 <th class="text-center" scope="col">Product Name</th>
-                <th  class="text-center" scope="col">Category Name</th>
-                <th  class="text-center" scope="col">Sub Category Name</th>
-                <th  class="text-center" scope="col">Notes</th>                 
+                 <th class="text-center" scope="col"><spring:message code="No"/></th>
+                 <th class="text-center" scope="col"><spring:message code="CategoryName"/></th>
+                 <th class="text-center" scope="col"><spring:message code="SubCategoryName"/></th>
+                 <th class="text-center" scope="col"><spring:message code="ProductName"/></th>
+                <th class="text-center" scope="col"><spring:message code="Notes"/></th>                 
                 </tr>
     </thead>
                    <tbody>
                 <c:forEach var="productList" items="${productList}" varStatus="status">
                 <tr>
                     <td class="text-center">${status.index + 1}</td>
-                    <td class="text-center">${productList.productName}</td>
                     <td class="text-center">${productList.catName}</td>
                     <td class="text-center">${productList.subCatName}</td>
+                    <td class="text-center">${productList.productName}</td>
                     <td class="text-center">${productList.notes}</td>              
                                                
                 </tr>
@@ -133,13 +134,13 @@
                 <c:if test="${not empty bankList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        Banks       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        <spring:message code="Banks"/>       </h2>
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">
                     	<tr>
-                 <th class="text-center" scope="col">No</th>
-                 <th class="text-center" scope="col">Bank Name</th>
-                <th  class="text-center" scope="col">IBAN</th>                 
+                 <th class="text-center" scope="col"><spring:message code="No"/></th>
+                 <th class="text-center" scope="col"><spring:message code="BankName"/></th>
+                <th  class="text-center" scope="col"><spring:message code="IBAN"/></th>                 
                   
                 </tr>
     </thead>
@@ -168,14 +169,14 @@
                 <c:if test="${not empty contactList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        Contact List       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        <spring:message code="ContactList"/>       </h2>
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">
                     	<tr>
-                 <th class="text-center" scope="col">No</th>
-                 <th class="text-center" scope="col">Full Name</th>
-                <th  class="text-center" scope="col">Mobile</th>
-                <th  class="text-center" scope="col">Email</th>                 
+                  <th class="text-center" scope="col"><spring:message code="No"/></th>
+                 <th class="text-center" scope="col"><spring:message code="FullName"/></th>
+                <th  class="text-center" scope="col"><spring:message code="Mobile"/></th>
+                <th  class="text-center" scope="col"><spring:message code="Email"/></th>                 
                   
                 </tr>
     </thead>
@@ -185,7 +186,7 @@
                     <td class="text-center">${status.index + 1}</td>
                     <td class="text-center">${contactList.fullName}</td>
                     <td class="text-center">${contactList.mobile}</td> 
-                    <td class="text-center">${contactList.email}</td>              
+                    <td class="text-center">${contactList.emailPerson}</td>              
                                                
                 </tr>
                 </c:forEach>   
@@ -204,15 +205,15 @@
                 <c:if test="${not empty branchesList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        Branches List       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        <spring:message code="BranchesList"/>       </h2>
                     	<table class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">
                     	<tr>
-                 <th class="text-center" scope="col">No</th>
-                 <th class="text-center" scope="col">Country Name</th>
-                <th  class="text-center" scope="col">State Name</th>
-                <th  class="text-center" scope="col">City Name</th>
-                <th  class="text-center" scope="col">Sort Name</th>                 
+                 <th class="text-center" scope="col"><spring:message code="No"/></th>
+                 <th class="text-center" scope="col"><spring:message code="CountryName"/></th>
+                <th  class="text-center" scope="col"><spring:message code="StateName"/></th>
+                <th  class="text-center" scope="col"><spring:message code="CityName"/></th>
+                <th  class="text-center" scope="col"><spring:message code="SortName"/></th>                 
                   
                 </tr>
     </thead>
@@ -243,14 +244,14 @@
                 <c:if test="${not empty attachList}">    
         <div align="center">
             <h1></h1>
-             <h2><span class="glyphicon glyphicon-edit" ></span>        Attachment List       </h2>
+             <h2><span class="glyphicon glyphicon-edit" ></span>        <spring:message code="AttachmentList"/>       </h2>
                     	<table id="attachmentTable" class="table table-sm table-hover table-striped table-bordered">
                     	  <thead class="bg-primary ">
                     	<tr>
-                 <th class="text-center" scope="col">No</th>
-                <th  class="text-center" scope="col">Attachment En</th>
-                <th  class="text-center" scope="col">Attachment Ar</th>
-                <th  class="text-center" scope="col">Download</th>    
+                 <th class="text-center" scope="col"><spring:message code="No"/></th>
+                <th  class="text-center" scope="col"><spring:message code="AttachmentEn"/></th>
+                <th  class="text-center" scope="col"><spring:message code="AttachmentAr"/></th>
+                <th class="text-center" scope="col"><spring:message code="Download"/></th>    
                 
                 </tr>
     </thead>

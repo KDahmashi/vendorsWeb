@@ -374,6 +374,65 @@ public class UserController {
 					}			
 				return"";
 			}
+			
+			@RequestMapping(value="/downloadFile/{fileName}",method = RequestMethod.GET)
+			public String downloadFileReference(@PathVariable long attachmentID,HttpSession session,
+					HttpServletResponse resonse,RedirectAttributes redirectAttributes) throws IOException{
+				
+				context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+				 VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");    	       
+		      
+				 // user Session 
+				 User userSession=(User)session.getAttribute("user");
+				 if(userSession==null) 
+					 return "redirect:/login";
+				
+				Attachment attachment =vendorDAO.GetAttachment(userSession.userID, attachmentID);			
+				if(attachment.url!=null)
+					{     
+					try {
+					   ServletContext context = session.getServletContext();  
+					   String directory = context.getRealPath(attachment.url);																				
+					   File file = new File(directory);  
+				       FileInputStream inputStream = new FileInputStream(file);
+								         
+				        //  MIME type 
+				        String mimeType = context.getMimeType(directory);
+				        if (mimeType == null) {								           
+					            mimeType = "application/octet-stream";
+						        }
+				        
+				        //  content attributes 
+					        resonse.setContentType(mimeType);
+					        resonse.setContentLength((int) file.length());
+								 
+					        //  headers 
+					        String headerKey = "Content-Disposition";
+					        String headerValue = String.format("attachment; filename=\"%s\"",
+			        		file.getName());
+					        resonse.setHeader(headerKey, headerValue);
+								 
+					        //  output stream 
+					        OutputStream outStream = resonse.getOutputStream();
+								 
+					        byte[] buffer = new byte[4096];
+					        int bytesRead = -1;
+								 
+					        // write bytes 
+					        while ((bytesRead = inputStream.read(buffer)) != -1) {
+					            outStream.write(buffer, 0, bytesRead);
+					        }
+								 
+					        inputStream.close();
+					        outStream.close();
+   
+								} catch (Exception ex){	
+									   redirectAttributes.addFlashAttribute("message", "Error in download file please try again ");
+								        return "redirect:../message";
+								}								
+					}			
+				return"";
+			}
 			@RequestMapping(value="/deleteAttachment/{attachmentID}",method = RequestMethod.GET)
 			public ModelAndView deleteProduct(@PathVariable long attachmentID,HttpSession session){
 				

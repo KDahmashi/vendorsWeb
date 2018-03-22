@@ -1,15 +1,19 @@
 package vendorsDLL;
 
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
+import java.sql.Date;
 
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 import vendorsModel.Attachment;
@@ -18,6 +22,7 @@ import vendorsModel.Bank;
 import vendorsModel.VendorBranches;
 import vendorsModel.ContactPerson;
 import vendorsModel.Menu;
+import vendorsModel.User;
 import vendorsModel.Vendor;
 import vendorsModel.VendorProduct;
 
@@ -49,9 +54,14 @@ public class VendorsImpl implements VendorDAO {
 	                		new SqlParameter( "mobileNumber_in", Types.VARCHAR ),
 	                		new SqlParameter( "webSiteurl_in", Types.VARCHAR ),
 	                		new SqlParameter( "crNumber_in", Types.VARCHAR ),
+	                		new SqlParameter( "fax_in", Types.VARCHAR ),
+	                		new SqlParameter( "crDateBeginning_in", Types.DATE ),
+	                		new SqlParameter( "crDateExpire_in", Types.DATE ),
 		    				new SqlOutParameter("result", Types.BIGINT ));
 	                       
 	
+	    		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+	            
 	    				
 	    			Map<String, Object> result = new HashMap<String, Object>(2);
 	    				result.put("vendorID_in",vendor.vendorID);
@@ -64,6 +74,10 @@ public class VendorsImpl implements VendorDAO {
 	    				result.put("mobileNumber_in", vendor.mobileNumber);
 	    				result.put("webSiteurl_in", vendor.webSiteurl);
 	    				result.put("crNumber_in", vendor.crNumber);
+	    				result.put("fax_in", vendor.fax);
+	    				result.put("crDateBeginning_in", formatter.parse(vendor.crDateBeginning));
+	    				result.put("crDateExpire_in", formatter.parse(vendor.crDateExpire));
+	    				
 	    			 
 	    				
 	    			result = jdbcCall.execute(result);
@@ -127,7 +141,7 @@ public class VendorsImpl implements VendorDAO {
 	                		new SqlParameter( "vendorID_in", Types.BIGINT ),
 	                		new SqlParameter( "fullName_in", Types.VARCHAR ),
 	                		new SqlParameter( "mobile_in", Types.VARCHAR ),
-	                		new SqlParameter( "email_in", Types.VARCHAR ),
+	                		new SqlParameter( "emailPerson_in", Types.VARCHAR ),
 		    				new SqlOutParameter("result", Types.INTEGER ));
 	                       
 	
@@ -136,7 +150,7 @@ public class VendorsImpl implements VendorDAO {
 	    				result.put("vendorID_in",contactPerson.vendorID);
 	    				result.put("fullName_in", contactPerson.fullName);
 	    				result.put("mobile_in", contactPerson.mobile);
-	    				result.put("email_in", contactPerson.email);
+	    				result.put("emailPerson_in", contactPerson.emailPerson);
 	    			 
 	    				
 	    			result = jdbcCall.execute(result);
@@ -304,6 +318,7 @@ public class VendorsImpl implements VendorDAO {
 	    public Vendor GetVendorByUserID(long userID)
 	    {  
 	    	Vendor vendor = new Vendor();
+	    	SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 	    	try {
 	    		SimpleJdbcCall jdbcCall = new 
 		                SimpleJdbcCall(dataSource).withProcedureName("GetVendorByUserID")
@@ -330,7 +345,11 @@ public class VendorsImpl implements VendorDAO {
 	            	vendor.lanNumber=(String) (item.get("lanNumber"));
 	            	vendor.webSiteurl=(String) (item.get("webSiteurl"));
 	            	vendor.crNumber=(String) (item.get("crNumber"));
+	            	vendor.fax=(String) (item.get("fax"));
+	            	vendor.crDateBeginning=formatter.format(item.get("crDateBeginning"));
+	            	vendor.crDateExpire=formatter.format(item.get("crDateExpire"));
 	            	
+
 	            }
 	            	            
 	        
@@ -462,7 +481,7 @@ public class VendorsImpl implements VendorDAO {
 	            	contactPerson.vendorID= vendorID;
 	            	contactPerson.fullName=(String)item.get("fullName");
 	            	contactPerson.mobile=(String)item.get("mobile");
-	            	contactPerson.email=(String)item.get("email");
+	            	contactPerson.emailPerson=(String)item.get("emailPerson");
 	            	
 	               	
 	            	
@@ -1037,5 +1056,79 @@ public class VendorsImpl implements VendorDAO {
 	    		 return 0;  
 	    	}        
 	    }
-}  
+
+		@Override
+		public Map<Integer, String> GetAllCompanyTypes() {
+			 Map<Integer, String> lst = new HashMap<Integer, String>();	      
+		    	try {
+		        
+		    		SimpleJdbcCall jdbcCall = new 
+			                SimpleJdbcCall(dataSource).withProcedureName("GetAllCommpanyTypes")
+			                .withoutProcedureColumnMetaDataAccess().declareParameters();	            			    				                   
+			    				
+			    			Map<String, Object> result = new HashMap<String, Object>(2);    					    				 
+			    				result = jdbcCall.execute(result);
+
+			    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	    
+			    	            
+		            for (Map<String, Object> item : list) {	 	            	
+		            	lst.put((Integer) (item.get("typeID")), (String) (item.get("typeEn")));    	             	
+		            }       	                    
+		            
+		    	}catch(Exception ex)
+		    	{
+		    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
+		    		 return lst;  
+		    	}
+		            
+		             return lst;  	   
+			}
+
+		@Override
+		public List<Vendor> GetAllExpiredCRDate() {
+			List<Vendor> lstUser= new ArrayList<Vendor>();
+		      
+	    	try {	
+	    		
+	    		SimpleJdbcCall jdbcCall = new 
+		                SimpleJdbcCall(dataSource).withProcedureName("GetAllExpiredCRDate")
+		                .withoutProcedureColumnMetaDataAccess().declareParameters();
+		                
+	    		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		    				
+		    			Map<String, Object> result = new HashMap<String, Object>(2);
+		    						    				 
+
+		    				result = jdbcCall.execute(result);
+
+		    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");
+
+	            for (Map<String, Object> item : list) {	 
+	            	Vendor vendor = new Vendor();
+	            	  
+	            	vendor.vendorID=(Long) (item.get("vendorID"));
+	            	vendor.vendorNameEn= (String) (item.get("vendorNameEn"));
+	            	vendor.vendorNameAr=(String)item.get("vendorNameAr");
+	            	vendor.mobileNumber=(String) (item.get("mobileNumber"));
+	            	vendor.email=(String) (item.get("email"));
+	            	vendor.statusAr=(String) (item.get("statusAr"));
+	            	vendor.statusEn=(String) (item.get("statusEn"));
+	            	vendor.crDateBeginning=formatter.format(item.get("crDateBeginning"));
+	            	vendor.crDateExpire= formatter.format(item.get("crDateExpire"));
+	            	        	
+	            	
+	            	lstUser.add(vendor);
+	            }
+	            	            
+	        
+	             
+	    	}catch(Exception ex)
+	    	{
+	    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
+	    		 return lstUser;  
+	    	}
+	            
+	             return lstUser;  
+		}
+}
 	    
