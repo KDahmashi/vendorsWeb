@@ -133,13 +133,13 @@ public class SearchVendorsImp implements SearchVendorsDAO {
             	vendor.vendorID=(Long) (item.get("vendorID"));
             	vendor.vendorNameEn=(String) (item.get("VendorNameEn"));
             	vendor.vendorNameAr=(String) (item.get("VendorNameAr"));
-            	vendor.fullName=(String) (item.get("fullName"));
-            	vendor.mobile=(String) (item.get("mobile"));
+            	vendor.mobileNumber=(String) (item.get("mobileNumber"));
+            	vendor.lanNumber=(String) (item.get("lanNumber"));
             	/*vendor.productName=(String) (item.get("productName"));
             	vendor.catName=(String) (item.get("catName"));
             	vendor.subCatName=(String) (item.get("subCatName"));*/
-            	//vendor.webSiteurl=(String) (item.get("webSiteurl"));
-            	vendor.emailPerson=(String) (item.get("emailPerson"));
+            	vendor.email=(String) (item.get("email"));
+            	vendor.webSiteurl=(String) (item.get("webSiteurl"));
             	vendor.statusAr=(String) (item.get("statusAr"));
             	vendor.statusEn=(String) (item.get("statusEn"));
             	

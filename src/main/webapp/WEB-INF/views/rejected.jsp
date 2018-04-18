@@ -73,8 +73,8 @@
                 <th class="text-center" scope="col"><spring:message code="VendorNameArabic"/></th>
                 <th class="text-center" scope="col"><spring:message code="MobileNumber"/></th>
                 <th class="text-center" scope="col"><spring:message code="LANNumber"/></th>
-                <th class="text-center" scope="col"><spring:message code="WebSite"/></th>
                 <th class="text-center" scope="col"><spring:message code="Email"/></th>
+                <th class="text-center" scope="col"><spring:message code="WebSite"/></th>
                 <th class="text-center" scope="col"><spring:message code="StatusAr"/></th>
                 <th class="text-center" scope="col"><spring:message code="StatusEn"/></th>
                 </tr>
@@ -89,8 +89,8 @@
                 <td class="text-center">${vendor.vendorNameAr}</td>
                 <td class="text-center">${vendor.mobileNumber}</td>
                 <td class="text-center">${vendor.lanNumber}</td>
+                <td class="text-center">${vendor.email}</td>
                 <td class="text-center">${vendor.webSiteurl}</td>
-                 <td class="text-center">${vendor.email}</td>
                  <td class="text-center">${vendor.statusAr}</td>
                  <td class="text-center">${vendor.statusEn}</td>
                 </tr>

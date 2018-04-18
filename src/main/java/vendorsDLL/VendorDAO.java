@@ -27,6 +27,7 @@ public int deleteContactPerson(long contactPersonID);
 public  Map<Integer, String> GetAllVendorTypes();
 public  Map<Integer, String> GetAllCompanyTypes();
 public List<Bank> GetBanks(long vendorID);
+public  Map<Integer, String> GetAllBankName();
 public List<ContactPerson> GetContactPerson(long vendorID);
 
 public Vendor GetVendorByUserID(long userID);

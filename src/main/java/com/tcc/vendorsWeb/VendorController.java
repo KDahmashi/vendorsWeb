@@ -247,6 +247,9 @@ public class VendorController {
 		@RequestMapping(value = "/vendorInfo", method = RequestMethod.GET)
 		public String vendorInfo(Map model,HttpSession session, @ModelAttribute("alert") Alert alert) {		
 			
+			VendorDAO vendorDAO;
+			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
+			vendorDAO = (VendorDAO) context.getBean("VendorDAO"); 
 			 // user Session 
 			 User userSession=(User)session.getAttribute("user");
 			 if(userSession==null)
@@ -255,6 +258,7 @@ public class VendorController {
 			 if(!new UserManager().isAuthorised(userSession.menu,"vendorMain"))
 				 return "redirect:/login";//UnAuthorised Access of this page 
 			
+			 model.put("BankNameList", vendorDAO.GetAllBankName());
 			Bank bank = new Bank();
 			model.put("bank", bank);
 			model.put("userSession", userSession);
@@ -264,8 +268,7 @@ public class VendorController {
 			model.put("alert", alert);
 			Long vendorId=(Long)session.getAttribute("vendorId");
 			
-			context= new ClassPathXmlApplicationContext("Spring-Module.xml");		
-			VendorDAO vendorDAO = (VendorDAO) context.getBean("VendorDAO");     	
+			    	
 			 List<Bank> bankList=vendorDAO.GetBanks(vendorId);
 			 model.put("bankList", bankList);
 			 

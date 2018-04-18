@@ -27,11 +27,22 @@
     
      <h4>    <spring:message code="BankDetails"/>         </h4>
 
+			<div class="form-group row">
                   <div class="col-sm-2"></div>
                 <label  class="col-sm-4 col-form-label"><spring:message code="BankName"/></label>
-                    <div class="col-sm-4"><form:input  class="form-control" path="bankName" id="bankName" placeholder="Bank Name"/></div>
-                     <div class="col-sm-2"></div>
+                    <div class="col-sm-4">
+                     <form:select  path="bankID" class="form-control" id="ddlBankName">
+                     <form:option value = "0" label = "Select Bank Name"/>
+                     <form:options items = "${BankNameList}" />
+                  </form:select>   
+                    </div>
+                     <div class="col-sm-2">                     
+                     </div>
             </div>
+              
+        </div>
+            
+            
             
               <div class="form-group row">
                   <div class="col-sm-2"></div>
@@ -293,10 +304,11 @@
     	    	 $('#alert').empty(); 
     	    	 var isValid = true;    	    	
     	   
-    	    	  if ($('#bankName').val().length <1)
+    	    	 if ( $( "#ddlBankName option:selected" ).val() ==0)
     	    	  {    		 
-    	    		  $('#alert').append("enter bank Name ! ");  isValid = false;
-    	    	  }  
+    	    		  $('#alert').append("select Bank Name! ");
+    	    		  isValid = false;
+    	    	  } 
     	    	  
 
     	    	  if ($('#iban').val().length <1)

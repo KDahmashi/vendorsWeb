@@ -103,7 +103,7 @@ public class VendorsImpl implements VendorDAO {
 	                SimpleJdbcCall(dataSource).withProcedureName("AddBank")
 	                .withoutProcedureColumnMetaDataAccess().declareParameters(
 	                		new SqlParameter( "vendorID_in", Types.BIGINT ),
-	                		new SqlParameter( "bankName_in", Types.VARCHAR ),
+	                		new SqlParameter( "bankNameID_in", Types.INTEGER ),
 	                		new SqlParameter( "iban_in", Types.VARCHAR ),
 		    				new SqlOutParameter("result", Types.INTEGER ));
 	                       
@@ -111,7 +111,7 @@ public class VendorsImpl implements VendorDAO {
 	    				
 	    			Map<String, Object> result = new HashMap<String, Object>(2);
 	    				result.put("vendorID_in",bank.vendorID);
-	    				result.put("bankName_in", bank.bankName);
+	    				result.put("bankNameID_in", bank.bankID);
 	    				result.put("iban_in", bank.iban);
 	    			 
 	    				
@@ -1057,6 +1057,33 @@ public class VendorsImpl implements VendorDAO {
 	    	}        
 	    }
 
+		@Override
+		public Map<Integer, String> GetAllBankName() {
+			 Map<Integer, String> lst = new HashMap<Integer, String>();	      
+		    	try {
+		        
+		    		SimpleJdbcCall jdbcCall = new 
+			                SimpleJdbcCall(dataSource).withProcedureName("GetAllBankName")
+			                .withoutProcedureColumnMetaDataAccess().declareParameters();	            			    				                   
+			    				
+			    			Map<String, Object> result = new HashMap<String, Object>(2);    					    				 
+			    				result = jdbcCall.execute(result);
+
+			    	            List<Map<String, Object>> list = (List) result.get("#result-set-1");	    
+			    	            
+		            for (Map<String, Object> item : list) {	 	            	
+		            	lst.put((Integer) (item.get("bankNameID")), (String) (item.get("bankName")));    	             	
+		            }       	                    
+		            
+		    	}catch(Exception ex)
+		    	{
+		    		new ExceptionImp().LogException(dataSource,Thread.currentThread().getStackTrace()[1].getMethodName(),ex.toString());
+		    		 return lst;  
+		    	}
+		            
+		             return lst;  	   
+			}
+		
 		@Override
 		public Map<Integer, String> GetAllCompanyTypes() {
 			 Map<Integer, String> lst = new HashMap<Integer, String>();	      
